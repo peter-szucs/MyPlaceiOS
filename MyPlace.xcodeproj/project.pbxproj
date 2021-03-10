@@ -13,6 +13,8 @@
 		5295D6C425F973E600C47D2B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295D6C325F973E600C47D2B /* Preview Assets.xcassets */; };
 		5295D6CF25F973E600C47D2B /* MyPlaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6CE25F973E600C47D2B /* MyPlaceTests.swift */; };
 		5295D6DA25F973E700C47D2B /* MyPlaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6D925F973E700C47D2B /* MyPlaceUITests.swift */; };
+		5295D70325F97FE400C47D2B /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D70225F97FE400C47D2B /* RegisterView.swift */; };
+		5295D70825F98A9200C47D2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D70725F98A9200C47D2B /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,8 @@
 		5295D6D525F973E700C47D2B /* MyPlaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyPlaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5295D6D925F973E700C47D2B /* MyPlaceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceUITests.swift; sourceTree = "<group>"; };
 		5295D6DB25F973E700C47D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5295D70225F97FE400C47D2B /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		5295D70725F98A9200C47D2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 			children = (
 				5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */,
 				5295D6BE25F973E200C47D2B /* ContentView.swift */,
+				5295D70225F97FE400C47D2B /* RegisterView.swift */,
+				5295D70725F98A9200C47D2B /* User.swift */,
 				5295D6C025F973E600C47D2B /* Assets.xcassets */,
 				5295D6C525F973E600C47D2B /* Info.plist */,
 				5295D6C225F973E600C47D2B /* Preview Content */,
@@ -259,6 +265,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5295D70825F98A9200C47D2B /* User.swift in Sources */,
+				5295D70325F97FE400C47D2B /* RegisterView.swift in Sources */,
 				5295D6BF25F973E200C47D2B /* ContentView.swift in Sources */,
 				5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */,
 			);
