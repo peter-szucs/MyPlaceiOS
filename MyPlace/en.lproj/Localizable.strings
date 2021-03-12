@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  MyPlace
+
+  Created by Peter Szücs on 2021-03-11.
+  
+*/
+"Register"              = "Register";
+"AlreadyHaveAccount?"   = "Already have an account?";
+"LogInHere"             = "Log in here";
+"FirstName"             = "First name";
+"FirstNamePlaceHolder"  = "First name...";
+"LastName"              = "Last name";
+"LastNamePlaceHolder"   = "Last name...";
+"UserName"              = "Username";
+"UserNamePlaceHolder"   = "Username...";
+"Done"                  = "Done";

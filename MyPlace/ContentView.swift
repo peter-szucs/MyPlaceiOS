@@ -24,7 +24,7 @@ struct ContentView: View {
                 NavigationLink(
                     destination: RegisterView(),
                     label: {
-                        Text("Registrera")
+                        Text(LocalizedStringKey("Register"))
                     })
                     .frame(width: 150, alignment: .center)
                     .font(.headline)
@@ -32,20 +32,17 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .background(Color("MainBlue"))
                     .cornerRadius(5)
-                Text("Har du redan ett konto?")
-                    .padding(.bottom, 8)
-                Button {
-                    registerButtonTapped()
-                } label: {
-                    Text("Logga in här")
-                }
+                Text(LocalizedStringKey("AlreadyHaveAccount?"))
+                    .padding(.vertical, 8.0)
+                    
+                NavigationLink(
+                    destination: LogInView(),
+                    label: {
+                        Text(LocalizedStringKey("LogInHere"))
+                    })
                 Spacer() 
             }
         }
-    }
-    
-    func registerButtonTapped() {
-        print("!!! button tapped")
     }
 }
 

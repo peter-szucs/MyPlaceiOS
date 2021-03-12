@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  MyPlace
+
+  Created by Peter Szücs on 2021-03-11.
+  
+*/
+"Register"              = "Registrera";
+"AlreadyHaveAccount?"   = "Har du redan ett konto?";
+"LogInHere"             = "Logga in här";
+"FirstName"             = "Förnamn";
+"FirstNamePlaceHolder"  = "Förnamn...";
+"LastName"              = "Efternamn";
+"LastNamePlaceHolder"   = "Efternamn...";
+"UserName"              = "Användarnamn";
+"UserNamePlaceHolder"   = "Användarnamn...";
+"Done"                  = "Klar";

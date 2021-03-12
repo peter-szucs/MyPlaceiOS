@@ -8,5 +8,8 @@
 import SwiftUI
 
 struct User {
+    var firstName: String = ""
+    var lastName: String = ""
     var userName: String = ""
+    var profileImage: Image?
 }
