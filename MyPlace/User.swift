@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct User {
+class User: ObservableObject {
+    @Published
     var firstName: String = ""
     var lastName: String = ""
     var userName: String = ""

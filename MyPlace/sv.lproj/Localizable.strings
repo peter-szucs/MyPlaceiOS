@@ -6,6 +6,7 @@
   
 */
 "Register"              = "Registrera";
+"LogIn"                 = "Logga in";
 "AlreadyHaveAccount?"   = "Har du redan ett konto?";
 "LogInHere"             = "Logga in här";
 "FirstName"             = "Förnamn";
@@ -15,3 +16,7 @@
 "UserName"              = "Användarnamn";
 "UserNamePlaceHolder"   = "Användarnamn...";
 "Done"                  = "Klar";
+"EMail"                 = "E-Mail";
+"EMailPlaceHolder"      = "dinemail@emailklient.com";
+"Password"              = "Lösenord";
+"PasswordPlaceHolder"   = "Skriv Lösenord...";

@@ -19,6 +19,9 @@
 		52EDC02C25FAC8E600B0F3F9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52EDC02B25FAC8E600B0F3F9 /* GoogleService-Info.plist */; };
 		52EDC03125FAC99900B0F3F9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EDC03025FAC99900B0F3F9 /* LogInView.swift */; };
 		52EDC03A25FACE3600B0F3F9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52EDC03C25FACE3600B0F3F9 /* Localizable.strings */; };
+		52EDC04525FB69B700B0F3F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EDC04425FB69B700B0F3F9 /* AppDelegate.swift */; };
+		52FABA702615A6A500F88DB5 /* FirebaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FABA6F2615A6A400F88DB5 /* FirebaseImage.swift */; };
+		52FABA762615A92A00F88DB5 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FABA752615A92A00F88DB5 /* ImageLoader.swift */; };
 		538EF94168EA55D7CBE673EF /* Pods_MyPlace_MyPlaceUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6638A239191D647980810499 /* Pods_MyPlace_MyPlaceUITests.framework */; };
 		99101BFF751E03D078024C2A /* Pods_MyPlace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9151435807468970BA59B7 /* Pods_MyPlace.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +64,9 @@
 		52EDC03025FAC99900B0F3F9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		52EDC03B25FACE3600B0F3F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		52EDC04025FACE3E00B0F3F9 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		52EDC04425FB69B700B0F3F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		52FABA6F2615A6A400F88DB5 /* FirebaseImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseImage.swift; sourceTree = "<group>"; };
+		52FABA752615A92A00F88DB5 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		5A0DF2BD1DBC5C7F283B33A0 /* Pods-MyPlaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPlaceTests.debug.xcconfig"; path = "Target Support Files/Pods-MyPlaceTests/Pods-MyPlaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6638A239191D647980810499 /* Pods_MyPlace_MyPlaceUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyPlace_MyPlaceUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842B1B8B213968031EA6399A /* Pods-MyPlace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPlace.release.xcconfig"; path = "Target Support Files/Pods-MyPlace/Pods-MyPlace.release.xcconfig"; sourceTree = "<group>"; };
@@ -123,7 +129,9 @@
 		5295D6BB25F973E200C47D2B /* MyPlace */ = {
 			isa = PBXGroup;
 			children = (
+				52FABA6D2615A67C00F88DB5 /* Core */,
 				5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */,
+				52EDC04425FB69B700B0F3F9 /* AppDelegate.swift */,
 				5295D6BE25F973E200C47D2B /* ContentView.swift */,
 				52EDC03025FAC99900B0F3F9 /* LogInView.swift */,
 				5295D70225F97FE400C47D2B /* RegisterView.swift */,
@@ -161,6 +169,31 @@
 				5295D6DB25F973E700C47D2B /* Info.plist */,
 			);
 			path = MyPlaceUITests;
+			sourceTree = "<group>";
+		};
+		52FABA6D2615A67C00F88DB5 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				52FABA742615A8EF00F88DB5 /* Models */,
+				52FABA6E2615A68700F88DB5 /* Views */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		52FABA6E2615A68700F88DB5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				52FABA6F2615A6A400F88DB5 /* FirebaseImage.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		52FABA742615A8EF00F88DB5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				52FABA752615A92A00F88DB5 /* ImageLoader.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		7598185B70108449337BE47C /* Pods */ = {
@@ -426,10 +459,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52FABA702615A6A500F88DB5 /* FirebaseImage.swift in Sources */,
+				52EDC04525FB69B700B0F3F9 /* AppDelegate.swift in Sources */,
 				52EDC03125FAC99900B0F3F9 /* LogInView.swift in Sources */,
 				5295D70825F98A9200C47D2B /* User.swift in Sources */,
 				5295D70325F97FE400C47D2B /* RegisterView.swift in Sources */,
 				5295D6BF25F973E200C47D2B /* ContentView.swift in Sources */,
+				52FABA762615A92A00F88DB5 /* ImageLoader.swift in Sources */,
 				5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

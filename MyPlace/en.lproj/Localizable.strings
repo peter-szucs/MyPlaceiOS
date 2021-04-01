@@ -6,6 +6,7 @@
   
 */
 "Register"              = "Register";
+"LogIn"                 = "Log in";
 "AlreadyHaveAccount?"   = "Already have an account?";
 "LogInHere"             = "Log in here";
 "FirstName"             = "First name";
@@ -15,3 +16,7 @@
 "UserName"              = "Username";
 "UserNamePlaceHolder"   = "Username...";
 "Done"                  = "Done";
+"EMail"                 = "E-Mail";
+"EMailPlaceHolder"      = "youremail@emailprovider.com";
+"Password"              = "Password";
+"PasswordPlaceHolder"   = "Enter Password...";

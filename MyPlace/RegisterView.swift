@@ -11,6 +11,7 @@ struct RegisterView: View {
     
     @State var userObject = User()
     @State var showPickerAction = false
+    @State var pickedImage = UIImage()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -21,7 +22,9 @@ struct RegisterView: View {
                     print("ImageButton tapped")
                 } label: {
                     if (userObject.profileImage != nil) {
-                        
+                        Image(uiImage: pickedImage)
+                            .resizable()
+                            .scaledToFit()
                     } else {
                         Image(systemName: "person.circle.fill")
                             .resizable()
@@ -46,7 +49,7 @@ struct RegisterView: View {
             }) {
                 print("FirstName onCommit: \(userObject.firstName)")
             }
-            .padding([.leading, .bottom])
+            .padding([.leading, .trailing, .bottom])
             .textFieldStyle(RoundedBorderTextFieldStyle())
             
             Text(LocalizedStringKey("LastName"))
@@ -59,7 +62,7 @@ struct RegisterView: View {
             }) {
                 print("LastName onCommit: \(userObject.lastName)")
             }
-            .padding([.leading, .bottom])
+            .padding([.leading, .trailing, .bottom])
             .textFieldStyle(RoundedBorderTextFieldStyle())
             
             Text(LocalizedStringKey("UserName"))
@@ -72,7 +75,7 @@ struct RegisterView: View {
             }) {
                 print("Username onCommit: \(userObject.userName)")
             }
-            .padding([.leading, .bottom])
+            .padding([.leading, .trailing, .bottom])
             .textFieldStyle(RoundedBorderTextFieldStyle())
             
             HStack(alignment: .center) {
@@ -80,7 +83,7 @@ struct RegisterView: View {
                 Button {
                     print("Done tapped")
                 } label: {
-                    Text("Klar")
+                    Text(LocalizedStringKey("Done"))
                         .font(.headline)
                         .padding()
                 }
@@ -92,7 +95,7 @@ struct RegisterView: View {
             }
             Spacer()
         }
-        .navigationBarTitle(Text("Register"), displayMode: .inline)
+        .navigationBarTitle(Text(LocalizedStringKey("Register")), displayMode: .inline)
     }
 }
 
