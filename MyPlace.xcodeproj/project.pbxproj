@@ -16,6 +16,7 @@
 		5295D6DA25F973E700C47D2B /* MyPlaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6D925F973E700C47D2B /* MyPlaceUITests.swift */; };
 		5295D70325F97FE400C47D2B /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D70225F97FE400C47D2B /* RegisterView.swift */; };
 		5295D70825F98A9200C47D2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D70725F98A9200C47D2B /* User.swift */; };
+		52BE2C542626F080000DB5D4 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BE2C532626F080000DB5D4 /* Place.swift */; };
 		52EDC02C25FAC8E600B0F3F9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52EDC02B25FAC8E600B0F3F9 /* GoogleService-Info.plist */; };
 		52EDC03125FAC99900B0F3F9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EDC03025FAC99900B0F3F9 /* LogInView.swift */; };
 		52EDC03A25FACE3600B0F3F9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52EDC03C25FACE3600B0F3F9 /* Localizable.strings */; };
@@ -60,6 +61,7 @@
 		5295D6DB25F973E700C47D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5295D70225F97FE400C47D2B /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		5295D70725F98A9200C47D2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		52BE2C532626F080000DB5D4 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		52EDC02B25FAC8E600B0F3F9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52EDC03025FAC99900B0F3F9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		52EDC03B25FACE3600B0F3F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				52FABA752615A92A00F88DB5 /* ImageLoader.swift */,
+				52BE2C532626F080000DB5D4 /* Place.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				5295D70825F98A9200C47D2B /* User.swift in Sources */,
 				5295D70325F97FE400C47D2B /* RegisterView.swift in Sources */,
 				5295D6BF25F973E200C47D2B /* ContentView.swift in Sources */,
+				52BE2C542626F080000DB5D4 /* Place.swift in Sources */,
 				52FABA762615A92A00F88DB5 /* ImageLoader.swift in Sources */,
 				5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */,
 			);
