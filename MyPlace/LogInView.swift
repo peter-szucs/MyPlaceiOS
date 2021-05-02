@@ -64,7 +64,7 @@ struct LogInView: View {
                             .font(.headline)
                             .padding()
                     }
-                    .frame(width: 150, alignment: .center)
+                    .frame(width: 250, alignment: .center)
                     .foregroundColor(.white)
                     .background(Color("MainBlue"))
                     .cornerRadius(5)
