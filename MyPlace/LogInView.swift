@@ -61,13 +61,8 @@ struct LogInView: View {
                         print("Done tapped")
                     } label: {
                         Text(LocalizedStringKey("Done"))
-                            .font(.headline)
-                            .padding()
                     }
-                    .frame(width: 250, alignment: .center)
-                    .foregroundColor(.white)
-                    .background(Color("MainBlue"))
-                    .cornerRadius(5)
+                    .buttonStyle(ButtonViewRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
                     Spacer()
                 }
                 Spacer()

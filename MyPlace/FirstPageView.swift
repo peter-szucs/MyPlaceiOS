@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  FirstPageView.swift
 //  MyPlace
 //
 //  Created by Peter Szücs on 2021-03-10.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct ContentView: View {
+struct FirstPageView: View {
     
     var body: some View {
         NavigationView {
@@ -48,6 +48,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        FirstPageView()
     }
 }
