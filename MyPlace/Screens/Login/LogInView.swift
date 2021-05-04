@@ -28,11 +28,7 @@ struct LogInView: View {
 //                Spacer()
 //            }
             VStack(alignment: .leading) {
-                Text(LocalizedStringKey("EMail"))
-                    .font(.callout)
-                    .bold()
-                    .multilineTextAlignment(.leading)
-                    .padding([.leading, .top])
+                FormTextView(text: LocalizedStringKey("EMail"))
                 TextField(LocalizedStringKey("EMailPlaceHolder"), text: $email, onEditingChanged: { (changed) in
                     print("EMail oneditingchanged: \(changed)")
                 }) {
@@ -41,19 +37,11 @@ struct LogInView: View {
                 .padding([.leading, .trailing, .bottom])
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 
-                Text(LocalizedStringKey("Password"))
-                    .font(.callout)
-                    .bold()
-                    .multilineTextAlignment(.leading)
-                    .padding(.leading)
-                TextField(LocalizedStringKey("PasswordPlaceHolder"), text: $password, onEditingChanged: { (changed) in
-                    print("Password oneditingchanged: \(changed)")
-                }) {
-                    print("Password onCommit: \(password)")
-                }
-                .padding([.leading, .trailing, .bottom])
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.bottom, 20)
+                FormTextView(text: LocalizedStringKey("Password"))
+                TextField(LocalizedStringKey("PasswordPlaceHolder"), text: $password)
+                    .padding([.leading, .trailing, .bottom])
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.bottom, 20)
                 
                 HStack(alignment: .center) {
                     Spacer()
@@ -62,7 +50,7 @@ struct LogInView: View {
                     } label: {
                         Text(LocalizedStringKey("Done"))
                     }
-                    .buttonStyle(ButtonViewRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
+                    .buttonStyle(ButtonStyleRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
                     Spacer()
                 }
                 Spacer()

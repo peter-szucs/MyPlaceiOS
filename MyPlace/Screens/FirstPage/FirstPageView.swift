@@ -10,6 +10,8 @@ import Combine
 
 struct FirstPageView: View {
     
+    @StateObject private var viewModel = FirstPageViewModel()
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -26,12 +28,7 @@ struct FirstPageView: View {
                     label: {
                         Text(LocalizedStringKey("Register"))
                     })
-                    .frame(width: 150, alignment: .center)
-                    .font(.headline)
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color("MainBlue"))
-                    .cornerRadius(5)
+                    .buttonStyle(ButtonStyleRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
                 Text(LocalizedStringKey("AlreadyHaveAccount?"))
                     .padding(.vertical, 8.0)
                     

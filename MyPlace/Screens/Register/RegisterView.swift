@@ -38,12 +38,7 @@ struct RegisterView: View {
                 .padding()
                 Spacer()
             }
-            
-            Text(LocalizedStringKey("FirstName"))
-                .font(.callout)
-                .bold()
-                .multilineTextAlignment(.leading)
-                .padding(.leading)
+            FormTextView(text: LocalizedStringKey("FirstName"))
             TextField(LocalizedStringKey("FirstNamePlaceHolder"), text: $userObject.firstName, onEditingChanged: { (changed) in
                 print("FirstName oneditingchanged: \(changed)")
             }) {
@@ -52,11 +47,7 @@ struct RegisterView: View {
             .padding([.leading, .trailing, .bottom])
             .textFieldStyle(RoundedBorderTextFieldStyle())
             
-            Text(LocalizedStringKey("LastName"))
-                .font(.callout)
-                .bold()
-                .multilineTextAlignment(.leading)
-                .padding(.leading)
+            FormTextView(text: LocalizedStringKey("LastName"))
             TextField(LocalizedStringKey("LastNamePlaceHolder"), text: $userObject.lastName, onEditingChanged: { (changed) in
                 print("LastName oneditingchanged: \(changed)")
             }) {
@@ -65,11 +56,7 @@ struct RegisterView: View {
             .padding([.leading, .trailing, .bottom])
             .textFieldStyle(RoundedBorderTextFieldStyle())
             
-            Text(LocalizedStringKey("UserName"))
-                .font(.callout)
-                .bold()
-                .multilineTextAlignment(.leading)
-                .padding(.leading)
+            FormTextView(text: LocalizedStringKey("UserName"))
             TextField(LocalizedStringKey("UserNamePlaceHolder"), text: $userObject.userName, onEditingChanged: { (changed) in
                 print("Username oneditingchanged: \(changed)")
             }) {
@@ -84,13 +71,8 @@ struct RegisterView: View {
                     print("Done tapped")
                 } label: {
                     Text(LocalizedStringKey("Done"))
-                        .font(.headline)
-                        .padding()
                 }
-                .frame(width: 150, alignment: .center)
-                .foregroundColor(.white)
-                .background(Color("MainBlue"))
-                .cornerRadius(5)
+                .buttonStyle(ButtonStyleRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
                 Spacer()
             }
             Spacer()
