@@ -15,7 +15,7 @@ struct ButtonStyleRegular: ButtonStyle {
         return configuration.label
             .font(.headline)
             .padding(.vertical)
-            .frame(width: 250, alignment: .center)
+            .frame(width: UIScreen.main.bounds.width - 100, alignment: .center)
             .foregroundColor(foregroundColor)
             .background(backgroundColor)
             .cornerRadius(5)

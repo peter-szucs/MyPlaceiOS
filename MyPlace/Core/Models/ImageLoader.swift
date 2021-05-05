@@ -16,7 +16,7 @@ final class ImageLoader: ObservableObject {
     }
     
     init(_ id: String) {
-        let url = "images/\(id)"
+        let url = "profileImages/\(id)"
         let storage = Storage.storage()
         let ref = storage.reference().child(url)
         ref.getData(maxSize: 1 * 1024 * 1024) { (data, error) in

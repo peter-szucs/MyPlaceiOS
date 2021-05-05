@@ -5,18 +5,31 @@
   Created by Peter Szücs on 2021-03-11.
   
 */
-"Register"              = "Register";
-"LogIn"                 = "Log in";
-"AlreadyHaveAccount?"   = "Already have an account?";
-"LogInHere"             = "Log in here";
-"FirstName"             = "First name";
-"FirstNamePlaceHolder"  = "First name...";
-"LastName"              = "Last name";
-"LastNamePlaceHolder"   = "Last name...";
-"UserName"              = "Username";
-"UserNamePlaceHolder"   = "Username...";
-"Done"                  = "Done";
-"EMail"                 = "E-Mail";
-"EMailPlaceHolder"      = "youremail@emailprovider.com";
-"Password"              = "Password";
-"PasswordPlaceHolder"   = "Enter Password...";
+"Empty"                         = "Empty";
+"Register"                      = "Register";
+"LogIn"                         = "Log in";
+"AlreadyHaveAccount?"           = "Already have an account?";
+"LogInHere"                     = "Log in here";
+"FirstName"                     = "First name";
+"FirstNamePlaceHolder"          = "First name...";
+"LastName"                      = "Last name";
+"LastNamePlaceHolder"           = "Last name...";
+"UserName"                      = "Username";
+"UserNamePlaceHolder"           = "Username...";
+"Done"                          = "Done";
+"EMail"                         = "E-Mail";
+"EMailPlaceHolder"              = "email@email.com";
+"Password"                      = "Password";
+"PasswordPlaceHolder"           = "Enter Password...";
+"ReEnterPassword"               = "Re-enter Password";
+"ReEnterPasswordPH"             = "Re-enter Password...";
+"Next"                          = "Next";
+"OnboardingPassesMismatch"      = "Passwords Doesn't match";
+"OnboardingFieldsEmpty"         = "Fill in all fields";
+"OnboardingSuccess"             = "Successfully registered!";
+"OnboardingInvalidEmail"        = "Invalid Email";
+"FIRerror_NetworkError"         = "Network Error";
+"FIRerror_InvalidEmail"         = "Invalid Email";
+"FIRerror_WrongPassword"        = "Wrong Password";
+"FIRerror_UserNotFound"         = "User not found";
+"UnknownError"                  = "Unknown Error";

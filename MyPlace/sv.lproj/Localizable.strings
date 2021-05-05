@@ -5,18 +5,31 @@
   Created by Peter Szücs on 2021-03-11.
   
 */
-"Register"              = "Registrera";
-"LogIn"                 = "Logga in";
-"AlreadyHaveAccount?"   = "Har du redan ett konto?";
-"LogInHere"             = "Logga in här";
-"FirstName"             = "Förnamn";
-"FirstNamePlaceHolder"  = "Förnamn...";
-"LastName"              = "Efternamn";
-"LastNamePlaceHolder"   = "Efternamn...";
-"UserName"              = "Användarnamn";
-"UserNamePlaceHolder"   = "Användarnamn...";
-"Done"                  = "Klar";
-"EMail"                 = "E-Mail";
-"EMailPlaceHolder"      = "dinemail@emailklient.com";
-"Password"              = "Lösenord";
-"PasswordPlaceHolder"   = "Skriv Lösenord...";
+"Empty"                         = "Tom";
+"Register"                      = "Registrera";
+"LogIn"                         = "Logga in";
+"AlreadyHaveAccount?"           = "Har du redan ett konto?";
+"LogInHere"                     = "Logga in här";
+"FirstName"                     = "Förnamn";
+"FirstNamePlaceHolder"          = "Förnamn...";
+"LastName"                      = "Efternamn";
+"LastNamePlaceHolder"           = "Efternamn...";
+"UserName"                      = "Användarnamn";
+"UserNamePlaceHolder"           = "Användarnamn...";
+"Done"                          = "Klar";
+"EMail"                         = "E-Mail";
+"EMailPlaceHolder"              = "email@email.com";
+"Password"                      = "Lösenord";
+"PasswordPlaceHolder"           = "Skriv Lösenord...";
+"ReEnterPassword"               = "Verifiera Lösenord";
+"ReEnterPasswordPH"             = "Skriv Lösenord igen...";
+"Next"                          = "Nästa";
+"OnboardingPassesMismatch"      = "Lösenorden matchar inte";
+"OnboardingFieldsEmpty"         = "Fyll i alla fält";
+"OnboardingSuccess"              = "Registrering lyckades!";
+"OnboardingInvalidEmail"        = "Felaktig Email";
+"FIRerror_NetworkError"         = "Nätverksfel";
+"FIRerror_InvalidEmail"         = "Felaktig Email";
+"FIRerror_WrongPassword"        = "Fel Lösenord";
+"FIRerror_UserNotFound"         = "Användaren finns inte";
+"UnknownError"                  = "Okänt fel";

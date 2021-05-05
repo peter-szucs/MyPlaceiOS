@@ -24,7 +24,7 @@ struct FirstPageView: View {
                     .shadow(color: .gray, radius: 3, x: 0.0, y: 5)
                 Spacer()
                 NavigationLink(
-                    destination: RegisterView(),
+                    destination: RegisterFirstView(),
                     label: {
                         Text(LocalizedStringKey("Register"))
                     })

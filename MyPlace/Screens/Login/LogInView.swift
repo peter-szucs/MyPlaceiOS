@@ -9,53 +9,55 @@ import SwiftUI
 
 struct LogInView: View {
     
-    @State var email = ""
-    @State var password = ""
+    @StateObject private var viewModel = LoginViewModel()
     
     var body: some View {
+        
         VStack(alignment: .leading) {
-//            HStack {
-//                Spacer()
-//                VStack(alignment: .center) {
-//                    Text("myPlace")
-//                        .bold()
-//                        .font(Font.system(size: 60, weight: .bold))
-//                    Image("Logo")
-//                        .offset(x: 0, y: -50)
-////                        .padding(.bottom, 100)
-//                        .shadow(color: .gray, radius: 3, x: 0.0, y: 5)
-//                }
-//                Spacer()
-//            }
+            
             VStack(alignment: .leading) {
                 FormTextView(text: LocalizedStringKey("EMail"))
-                TextField(LocalizedStringKey("EMailPlaceHolder"), text: $email, onEditingChanged: { (changed) in
-                    print("EMail oneditingchanged: \(changed)")
-                }) {
-                    print("EMail onCommit: \(email)")
-                }
-                .padding([.leading, .trailing, .bottom])
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                
-                FormTextView(text: LocalizedStringKey("Password"))
-                TextField(LocalizedStringKey("PasswordPlaceHolder"), text: $password)
+                TextField(LocalizedStringKey("EMailPlaceHolder"), text: $viewModel.email)
                     .padding([.leading, .trailing, .bottom])
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.bottom, 20)
+                    .keyboardType(.emailAddress)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                
+                FormTextView(text: LocalizedStringKey("Password"))
+                SecureField(LocalizedStringKey("PasswordPlaceHolder"), text: $viewModel.password)
+                    .padding([.leading, .trailing, .bottom])
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.default)
+                
+                Text(viewModel.errorMessage)
+                    .padding([.leading, .trailing])
+                    .foregroundColor(viewModel.errorMessageColor)
                 
                 HStack(alignment: .center) {
                     Spacer()
+                    NavigationLink(
+                        destination: MapView(),
+                        isActive: $viewModel.logIn,
+                        label: {
+                            
+                        })
                     Button {
-                        print("Done tapped")
+                        hideKeyboard()
+                        viewModel.signInUser()
                     } label: {
                         Text(LocalizedStringKey("Done"))
                     }
                     .buttonStyle(ButtonStyleRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
+                    .padding(.top, 20)
+                    Spacer()
+                }
+                if viewModel.isLoading {
+                    ActivityView()
                     Spacer()
                 }
                 Spacer()
             }
-//            .offset(x: 0, y: -50)
         }
         .navigationBarTitle(Text(LocalizedStringKey("LogIn")), displayMode: .inline)
     }
@@ -66,3 +68,5 @@ struct LogInView_Previews: PreviewProvider {
         LogInView()
     }
 }
+
+

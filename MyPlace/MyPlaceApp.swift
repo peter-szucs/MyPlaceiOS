@@ -12,14 +12,21 @@ import Firebase
 struct MyPlaceApp: App {
     
 //    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
+    var user: User?
     init() {
         FirebaseApp.configure()
+//        user = Auth()
     }
     
     var body: some Scene {
         WindowGroup {
-            FirstPageView()
+            if user != nil {
+//                MapView()
+            } else {
+                FirstPageView()
+    //                .environmentObject(user)
+            }
+            
         }
     }
 }
