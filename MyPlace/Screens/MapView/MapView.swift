@@ -52,15 +52,20 @@ struct MapView: View {
                                             trailing: 10))
                     Spacer()
                     NavigationLink(
-                        destination: Text("Destination"),
+                        destination: MenuView(),
                         label: {
-                            Image(systemName: "gearshape.fill")
-                                .scaleEffect(2)
-                                .padding(EdgeInsets(top: 20,
-                                                    leading: 30,
-                                                    bottom: 20,
-                                                    trailing: 30))
-                                .foregroundColor(.secondary)
+                            VStack(alignment: .center, spacing: 6) {
+                                Image(systemName: "ellipsis.rectangle")
+                                    .scaleEffect(2)
+                                    .foregroundColor(.secondary)
+                                Text(LocalizedStringKey("Menu_title"))
+                                    .font(.footnote)
+                            }
+                            .padding(EdgeInsets(top: 20,
+                                                leading: 0,
+                                                bottom: 0,
+                                                trailing: 30))
+                            
                         })
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -82,7 +87,7 @@ struct MapView: View {
         }
         .navigationBarHidden(true)
         // MARK: Localize this
-        .navigationBarTitle("Map View")
+        .navigationBarTitle(LocalizedStringKey("Map_title"))
         
         .onAppear(perform: {
             locationManager.delegate = viewModel

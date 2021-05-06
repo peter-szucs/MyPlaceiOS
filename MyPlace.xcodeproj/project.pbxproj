@@ -31,6 +31,16 @@
 		52E35BF02642EB0200FE1D2A /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35BEF2642EB0200FE1D2A /* ActivityView.swift */; };
 		52E35BF526431E1A00FE1D2A /* MapUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35BF426431E1A00FE1D2A /* MapUIView.swift */; };
 		52E35BFA26431EB100FE1D2A /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35BF926431EB100FE1D2A /* MapViewModel.swift */; };
+		52E35C0326441C9E00FE1D2A /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C0226441C9E00FE1D2A /* MenuView.swift */; };
+		52E35C0B26441CAE00FE1D2A /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C0A26441CAE00FE1D2A /* MenuViewModel.swift */; };
+		52E35C1026442CDC00FE1D2A /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C0F26442CDB00FE1D2A /* MenuItem.swift */; };
+		52E35C1F264436E900FE1D2A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C1E264436E800FE1D2A /* SettingsView.swift */; };
+		52E35C2526443A6900FE1D2A /* MenuCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C2426443A6900FE1D2A /* MenuCellView.swift */; };
+		52E35C2D2644451C00FE1D2A /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C2C2644451C00FE1D2A /* FriendsListView.swift */; };
+		52E35C352644452C00FE1D2A /* MyPlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C342644452C00FE1D2A /* MyPlacesView.swift */; };
+		52E35C3A26444BE200FE1D2A /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C3926444BE200FE1D2A /* UserInfo.swift */; };
+		52E35C4026444D4F00FE1D2A /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C3F26444D4F00FE1D2A /* SplashView.swift */; };
+		52E35C482644504600FE1D2A /* SplashLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35C472644504600FE1D2A /* SplashLoadingView.swift */; };
 		52EDC02C25FAC8E600B0F3F9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52EDC02B25FAC8E600B0F3F9 /* GoogleService-Info.plist */; };
 		52EDC03125FAC99900B0F3F9 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EDC03025FAC99900B0F3F9 /* LogInView.swift */; };
 		52EDC03A25FACE3600B0F3F9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52EDC03C25FACE3600B0F3F9 /* Localizable.strings */; };
@@ -91,6 +101,16 @@
 		52E35BEF2642EB0200FE1D2A /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		52E35BF426431E1A00FE1D2A /* MapUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUIView.swift; sourceTree = "<group>"; };
 		52E35BF926431EB100FE1D2A /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		52E35C0226441C9E00FE1D2A /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		52E35C0A26441CAE00FE1D2A /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		52E35C0F26442CDB00FE1D2A /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		52E35C1E264436E800FE1D2A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		52E35C2426443A6900FE1D2A /* MenuCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellView.swift; sourceTree = "<group>"; };
+		52E35C2C2644451C00FE1D2A /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
+		52E35C342644452C00FE1D2A /* MyPlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlacesView.swift; sourceTree = "<group>"; };
+		52E35C3926444BE200FE1D2A /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		52E35C3F26444D4F00FE1D2A /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		52E35C472644504600FE1D2A /* SplashLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashLoadingView.swift; sourceTree = "<group>"; };
 		52EDC02B25FAC8E600B0F3F9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52EDC03025FAC99900B0F3F9 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		52EDC03B25FACE3600B0F3F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -204,6 +224,11 @@
 		52E35B9426415BB400FE1D2A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				52E35C3E26444D3900FE1D2A /* Splash */,
+				52E35C2A264444CD00FE1D2A /* MyPlaces */,
+				52E35C29264444B900FE1D2A /* FriendsList */,
+				52E35C1D264436D300FE1D2A /* Settings */,
+				52E35C0126441C8F00FE1D2A /* Menu */,
 				52E35BE62642DD8100FE1D2A /* MapView */,
 				52E35BB62641FA9A00FE1D2A /* RegisterFirst */,
 				52E35B9526415BE700FE1D2A /* FirstPage */,
@@ -244,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				52E35BAE2641764D00FE1D2A /* FirebaseRepository.swift */,
+				52E35C3926444BE200FE1D2A /* UserInfo.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -283,6 +309,49 @@
 			path = MapView;
 			sourceTree = "<group>";
 		};
+		52E35C0126441C8F00FE1D2A /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				52E35C0226441C9E00FE1D2A /* MenuView.swift */,
+				52E35C0A26441CAE00FE1D2A /* MenuViewModel.swift */,
+				52E35C2426443A6900FE1D2A /* MenuCellView.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		52E35C1D264436D300FE1D2A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				52E35C1E264436E800FE1D2A /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		52E35C29264444B900FE1D2A /* FriendsList */ = {
+			isa = PBXGroup;
+			children = (
+				52E35C2C2644451C00FE1D2A /* FriendsListView.swift */,
+			);
+			path = FriendsList;
+			sourceTree = "<group>";
+		};
+		52E35C2A264444CD00FE1D2A /* MyPlaces */ = {
+			isa = PBXGroup;
+			children = (
+				52E35C342644452C00FE1D2A /* MyPlacesView.swift */,
+			);
+			path = MyPlaces;
+			sourceTree = "<group>";
+		};
+		52E35C3E26444D3900FE1D2A /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				52E35C3F26444D4F00FE1D2A /* SplashView.swift */,
+				52E35C472644504600FE1D2A /* SplashLoadingView.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
 		52FABA6D2615A67C00F88DB5 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +381,7 @@
 				5295D70725F98A9200C47D2B /* User.swift */,
 				52FABA752615A92A00F88DB5 /* ImageLoader.swift */,
 				52BE2C532626F080000DB5D4 /* Place.swift */,
+				52E35C0F26442CDB00FE1D2A /* MenuItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -582,25 +652,35 @@
 				52E35B9726415C0D00FE1D2A /* FirstPageViewModel.swift in Sources */,
 				52FABA702615A6A500F88DB5 /* FirebaseImage.swift in Sources */,
 				52EDC04525FB69B700B0F3F9 /* AppDelegate.swift in Sources */,
+				52E35C0B26441CAE00FE1D2A /* MenuViewModel.swift in Sources */,
 				52F993DF263EA4F700B5FAB0 /* ButtonStyleRegular.swift in Sources */,
 				52E35BF526431E1A00FE1D2A /* MapUIView.swift in Sources */,
 				52EDC03125FAC99900B0F3F9 /* LogInView.swift in Sources */,
 				5295D70825F98A9200C47D2B /* User.swift in Sources */,
 				52E35BA9264161CE00FE1D2A /* LoginViewModel.swift in Sources */,
 				52E35BE82642DD9300FE1D2A /* MapView.swift in Sources */,
+				52E35C352644452C00FE1D2A /* MyPlacesView.swift in Sources */,
+				52E35C2526443A6900FE1D2A /* MenuCellView.swift in Sources */,
 				5295D70325F97FE400C47D2B /* RegisterSecondView.swift in Sources */,
 				52E35BC32641FDCD00FE1D2A /* RegisterFirstViewModel.swift in Sources */,
 				52E35BAF2641764D00FE1D2A /* FirebaseRepository.swift in Sources */,
+				52E35C2D2644451C00FE1D2A /* FriendsListView.swift in Sources */,
 				52E35BF02642EB0200FE1D2A /* ActivityView.swift in Sources */,
 				52E35B8D26415A8100FE1D2A /* FormTextView.swift in Sources */,
+				52E35C482644504600FE1D2A /* SplashLoadingView.swift in Sources */,
 				52E35BCE2642986A00FE1D2A /* ViewExtensions.swift in Sources */,
+				52E35C0326441C9E00FE1D2A /* MenuView.swift in Sources */,
+				52E35C3A26444BE200FE1D2A /* UserInfo.swift in Sources */,
 				52E35BB82641FAD600FE1D2A /* RegisterFirstView.swift in Sources */,
 				52E35BA1264161B100FE1D2A /* RegisterSecondViewModel.swift in Sources */,
+				52E35C4026444D4F00FE1D2A /* SplashView.swift in Sources */,
 				5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */,
 				52BE2C542626F080000DB5D4 /* Place.swift in Sources */,
+				52E35C1F264436E900FE1D2A /* SettingsView.swift in Sources */,
 				52FABA762615A92A00F88DB5 /* ImageLoader.swift in Sources */,
 				52E35BD72642B6CF00FE1D2A /* ImagePicker.swift in Sources */,
 				5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */,
+				52E35C1026442CDC00FE1D2A /* MenuItem.swift in Sources */,
 				52E35BC826428C2600FE1D2A /* LoadingView.swift in Sources */,
 				52E35BFA26431EB100FE1D2A /* MapViewModel.swift in Sources */,
 			);
