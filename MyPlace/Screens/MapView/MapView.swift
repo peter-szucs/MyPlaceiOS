@@ -6,14 +6,30 @@
 //
 
 import SwiftUI
-import Firebase
+import CoreLocation
 
 struct MapView: View {
-    @State var image: Image?
+    
+    @StateObject var viewModel = MapViewModel()
+    
+    @State var locationManager = CLLocationManager()
     
     var body: some View {
-        FirebaseImage(id: Auth.auth().currentUser!.uid)
-            .frame(width: 150, height: 150, alignment: .center)
+        ZStack {
+            MapUIView()
+                .environmentObject(viewModel)
+                .ignoresSafeArea(.all, edges: .all)
+        }
+        .navigationBarHidden(true)
+        .onAppear(perform: {
+            locationManager.delegate = viewModel
+            locationManager.requestWhenInUseAuthorization()
+        })
+        .alert(isPresented: $viewModel.permissionDenied, content: {
+            Alert(title: Text(LocalizedStringKey("CLPermissionDenied")), message: Text(LocalizedStringKey("CLPermDeniedMsg")), dismissButton: .default(Text(LocalizedStringKey("CLPermDeniedDismiss")), action: {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            }))
+        })
     }
 }
 

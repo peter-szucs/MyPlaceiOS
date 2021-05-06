@@ -33,3 +33,6 @@
 "FIRerror_WrongPassword"        = "Wrong Password";
 "FIRerror_UserNotFound"         = "User not found";
 "UnknownError"                  = "Unknown Error";
+"CLPermissionDenied"            = "Permission Denied";
+"CLPermDeniedMsg"               = "Please enable permissions in app settings";
+"CLPermDeniedDismiss"           = "Go to settings";

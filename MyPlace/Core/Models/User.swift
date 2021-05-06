@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-class User: ObservableObject {
-    @Published
-    var firstName: String = ""
-    var lastName: String = ""
-    var userName: String = ""
-    var profileImage: Image?
+class User: ObservableObject, Identifiable {
+    var id: String?
+    var firstName: String?
+    var lastName: String?
+    var userName: String?
+    var profileImageUrl: String?
 }

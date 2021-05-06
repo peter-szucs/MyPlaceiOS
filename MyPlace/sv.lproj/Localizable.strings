@@ -33,3 +33,6 @@
 "FIRerror_WrongPassword"        = "Fel Lösenord";
 "FIRerror_UserNotFound"         = "Användaren finns inte";
 "UnknownError"                  = "Okänt fel";
+"CLPermissionDenied"            = "Åtkomst nekad";
+"CLPermDeniedMsg"               = "Var vänlig aktiver behörighet i inställningar";
+"CLPermDeniedDismiss"           = "Gå till inställningar";

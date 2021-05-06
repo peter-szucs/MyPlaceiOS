@@ -23,6 +23,9 @@ struct FirebaseImage: View {
     
     var body: some View {
         Image(uiImage: image ?? placeholderImage)
+            .resizable()
+            .scaledToFill()
+            .foregroundColor(Color("MainLightBlue"))
     }
 }
 
