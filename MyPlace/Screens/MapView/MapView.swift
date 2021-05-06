@@ -46,20 +46,38 @@ struct MapView: View {
                 
                 HStack {
                     Text("Filter")
-                        .padding()
+                        .padding(EdgeInsets(top: 20,
+                                            leading: 30,
+                                            bottom: 20,
+                                            trailing: 10))
                     Spacer()
                     NavigationLink(
                         destination: Text("Destination"),
                         label: {
                             Image(systemName: "gearshape.fill")
                                 .scaleEffect(2)
-                                .padding(.horizontal, 30)
+                                .padding(EdgeInsets(top: 20,
+                                                    leading: 30,
+                                                    bottom: 20,
+                                                    trailing: 30))
                                 .foregroundColor(.secondary)
                         })
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .ignoresSafeArea(.all, edges: .all)
                 .background(Color("MainBW"))
+            }
+            VStack {
+                Spacer()
+                Button(action: {}, label: {
+                    Image(systemName: "plus")
+                        .font(.title)
+                        .padding(25)
+                        .background(Color("MainOrange"))
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                        .shadow(color: .gray, radius: 2, y: 1)
+                })
             }
         }
         .navigationBarHidden(true)
