@@ -15,7 +15,7 @@ final class LoginViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var logIn = false
     @Published var errorMessage = LocalizedStringKey("Empty")
-    @Published var errorMessageColor: Color = .white
+    @Published var errorMessageColor: Color = Color("MainBW")
     
     func signInUser() {
         isLoading = true
@@ -31,7 +31,7 @@ final class LoginViewModel: ObservableObject {
                 self.isLoading = false
                 return
             }
-            self.errorMessageColor = .white
+            self.errorMessageColor = Color("MainBW")
             print(result)
             self.logIn = true
             self.isLoading = false

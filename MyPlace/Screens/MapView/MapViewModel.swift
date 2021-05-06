@@ -16,6 +16,26 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     
     @Published var permissionDenied = false
     
+    @Published var mapType: MKMapType = .standard
+    
+    // Change map type
+    func updateMapType() {
+        if mapType == .standard {
+            mapType = .hybrid
+            mapView.mapType = mapType
+        } else {
+            mapType = .standard
+            mapView.mapType = mapType
+        }
+    }
+    
+    // Focus on location
+    func focusLocation() {
+        guard let _ = region else { return }
+        mapView.setRegion(region, animated: true)
+        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
+    }
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         // Check persmissions
         switch manager.authorizationStatus {

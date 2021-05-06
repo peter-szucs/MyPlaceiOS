@@ -16,7 +16,7 @@ final class RegisterFirstViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var rePassword: String = ""
     @Published var errorMessage: LocalizedStringKey = LocalizedStringKey("Empty")
-    @Published var errorMessageColor: Color = .white
+    @Published var errorMessageColor: Color = Color("MainBW")
     
     func isEmailEmpty() -> Bool {
         return email == ""
@@ -50,7 +50,7 @@ final class RegisterFirstViewModel: ObservableObject {
             if isValidEmail() {
                 if isPasswordsEqual() {
                     errorMessage = LocalizedStringKey("OnboardingSuccess")
-                    errorMessageColor = .white
+                    errorMessageColor = Color("MainBW")
                     return true
                 } else {
                     errorMessage = LocalizedStringKey("OnboardingPassesMismatch")
