@@ -14,13 +14,34 @@ struct SettingsView: View {
     
     var body: some View {
         
-        VStack {
-            FirebaseImage(id: userInfo.user.uid)
-                .frame(width: 100, height: 100, alignment: .center)
-                .clipShape(Circle())
+        VStack(alignment: .center) {
+            Button(action: {
+                viewModel.showPickerAction = true
+            }, label: {
+                if viewModel.changedImage != nil {
+                    viewModel.changedImage?
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    FirebaseImage(id: userInfo.user.uid)
+                }
+            })
+            .frame(width: 100, height: 100, alignment: .center)
+            .clipShape(Circle())
+            .padding(.top, 20)
+            
+            TextField(LocalizedStringKey("FirstNamePlaceHolder"), text: $viewModel.firstName)
+                .textFieldStyle(UserInfoTextFieldStyle())
+                .keyboardType(.alphabet)
+                .disableAutocorrection(true)
+            
         }
         .onAppear {
-            print(userInfo.user)
+            viewModel.originalUserObject = userInfo.user
+        }
+        .navigationBarTitle(Text(LocalizedStringKey("Menu_profileSettings")), displayMode: .inline)
+        .sheet(isPresented: $viewModel.showPickerAction, onDismiss: viewModel.loadImage) {
+            ImagePicker(image: $viewModel.pickedImage)
         }
     }
 }

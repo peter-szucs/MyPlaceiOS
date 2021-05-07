@@ -17,22 +17,19 @@ struct RegisterFirstView: View {
             
             FormTextView(text: LocalizedStringKey("EMail"))
             TextField(LocalizedStringKey("EMailPlaceHolder"), text: $viewModel.email)
-                .padding([.leading, .trailing, .bottom])
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
             
             FormTextView(text: LocalizedStringKey("Password"))
             SecureField(LocalizedStringKey("PasswordPlaceHolder"), text: $viewModel.password)
-                .padding([.leading, .trailing, .bottom])
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.default)
             
             FormTextView(text: LocalizedStringKey("ReEnterPassword"))
             SecureField(LocalizedStringKey("ReEnterPasswordPH"), text: $viewModel.rePassword)
-                .padding([.leading, .trailing, .bottom])
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.default)
             
             

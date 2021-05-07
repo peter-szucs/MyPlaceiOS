@@ -39,9 +39,6 @@ class UserInfo: ObservableObject {
                 }
             })
         }
-        
-        // MARK: - Think of resolution for onboarding (removing handle here doesn't automatically take you to mapview after succesful first step)
-//        Auth.auth().removeStateDidChangeListener(authStateDidChangeListenerHandle)
         print(isUserAuthenticated)
     }
     

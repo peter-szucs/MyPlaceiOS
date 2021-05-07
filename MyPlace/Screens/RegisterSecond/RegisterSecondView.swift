@@ -41,22 +41,19 @@ struct RegisterSecondView: View {
             }
             FormTextView(text: LocalizedStringKey("FirstName"))
             TextField(LocalizedStringKey("FirstNamePlaceHolder"), text: $viewModel.firstName)
-                .padding([.leading, .trailing])
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.alphabet)
                 .disableAutocorrection(true)
             
             FormTextView(text: LocalizedStringKey("LastName"))
             TextField(LocalizedStringKey("LastNamePlaceHolder"), text: $viewModel.lastName)
-                .padding([.leading, .trailing])
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.alphabet)
                 .disableAutocorrection(true)
             
             FormTextView(text: LocalizedStringKey("UserName"))
             TextField(LocalizedStringKey("UserNamePlaceHolder"), text: $viewModel.userName)
-                .padding([.leading, .trailing, .bottom])
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.alphabet)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
@@ -94,6 +91,7 @@ struct RegisterSecondView: View {
                     Text(LocalizedStringKey("Done"))
                 }
                 .buttonStyle(ButtonStyleRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
+                .padding(.top)
                 Spacer()
             }
             if viewModel.isLoading {
