@@ -9,23 +9,52 @@ import SwiftUI
 
 struct MenuView: View {
     
+    @EnvironmentObject var userInfo: UserInfo
     @StateObject private var viewModel = MenuViewModel()
     
     var body: some View {
         
         VStack(alignment: .center) {
-            List(viewModel.menuItems) { item in
-//                NavigationLink(
-//                    destination: viewModel.menuDestinations[item.id],
-//                    label: {
-//                        MenuCellView(menuItem: item)
-//                    })
-                Divider().frame(width: UIScreen.main.bounds.width - 50)
-            }
+            
+            NavigationLink(
+                destination: FriendsListView(),
+                label: {
+                    MenuCellView(menuItem: viewModel.menuItems[0])
+                })
+                .padding(.top, 20)
+            Divider().frame(width: UIScreen.main.bounds.width - 50)
+            NavigationLink(
+                destination: MyPlacesView(),
+                label: {
+                    MenuCellView(menuItem: viewModel.menuItems[1])
+                })
+            Divider().frame(width: UIScreen.main.bounds.width - 50)
+            NavigationLink(
+                destination: SettingsView(),
+                label: {
+                    MenuCellView(menuItem: viewModel.menuItems[2])
+                })
+            Divider().frame(width: UIScreen.main.bounds.width - 50)
             Spacer()
         }
         // MARK: TODO - Localize
-        .navigationBarTitle(LocalizedStringKey("Menu_title"))
+        .navigationBarTitle(Text(LocalizedStringKey("Menu_title")), displayMode: .inline)
+        .toolbar(content: {
+            Button(action: {
+                // MARK: TODO - Refactor
+                viewModel.signOut()
+                
+            }, label: {
+                VStack {
+                    Image(systemName: "arrow.backward.square")
+                    Text(LocalizedStringKey("SignOut"))
+                        .font(.caption)
+                }
+            })
+        })
+        .onAppear {
+            print(userInfo.user)
+        }
     }
 }
 

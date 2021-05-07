@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 final class MenuViewModel: ObservableObject {
     
     @Published var menuItems: [MenuItem] = []
-    @Published var menuDestinations = [FriendsListView(), MyPlacesView(), SettingsView()]
     
     init() {
         menuItems = [MenuItem(id: 0, iconName: "person.3.fill", title: LocalizedStringKey("Menu_friends")),
@@ -18,4 +18,12 @@ final class MenuViewModel: ObservableObject {
                      MenuItem(id: 2, iconName: "gearshape.fill", title: LocalizedStringKey("Menu_profileSettings"))]
     }
     
+    func signOut() {
+        let auth = Auth.auth()
+        do {
+            try auth.signOut()
+        } catch let err {
+            print(err)
+        }
+    }
 }

@@ -8,8 +8,30 @@
 import SwiftUI
 
 struct FriendsListView: View {
+    
+    @StateObject private var viewModel = FriendsListViewModel()
+    
     var body: some View {
-        Text("Friends")
+        VStack {
+            if viewModel.friendsList.count == 0 {
+                Text("Nothing here yet.. 😢")
+                    .padding()
+                Spacer()
+            } else {
+                List(viewModel.friendsList, id: \.uid) { friend in
+                    FriendsListCellView(user: friend)
+                }
+            }
+            
+        }
+        .navigationBarTitle(Text(LocalizedStringKey("Menu_friends")), displayMode: .inline)
+        .toolbar(content: {
+            Button(action: {
+                print("Add friend")
+            }, label: {
+                Image(systemName: "person.crop.circle.badge.plus")
+            })
+        })
     }
 }
 

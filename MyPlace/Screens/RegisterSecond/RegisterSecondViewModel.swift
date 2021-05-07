@@ -40,17 +40,29 @@ final class RegisterSecondViewModel: ObservableObject {
             let data = ["firstName": firstName,
                         "lastName": lastName,
                         "userName": userName]
-            
-            let db = Firestore.firestore().collection("users")
-            db.addDocument(data: data) { (error) in
-                if error != nil {
-                    print(error?.localizedDescription)
-                    self.isLoading = false
-                    return
-                }
-                self.isLoading = false
-                self.finalizeReg = true
+            guard let uid = Auth.auth().currentUser?.uid else {
+                print("Current user dont exist")
+                return
             }
+            FirebaseRepository.addOrMergeUserToDb(data, uid: uid) { (result) in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(_):
+                    self.isLoading = false
+                    self.finalizeReg = true
+                }
+            }
+//            let db = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(Auth.auth().currentUser?.uid)
+//            db.addDocument(data: data) { (error) in
+//                if error != nil {
+//                    print(error?.localizedDescription)
+//                    self.isLoading = false
+//                    return
+//                }
+//                self.isLoading = false
+//                self.finalizeReg = true
+//            }
         } else {
             // MARK: TODO: Create alert for user
             print("Fill in fields")

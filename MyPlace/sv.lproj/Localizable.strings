@@ -8,6 +8,7 @@
 "Empty"                         = "Tom";
 "Register"                      = "Registrera";
 "LogIn"                         = "Logga in";
+"SignOut"                       = "Logga ut";
 "AlreadyHaveAccount?"           = "Har du redan ett konto?";
 "LogInHere"                     = "Logga in här";
 "FirstName"                     = "Förnamn";

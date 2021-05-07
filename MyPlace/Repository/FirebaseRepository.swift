@@ -25,4 +25,57 @@ final class FirebaseRepository: ObservableObject {
             } ?? []
         }
     }
+    
+    static func addOrMergeUserToDb(_ data: [String : Any], uid: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+        let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(uid)
+        ref.setData(data, merge: true) { (error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            completion(.success(true))
+        }
+    }
+    
+    static func retrieveUser(uid: String, completion: @escaping (Result<User, Error>) -> ()) {
+        let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(uid)
+        getDocument(for: ref) { (result) in
+            switch result {
+            case .success(let data):
+                guard let user = User(documentData: data) else {
+                    completion(.failure(FireStoreError.noUser))
+                    return
+                }
+                completion(.success(user))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    fileprivate static func getDocument(for reference: DocumentReference, completion: @escaping (Result<[String : Any], Error>) -> ()) {
+        reference.getDocument { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let snapshot = snapshot else {
+                completion(.failure(FireStoreError.noDocumentSnapshot))
+                return
+            }
+            guard let data = snapshot.data() else {
+                completion(.failure(FireStoreError.noSnapshotData))
+                return
+            }
+            completion(.success(data))
+        }
+    }
+}
+
+enum FireStoreError: Error {
+    case noAuthDataResult
+    case noCurrentUser
+    case noDocumentSnapshot
+    case noSnapshotData
+    case noUser
 }

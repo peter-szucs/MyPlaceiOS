@@ -12,19 +12,21 @@ struct SplashView: View {
     @EnvironmentObject var userInfo: UserInfo
     
     var body: some View {
-        Group {
-            if userInfo.isUserAuthenticated == .undefined {
-                SplashLoadingView()
-                
-            } else if userInfo.isUserAuthenticated == .signedOut {
-                FirstPageView()
-            } else {
-                MapView()
+        NavigationView {
+            Group {
+                if userInfo.isUserAuthenticated == .undefined {
+                    SplashLoadingView()
+                } else if userInfo.isUserAuthenticated == .signedOut {
+                    FirstPageView()
+                } else {
+                    MapView()
+                }
+            }
+            .onAppear {
+                self.userInfo.configureFirebaseStateDidChange()
             }
         }
-        .onAppear {
-            self.userInfo.configureFirebaseStateDidChange()
-        }
+        
     }
 }
 
