@@ -43,12 +43,12 @@ struct RegisterFirstView: View {
             
             HStack(alignment: .center) {
                 Spacer()
-                NavigationLink(
-                    destination: RegisterSecondView(),
-                    isActive: $viewModel.goToNextScreen,
-                    label: {
-                        
-                    })
+//                NavigationLink(
+//                    destination: RegisterSecondView(),
+//                    isActive: $viewModel.goToNextScreen,
+//                    label: {
+//                        
+//                    })
                 Button {
                     if viewModel.validateCredentials() {
                         hideKeyboard()

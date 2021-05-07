@@ -26,6 +26,8 @@ final class FirebaseRepository: ObservableObject {
         }
     }
     
+    // MARK: - Add or update userclass in DB
+    
     static func addOrMergeUserToDb(_ data: [String : Any], uid: String, completion: @escaping (Result<Bool, Error>) -> ()) {
         let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(uid)
         ref.setData(data, merge: true) { (error) in
@@ -36,6 +38,8 @@ final class FirebaseRepository: ObservableObject {
             completion(.success(true))
         }
     }
+    
+    // MARK: - Retrieve User
     
     static func retrieveUser(uid: String, completion: @escaping (Result<User, Error>) -> ()) {
         let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(uid)
@@ -52,6 +56,29 @@ final class FirebaseRepository: ObservableObject {
             }
         }
     }
+    
+    // MARK: - Upload to storage
+    
+    static func uploadToStorage(uid: String, imageData: Data, completion: @escaping (Result<Bool, Error>) -> ()) {
+        let storageRef = Storage.storage().reference().child("profileImages").child("\(uid)")
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpg"
+        
+        storageRef.putData(imageData, metadata: metadata) { (metadata, error) in
+            if error != nil {
+                print("Error uploading file: ", error ?? "")
+                completion(.failure(error!))
+            }
+            if metadata != nil {
+                print("Metadata: ", metadata)
+            }
+            print("Successfully uploaded image")
+            completion(.success(true))
+        }
+    }
+    
+    // MARK: - Inner functions
     
     fileprivate static func getDocument(for reference: DocumentReference, completion: @escaping (Result<[String : Any], Error>) -> ()) {
         reference.getDocument { (snapshot, error) in

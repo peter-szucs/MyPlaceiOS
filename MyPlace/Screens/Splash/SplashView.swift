@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct SplashView: View {
     
     @EnvironmentObject var userInfo: UserInfo
+    @StateObject private var viewModel = SplashViewModel()
     
     var body: some View {
         NavigationView {
@@ -18,12 +20,15 @@ struct SplashView: View {
                     SplashLoadingView()
                 } else if userInfo.isUserAuthenticated == .signedOut {
                     FirstPageView()
-                } else {
+                } else if userInfo.isUserAuthenticated == .signedIn {
                     MapView()
+                } else {
+                    RegisterSecondView()
                 }
             }
             .onAppear {
                 self.userInfo.configureFirebaseStateDidChange()
+                
             }
         }
         

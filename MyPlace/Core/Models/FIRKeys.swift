@@ -18,6 +18,6 @@ enum FIRKeys {
         static let firstName = "firstName"
         static let lastName = "lastName"
         static let userName = "userName"
-        static let profileImageUrl = "profileImageUrl"
+        static let hasFinishedOnboarding = "hasFinishedOnboarding"
     }
 }

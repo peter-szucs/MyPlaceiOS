@@ -8,8 +8,20 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @EnvironmentObject var userInfo: UserInfo
+    @StateObject private var viewModel = SettingsViewModel()
+    
     var body: some View {
-        Text("Settings")
+        
+        VStack {
+            FirebaseImage(id: userInfo.user.uid)
+                .frame(width: 100, height: 100, alignment: .center)
+                .clipShape(Circle())
+        }
+        .onAppear {
+            print(userInfo.user)
+        }
     }
 }
 

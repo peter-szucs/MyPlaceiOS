@@ -24,7 +24,7 @@ struct FriendsListCellView: View {
 
 struct FriendsListCellView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendsListCellView(user: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin"))
+        FriendsListCellView(user: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", hasFinishedOnboarding: true))
             .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 60))
     }
 }

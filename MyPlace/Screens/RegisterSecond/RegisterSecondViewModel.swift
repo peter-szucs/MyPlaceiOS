@@ -25,25 +25,41 @@ final class RegisterSecondViewModel: ObservableObject {
     }
     
     func validateFields() -> Bool {
-        return firstName != "" || lastName != "" || userName != ""
+        return firstName != "" && lastName != "" && userName != ""
     }
     
-    func finalizeRegistration() {
+    func finalizeRegistration(completion: @escaping (Bool) -> ()) {
         isLoading = true
-        uploadProfileImage()
-    }
-    
-    func createUserDB() {
-        print("createUserDB")
         if validateFields() {
-            print("Fields validated")
-            let data = ["firstName": firstName,
-                        "lastName": lastName,
-                        "userName": userName]
             guard let uid = Auth.auth().currentUser?.uid else {
-                print("Current user dont exist")
+                isLoading = false
+                print("failed UID check")
+                completion(false)
                 return
             }
+            
+            if pickedImage != nil {
+                print("pickedImage size: ", pickedImage?.size)
+                let resizedImage = pickedImage?.resized(withPercentage: 0.2)
+                print("resizedImage size: ", resizedImage?.size)
+                guard let imageData = resizedImage?.jpegData(compressionQuality: 0.5) else {
+                    print("Image to upload failed guard check")
+                    isLoading = false
+                    return
+                }
+                FirebaseRepository.uploadToStorage(uid: uid, imageData: imageData) { (result) in
+                    switch result {
+                    case .failure(let error):
+                        print(error)
+                        self.isLoading = false
+                        return
+                    case .success(_):
+                        print("Image uploaded successfully")
+                    }
+                }
+            }
+            let data = User.dataDict(firstName: firstName, lastName: lastName, userName: userName, hasFinishedOnboarding: true)
+            
             FirebaseRepository.addOrMergeUserToDb(data, uid: uid) { (result) in
                 switch result {
                 case .failure(let error):
@@ -51,51 +67,14 @@ final class RegisterSecondViewModel: ObservableObject {
                 case .success(_):
                     self.isLoading = false
                     self.finalizeReg = true
+                    completion(true)
                 }
             }
-//            let db = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(Auth.auth().currentUser?.uid)
-//            db.addDocument(data: data) { (error) in
-//                if error != nil {
-//                    print(error?.localizedDescription)
-//                    self.isLoading = false
-//                    return
-//                }
-//                self.isLoading = false
-//                self.finalizeReg = true
-//            }
+            
         } else {
-            // MARK: TODO: Create alert for user
+            // MARK: TODO: Create alert or text on screen for user
             print("Fill in fields")
-        }
-    }
-    
-    func uploadProfileImage() {
-        guard let uid = Auth.auth().currentUser?.uid else {
             isLoading = false
-            print("failed UID check")
-            return
         }
-//        guard let imageToUpload = pickedImage?.jpegData(compressionQuality: 035) else {
-//            print("Image to upload failed guard check")
-//            isLoading = false
-//            return
-//        }
-        let storageRef = Storage.storage().reference().child("profileImages").child("\(uid)")
-        
-        if pickedImage != nil {
-            print("pickedImage != nil")
-            storageRef.putData((pickedImage?.jpegData(compressionQuality: 0.35))!, metadata: nil) { (_, error) in
-                if error != nil {
-                    print(error?.localizedDescription)
-                    self.isLoading = false
-                    return
-                }
-                print("Successfully uploaded image")
-                self.createUserDB()
-            }
-        } else {
-            self.createUserDB()
-        }
-        
     }
 }

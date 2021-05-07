@@ -12,12 +12,14 @@ struct User {
     var firstName: String
     var lastName: String
     var userName: String
+    var hasFinishedOnboarding: Bool
     
-    init(uid: String, firstName: String, lastName: String, userName: String) {
+    init(uid: String, firstName: String, lastName: String, userName: String, hasFinishedOnboarding: Bool) {
         self.uid = uid
         self.firstName = firstName
         self.lastName = lastName
         self.userName = userName
+        self.hasFinishedOnboarding = hasFinishedOnboarding
     }
     
     // Firebase Init
@@ -26,24 +28,23 @@ struct User {
         let firstName = documentData[FIRKeys.User.firstName] as? String ?? ""
         let lastName = documentData[FIRKeys.User.lastName] as? String ?? ""
         let userName = documentData[FIRKeys.User.userName] as? String ?? ""
+        let hasFinishedOnboarding = documentData[FIRKeys.User.hasFinishedOnboarding] as? Bool ?? false
         
         self.init(uid: uid,
                   firstName: firstName,
                   lastName: lastName,
-                  userName: userName)
+                  userName: userName,
+                  hasFinishedOnboarding: hasFinishedOnboarding)
     }
         
-    static func dataDict(uid: String, firstName: String, lastName: String, userName: String) -> [String : Any] {
+    static func dataDict(firstName: String, lastName: String, userName: String, hasFinishedOnboarding: Bool) -> [String : Any] {
         var data: [String: Any]
+       
+        data = [FIRKeys.User.firstName: firstName,
+                FIRKeys.User.lastName: lastName,
+                FIRKeys.User.userName: userName,
+                FIRKeys.User.hasFinishedOnboarding: hasFinishedOnboarding]
         
-        if firstName != "" {
-            data = [FIRKeys.User.uid: uid,
-                    FIRKeys.User.firstName: firstName,
-                    FIRKeys.User.lastName: lastName,
-                    FIRKeys.User.userName: userName]
-        } else {
-            data = [FIRKeys.User.uid: uid]
-        }
         return data
     }
     

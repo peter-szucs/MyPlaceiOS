@@ -93,19 +93,6 @@ struct MapView: View {
         .onAppear(perform: {
             locationManager.delegate = viewModel
             locationManager.requestWhenInUseAuthorization()
-            
-            // MARK: TODO - Refactor to VM
-            guard let uid = Auth.auth().currentUser?.uid else { return }
-            FirebaseRepository.retrieveUser(uid: uid) { (result) in
-                switch result {
-                case .failure(let error):
-                    print("Error retrieving user:", error)
-                case .success(let user):
-                    self.userInfo.user = user
-                    self.userInfo.user.uid = uid
-                }
-            }
-            
         })
         .alert(isPresented: $viewModel.permissionDenied, content: {
             Alert(title: Text(LocalizedStringKey("CLPermissionDenied")), message: Text(LocalizedStringKey("CLPermDeniedMsg")), dismissButton: .default(Text(LocalizedStringKey("CLPermDeniedDismiss")), action: {

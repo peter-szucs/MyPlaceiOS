@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct RegisterSecondView: View {
     
+    @EnvironmentObject var userInfo: UserInfo
     @StateObject private var viewModel = RegisterSecondViewModel()
     
     var body: some View {
@@ -61,18 +63,33 @@ struct RegisterSecondView: View {
             
             HStack(alignment: .center) {
                 Spacer()
-                NavigationLink(
-                    destination: MapView(),
-                    isActive: $viewModel.finalizeReg,
-                    label: {
-                        
-                    })
+//                NavigationLink(
+//                    destination: MapView(),
+//                    isActive: $viewModel.finalizeReg,
+//                    label: {
+//
+//                    })
                 Button {
                     if viewModel.validateFields() {
                         hideKeyboard()
                         print("View validated fields")
                     }
-                    viewModel.finalizeRegistration()
+                    viewModel.finalizeRegistration { (result) in
+                        if result {
+                            print("Succesful registration")
+                            guard let uid = Auth.auth().currentUser?.uid else { return }
+                            FirebaseRepository.retrieveUser(uid: uid) { (result) in
+                                switch result {
+                                case .failure(let error):
+                                    print("Error retrieving user:", error)
+                                case .success(let user):
+                                    self.userInfo.user = user
+                                    self.userInfo.user.uid = uid
+                                    userInfo.isUserAuthenticated = .signedIn
+                                }
+                            }
+                        }
+                    }
                 } label: {
                     Text(LocalizedStringKey("Done"))
                 }
