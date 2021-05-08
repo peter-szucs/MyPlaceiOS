@@ -30,14 +30,42 @@ struct SettingsView: View {
             .clipShape(Circle())
             .padding(.top, 20)
             
+            Divider()
+                .padding([.horizontal, .top])
+            
+            FormTextView(text: LocalizedStringKey("Settings_userDetails"))
             TextField(LocalizedStringKey("FirstNamePlaceHolder"), text: $viewModel.firstName)
                 .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.alphabet)
                 .disableAutocorrection(true)
+                .padding(.bottom, 10)
             
+            TextField(LocalizedStringKey("LastNamePlaceHolder"), text: $viewModel.lastName)
+                .textFieldStyle(UserInfoTextFieldStyle())
+                .keyboardType(.alphabet)
+                .disableAutocorrection(true)
+                .padding(.bottom, 10)
+            
+            TextField(LocalizedStringKey("UserNamePlaceHolder"), text: $viewModel.userName)
+                .textFieldStyle(UserInfoTextFieldStyle())
+                .keyboardType(.alphabet)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .padding(.bottom, 10)
+            
+            Button(action: {
+                
+            }, label: {
+                Text("Save")
+            })
+            .buttonStyle(ButtonStyleRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
+            .padding()
+            .disabled(!viewModel.hasChanged)
+            
+            Spacer()
         }
         .onAppear {
-            viewModel.originalUserObject = userInfo.user
+            viewModel.setUpInfo(user: userInfo.user)
         }
         .navigationBarTitle(Text(LocalizedStringKey("Menu_profileSettings")), displayMode: .inline)
         .sheet(isPresented: $viewModel.showPickerAction, onDismiss: viewModel.loadImage) {

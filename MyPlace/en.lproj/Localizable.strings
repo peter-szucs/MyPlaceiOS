@@ -38,7 +38,9 @@
 "CLPermDeniedMsg"               = "Please enable permissions in app settings";
 "CLPermDeniedDismiss"           = "Go to settings";
 "Map_title"                     = "Mapview";
+"Map_filter_title"              = "Filter";
 "Menu_title"                    = "Menu";
 "Menu_friends"                  = "Friends";
 "Menu_myPlaces"                 = "My Places";
 "Menu_profileSettings"          = "Profile Settings";
+"Settings_userDetails"          = "User Details";

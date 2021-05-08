@@ -38,7 +38,9 @@
 "CLPermDeniedMsg"               = "Var vänlig aktiver behörighet i inställningar";
 "CLPermDeniedDismiss"           = "Gå till inställningar";
 "Map_title"                     = "Kartvy";
+"Map_filter_title"              = "Filter";
 "Menu_title"                    = "Meny";
 "Menu_friends"                  = "Vänner";
 "Menu_myPlaces"                 = "Mina Platser";
 "Menu_profileSettings"          = "Profil Inställningar";
+"Settings_userDetails"          = "User Details";

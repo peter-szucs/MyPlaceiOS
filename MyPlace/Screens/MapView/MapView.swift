@@ -47,27 +47,19 @@ struct MapView: View {
                 .padding()
                 
                 HStack {
-                    Text("Filter")
-                        .padding(EdgeInsets(top: 20,
-                                            leading: 30,
-                                            bottom: 20,
-                                            trailing: 10))
+                    NavigationLink(
+                        // MARK: TODO: Change to filter view
+                        destination: MenuView(),
+                        label: {
+                            MapBottomMenuIcon(iconSystemName: "line.horizontal.3.decrease.circle", iconTitle: LocalizedStringKey("Map_filter_title"))
+                        })
+                    
                     Spacer()
+                    
                     NavigationLink(
                         destination: MenuView(),
                         label: {
-                            VStack(alignment: .center, spacing: 6) {
-                                Image(systemName: "ellipsis.rectangle")
-                                    .scaleEffect(2)
-                                    .foregroundColor(.secondary)
-                                Text(LocalizedStringKey("Menu_title"))
-                                    .font(.footnote)
-                            }
-                            .padding(EdgeInsets(top: 20,
-                                                leading: 0,
-                                                bottom: 0,
-                                                trailing: 30))
-                            
+                            MapBottomMenuIcon(iconSystemName: "ellipsis.rectangle", iconTitle: LocalizedStringKey("Menu_title"))
                         })
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -78,13 +70,14 @@ struct MapView: View {
                 Spacer()
                 Button(action: {}, label: {
                     Image(systemName: "plus")
-                        .font(.title)
+                        .font(.largeTitle)
                         .padding(25)
                         .background(Color("MainOrange"))
                         .foregroundColor(.white)
                         .clipShape(Circle())
-                        .shadow(color: .gray, radius: 2, y: 1)
+                        .shadow(color: Color("AddPlaceButtonShadowColor"), radius: 2, y: 1)
                 })
+                .padding(.bottom, 10)
             }
         }
         .navigationBarHidden(true)

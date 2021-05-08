@@ -46,7 +46,7 @@ struct MenuView: View {
                 
             }, label: {
                 VStack {
-                    Image(systemName: "arrow.backward.square")
+                    Image(systemName: "lock.square")
                     Text(LocalizedStringKey("SignOut"))
                         .font(.caption)
                 }
