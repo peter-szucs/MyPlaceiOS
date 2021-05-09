@@ -9,44 +9,62 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var userInfo: UserInfo
     @StateObject private var viewModel = SettingsViewModel()
     
     var body: some View {
         
         VStack(alignment: .center) {
-            Button(action: {
-                viewModel.showPickerAction = true
-            }, label: {
+            
+            // MARK: Find a way to Cache this image (or use another method). it rerenders everytime a change is made (unless you change the image)
+            
+            ZStack {
+                Button(action: {
+                    viewModel.showPickerAction = true
+                }, label: {
+                    if viewModel.changedImage != nil {
+                        viewModel.changedImage?
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        FirebaseImage(id: userInfo.user.uid)
+                    }
+                })
+                .frame(width: 130, height: 130, alignment: .center)
+                .clipShape(Circle())
+                .padding(.top, 20)
+                
                 if viewModel.changedImage != nil {
-                    viewModel.changedImage?
-                        .resizable()
-                        .scaledToFill()
-                } else {
-                    FirebaseImage(id: userInfo.user.uid)
+                    Button(action: {
+                        viewModel.changedImage = nil
+                    }, label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.primary)
+                    })
+                    .padding(.bottom, 100)
+                    .padding(.leading, 125)
                 }
-            })
-            .frame(width: 100, height: 100, alignment: .center)
-            .clipShape(Circle())
-            .padding(.top, 20)
+            }
             
             Divider()
                 .padding([.horizontal, .top])
             
             FormTextView(text: LocalizedStringKey("Settings_userDetails"))
-            TextField(LocalizedStringKey("FirstNamePlaceHolder"), text: $viewModel.firstName)
+            TextField(LocalizedStringKey("FirstNamePlaceHolder"), text: $viewModel.newUserObject.firstName)
                 .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.alphabet)
                 .disableAutocorrection(true)
                 .padding(.bottom, 10)
             
-            TextField(LocalizedStringKey("LastNamePlaceHolder"), text: $viewModel.lastName)
+            TextField(LocalizedStringKey("LastNamePlaceHolder"), text: $viewModel.newUserObject.lastName)
                 .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.alphabet)
                 .disableAutocorrection(true)
                 .padding(.bottom, 10)
             
-            TextField(LocalizedStringKey("UserNamePlaceHolder"), text: $viewModel.userName)
+            TextField(LocalizedStringKey("UserNamePlaceHolder"), text: $viewModel.newUserObject.userName)
                 .textFieldStyle(UserInfoTextFieldStyle())
                 .keyboardType(.alphabet)
                 .autocapitalization(.none)
@@ -54,13 +72,22 @@ struct SettingsView: View {
                 .padding(.bottom, 10)
             
             Button(action: {
-                
+                viewModel.finalizeEditing { (result) in
+                    if result {
+                        userInfo.user = viewModel.newUserObject
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
             }, label: {
-                Text("Save")
+                Text(LocalizedStringKey("Save"))
             })
             .buttonStyle(ButtonStyleRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
             .padding()
-            .disabled(!viewModel.hasChanged)
+            .disabled(!viewModel.hasChanged || viewModel.isLoading)
+            
+            if viewModel.isLoading {
+                ActivityView()
+            }
             
             Spacer()
         }

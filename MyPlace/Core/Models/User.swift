@@ -48,5 +48,16 @@ struct User {
         return data
     }
     
+    static func dataDict(user: User) -> [String : Any] {
+        var data: [String: Any]
+       
+        data = [FIRKeys.User.firstName: user.firstName,
+                FIRKeys.User.lastName: user.lastName,
+                FIRKeys.User.userName: user.userName,
+                FIRKeys.User.hasFinishedOnboarding: user.hasFinishedOnboarding]
+        
+        return data
+    }
+    
 }
 

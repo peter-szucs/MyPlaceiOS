@@ -18,9 +18,15 @@ struct MapView: View {
     var body: some View {
         
         ZStack {
-            MapUIView()
+            MapUIView(centerCoordinate: $viewModel.centerCoordinate, annotations: viewModel.annotations)
                 .environmentObject(viewModel)
                 .ignoresSafeArea(.all, edges: .top)
+            
+            
+            Circle()
+                .fill(Color.blue)
+                .opacity(0.3)
+                .frame(width: 26, height: 26)
             
             VStack {
                 Spacer()
@@ -68,7 +74,10 @@ struct MapView: View {
             }
             VStack {
                 Spacer()
-                Button(action: {}, label: {
+                Button(action: {
+                    viewModel.convertCoordinateToAddress(location: viewModel.centerCoordinate)
+                    viewModel.addPlace(coordinate: viewModel.centerCoordinate)
+                }, label: {
                     Image(systemName: "plus")
                         .font(.largeTitle)
                         .padding(25)
@@ -80,12 +89,17 @@ struct MapView: View {
                 .padding(.bottom, 10)
             }
         }
+//        .onTapGesture(count: 2) {
+//            print("!!! double tapped")
+//        }
         .navigationBarHidden(true)
         .navigationBarTitle(LocalizedStringKey("Map_title"))
         
         .onAppear(perform: {
             locationManager.delegate = viewModel
             locationManager.requestWhenInUseAuthorization()
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
         })
         .alert(isPresented: $viewModel.permissionDenied, content: {
             Alert(title: Text(LocalizedStringKey("CLPermissionDenied")), message: Text(LocalizedStringKey("CLPermDeniedMsg")), dismissButton: .default(Text(LocalizedStringKey("CLPermDeniedDismiss")), action: {

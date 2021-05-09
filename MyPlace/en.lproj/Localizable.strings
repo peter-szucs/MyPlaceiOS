@@ -18,6 +18,7 @@
 "UserName"                      = "Username";
 "UserNamePlaceHolder"           = "Username...";
 "Done"                          = "Done";
+"Save"                          = "Save";
 "EMail"                         = "E-Mail";
 "EMailPlaceHolder"              = "email@email.com";
 "Password"                      = "Password";

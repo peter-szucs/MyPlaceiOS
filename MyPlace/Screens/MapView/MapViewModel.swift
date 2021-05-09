@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
 
 final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
@@ -17,6 +18,10 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     @Published var permissionDenied = false
     
     @Published var mapType: MKMapType = .standard
+    
+    @Published var centerCoordinate = CLLocationCoordinate2D()
+    @Published var annotations: [MKPointAnnotation] = []
+    
     
     // Change map type
     func updateMapType() {
@@ -36,6 +41,39 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
     }
     
+    func addPlace(coordinate: CLLocationCoordinate2D) {
+        let pointAnnotation = MKPointAnnotation()
+        pointAnnotation.coordinate = coordinate
+        pointAnnotation.title = "Annotation"
+        pointAnnotation.subtitle = "This is a pin"
+        annotations.append(pointAnnotation)
+        
+//        mapView.addAnnotation(pointAnnotation)
+        
+        // Move map to location
+//        let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 50, longitudinalMeters: 50)
+//        mapView.setRegion(coordinateRegion, animated: true)
+//        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
+    }
+    
+    func convertCoordinateToAddress(location: CLLocationCoordinate2D) {
+        let geoCoder = CLGeocoder()
+        let clLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+        geoCoder.reverseGeocodeLocation(clLocation) { (placemarks, error) -> Void in
+            if (error != nil) {
+                print("!!! reverse geocode failed: \(error?.localizedDescription)")
+            }
+            var placeMark: CLPlacemark!
+            for i in 0..<placemarks!.count {
+                placeMark = placemarks?[i]
+                
+                // MARK: - So it seems you need to either switch to Google Maps or use API from google maps (Places SDK) on the coordinate to get the business name and all other good stuff...
+                
+                print("!!! name: \(placemarks![i].name), address: \(placeMark.thoroughfare) \(placeMark.postalCode) \(placeMark.subLocality) \(placeMark.administrativeArea) \(placeMark.country), subAdmin: \(placeMark.subAdministrativeArea)")
+            }
+        }
+    }
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         // Check persmissions
         switch manager.authorizationStatus {
@@ -46,6 +84,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         case .authorizedWhenInUse:
             manager.requestLocation()
         default:
+            
             ()
         }
     }
@@ -55,9 +94,10 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("!!! didupdateloc")
         guard let location = locations.last else { return }
         
-        self.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
+        self.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
         
         self.mapView.setRegion(self.region, animated: true)
         

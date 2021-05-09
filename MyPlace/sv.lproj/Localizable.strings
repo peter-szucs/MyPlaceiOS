@@ -18,6 +18,7 @@
 "UserName"                      = "Användarnamn";
 "UserNamePlaceHolder"           = "Användarnamn...";
 "Done"                          = "Klar";
+"Save"                          = "Spara";
 "EMail"                         = "E-Mail";
 "EMailPlaceHolder"              = "email@email.com";
 "Password"                      = "Lösenord";

@@ -57,10 +57,14 @@ final class FirebaseRepository: ObservableObject {
         }
     }
     
-    // MARK: - Upload to storage
+    // MARK: - Storage functions
+    // MARK: TODO: Add FIRKeys value for path
     
     static func uploadToStorage(uid: String, imageData: Data, completion: @escaping (Result<Bool, Error>) -> ()) {
-        let storageRef = Storage.storage().reference().child("profileImages").child("\(uid)")
+        let storageRef = Storage.storage().reference().child(FIRKeys.StoragePath.profileImages).child("\(uid)")
+        
+        // MARK: TODO: If or switch statement to set correct path
+//        let storageRef = Storage.storage().reference().child(FIRKeys.StoragePath.placeImages).child("\(uid)").child(UUID().uuidString)
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -75,6 +79,20 @@ final class FirebaseRepository: ObservableObject {
             }
             print("Successfully uploaded image")
             completion(.success(true))
+        }
+    }
+    
+    static func deleteFromStorage(uid: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+        let storageRef = Storage.storage().reference().child("profileImages").child("\(uid)")
+        
+        storageRef.delete { (error) in
+            if let error = error {
+                print("Error deleting file: ", error)
+                completion(.failure(error))
+            } else {
+                print("File deleted succesfully")
+                completion(.success(true))
+            }
         }
     }
     
