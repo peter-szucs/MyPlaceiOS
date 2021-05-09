@@ -5,6 +5,8 @@
   Created by Peter Szücs on 2021-03-11.
   
 */
+"Add"                           = "Lägg till";
+"Add_trunc"                     = "Lägg till...";
 "Empty"                         = "Tom";
 "Register"                      = "Registrera";
 "LogIn"                         = "Logga in";
@@ -45,3 +47,8 @@
 "Menu_myPlaces"                 = "Mina Platser";
 "Menu_profileSettings"          = "Profil Inställningar";
 "Settings_userDetails"          = "User Details";
+"AddPlace_title"                = "Ny plats";
+"AddPlace_name"                 = "Namn";
+"AddPlace_namePH"               = "Namn på din plats";
+"AddPlace_description"          = "Beskrivning";
+"AddPlace_tags"                 = "Taggar";

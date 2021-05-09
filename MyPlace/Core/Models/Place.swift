@@ -12,7 +12,8 @@ struct Place {
     var uid: String
     var title: String
     var description: String
-    var creationDate: Date
+//    var creationDate: Date
+    var tags: [Tag]
     var lat: Double
     var lng: Double
     var coordinate: CLLocationCoordinate2D {
@@ -20,11 +21,11 @@ struct Place {
     }
 //    private var images: [Image]?
     
-    init(uid: String, title: String, description: String, creationDate: Date, lat: Double, lng: Double) {
+    init(uid: String, title: String, description: String, tags: [Tag], lat: Double, lng: Double) {
         self.uid = uid
         self.title = title
         self.description = description
-        self.creationDate = creationDate
+        self.tags = tags
         self.lat = lat
         self.lng = lng
     }
@@ -35,7 +36,8 @@ struct Place {
         let title = documentData[FIRKeys.Place.title] as? String ?? ""
         let description = documentData[FIRKeys.Place.description] as? String ?? ""
         // MARK: TODO: Date conversion here (Timestamp -> Date). Remove creationDate from upload/struct ? (documentSnapshot.get("created_at") as! Timestamp)
-        let creationDate = documentData[FIRKeys.Place.creationDate] as? Date ?? Date()
+        
+        let tags = documentData[FIRKeys.Place.tags] as? [Tag] ?? []
         let lat = documentData[FIRKeys.Place.latitude] as? Double ?? 0.0
         let lng = documentData[FIRKeys.Place.longitude] as? Double ?? 0.0
         
@@ -43,19 +45,31 @@ struct Place {
         self.init(uid: uid,
                   title: title,
                   description: description,
-                  creationDate: creationDate,
+                  tags: tags,
                   lat: lat,
                   lng: lng)
     }
     
-    static func dataDict(title: String, description: String, creationDate: Date, lat: Double, lng: Double) -> [String : Any] {
+    static func dataDict(title: String, description: String, tags: [Int], lat: Double, lng: Double) -> [String : Any] {
         var data: [String: Any]
        
         data = [FIRKeys.Place.title: title,
                 FIRKeys.Place.description: description,
-                FIRKeys.Place.creationDate: creationDate,
+                FIRKeys.Place.tags: tags,
                 FIRKeys.Place.latitude: lat,
                 FIRKeys.Place.longitude: lng]
+        
+        return data
+    }
+    
+    static func dataDict(place: Place) -> [String: Any] {
+        var data: [String: Any]
+       
+        data = [FIRKeys.Place.title: place.title,
+                FIRKeys.Place.description: place.description,
+                FIRKeys.Place.tags: place.tags,
+                FIRKeys.Place.latitude: place.lat,
+                FIRKeys.Place.longitude: place.lng]
         
         return data
     }

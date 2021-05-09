@@ -20,9 +20,13 @@ final class FirebaseRepository: ObservableObject {
                 print(error)
                 return
             }
-            self.places = snapshot?.documents.compactMap {
+            guard let documents = snapshot else {
+                print("No documents found")
+                return
+            }
+            self.places = documents.documents.compactMap {
                 try? $0.data() as? Place
-            } ?? []
+            }
         }
     }
     

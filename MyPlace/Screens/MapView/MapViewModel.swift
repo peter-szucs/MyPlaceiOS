@@ -12,15 +12,12 @@ import CoreLocation
 final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var mapView = MKMapView()
-    
     @Published var region: MKCoordinateRegion!
-    
     @Published var permissionDenied = false
-    
     @Published var mapType: MKMapType = .standard
-    
     @Published var centerCoordinate = CLLocationCoordinate2D()
     @Published var annotations: [MKPointAnnotation] = []
+    @Published var goToAddPlace = false
     
     
     // Change map type

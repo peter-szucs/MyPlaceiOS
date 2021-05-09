@@ -16,6 +16,11 @@
 		5295D6DA25F973E700C47D2B /* MyPlaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6D925F973E700C47D2B /* MyPlaceUITests.swift */; };
 		5295D70325F97FE400C47D2B /* RegisterSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D70225F97FE400C47D2B /* RegisterSecondView.swift */; };
 		5295D70825F98A9200C47D2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D70725F98A9200C47D2B /* User.swift */; };
+		52B05F7C2647F48E00E22F06 /* AddPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B05F7B2647F48E00E22F06 /* AddPlaceView.swift */; };
+		52B05F842647F49C00E22F06 /* AddPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B05F832647F49C00E22F06 /* AddPlaceViewModel.swift */; };
+		52B05F892648039700E22F06 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B05F882648039700E22F06 /* Tag.swift */; };
+		52B05F8E26482EC100E22F06 /* AddPlaceTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B05F8D26482EC100E22F06 /* AddPlaceTagsView.swift */; };
+		52B05F93264841FD00E22F06 /* AddPlaceAddTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B05F92264841FD00E22F06 /* AddPlaceAddTagsView.swift */; };
 		52BE2C542626F080000DB5D4 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BE2C532626F080000DB5D4 /* Place.swift */; };
 		52E35B8D26415A8100FE1D2A /* FormTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35B8C26415A8100FE1D2A /* FormTextView.swift */; };
 		52E35B9726415C0D00FE1D2A /* FirstPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E35B9626415C0D00FE1D2A /* FirstPageViewModel.swift */; };
@@ -94,6 +99,11 @@
 		5295D6DB25F973E700C47D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5295D70225F97FE400C47D2B /* RegisterSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSecondView.swift; sourceTree = "<group>"; };
 		5295D70725F98A9200C47D2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		52B05F7B2647F48E00E22F06 /* AddPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceView.swift; sourceTree = "<group>"; };
+		52B05F832647F49C00E22F06 /* AddPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceViewModel.swift; sourceTree = "<group>"; };
+		52B05F882648039700E22F06 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		52B05F8D26482EC100E22F06 /* AddPlaceTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceTagsView.swift; sourceTree = "<group>"; };
+		52B05F92264841FD00E22F06 /* AddPlaceAddTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceAddTagsView.swift; sourceTree = "<group>"; };
 		52BE2C532626F080000DB5D4 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		52E35B8C26415A8100FE1D2A /* FormTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextView.swift; sourceTree = "<group>"; };
 		52E35B9626415C0D00FE1D2A /* FirstPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageViewModel.swift; sourceTree = "<group>"; };
@@ -237,9 +247,21 @@
 			path = MyPlaceUITests;
 			sourceTree = "<group>";
 		};
+		52B05F7A2647F47B00E22F06 /* AddPlace */ = {
+			isa = PBXGroup;
+			children = (
+				52B05F7B2647F48E00E22F06 /* AddPlaceView.swift */,
+				52B05F832647F49C00E22F06 /* AddPlaceViewModel.swift */,
+				52B05F8D26482EC100E22F06 /* AddPlaceTagsView.swift */,
+				52B05F92264841FD00E22F06 /* AddPlaceAddTagsView.swift */,
+			);
+			path = AddPlace;
+			sourceTree = "<group>";
+		};
 		52E35B9426415BB400FE1D2A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				52B05F7A2647F47B00E22F06 /* AddPlace */,
 				52E35C3E26444D3900FE1D2A /* Splash */,
 				52E35C2A264444CD00FE1D2A /* MyPlaces */,
 				52E35C29264444B900FE1D2A /* FriendsList */,
@@ -406,6 +428,7 @@
 				52BE2C532626F080000DB5D4 /* Place.swift */,
 				52E35C0F26442CDB00FE1D2A /* MenuItem.swift */,
 				52E35C5526446B8800FE1D2A /* FIRKeys.swift */,
+				52B05F882648039700E22F06 /* Tag.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -676,12 +699,14 @@
 				52E35B9726415C0D00FE1D2A /* FirstPageViewModel.swift in Sources */,
 				52FABA702615A6A500F88DB5 /* FirebaseImage.swift in Sources */,
 				52EDC04525FB69B700B0F3F9 /* AppDelegate.swift in Sources */,
+				52B05F8E26482EC100E22F06 /* AddPlaceTagsView.swift in Sources */,
 				52E35C5626446B8900FE1D2A /* FIRKeys.swift in Sources */,
 				52E35C0B26441CAE00FE1D2A /* MenuViewModel.swift in Sources */,
 				52F993DF263EA4F700B5FAB0 /* ButtonStyleRegular.swift in Sources */,
 				52E35BF526431E1A00FE1D2A /* MapUIView.swift in Sources */,
 				52EDC03125FAC99900B0F3F9 /* LogInView.swift in Sources */,
 				5295D70825F98A9200C47D2B /* User.swift in Sources */,
+				52B05F7C2647F48E00E22F06 /* AddPlaceView.swift in Sources */,
 				52E35BA9264161CE00FE1D2A /* LoginViewModel.swift in Sources */,
 				52E35BE82642DD9300FE1D2A /* MapView.swift in Sources */,
 				52E35C352644452C00FE1D2A /* MyPlacesView.swift in Sources */,
@@ -689,6 +714,7 @@
 				5295D70325F97FE400C47D2B /* RegisterSecondView.swift in Sources */,
 				52E35BC32641FDCD00FE1D2A /* RegisterFirstViewModel.swift in Sources */,
 				52E35C7226456E3400FE1D2A /* SettingsViewModel.swift in Sources */,
+				52B05F93264841FD00E22F06 /* AddPlaceAddTagsView.swift in Sources */,
 				52E35BAF2641764D00FE1D2A /* FirebaseRepository.swift in Sources */,
 				52E35C2D2644451C00FE1D2A /* FriendsListView.swift in Sources */,
 				52E35BF02642EB0200FE1D2A /* ActivityView.swift in Sources */,
@@ -696,6 +722,7 @@
 				52E35B8D26415A8100FE1D2A /* FormTextView.swift in Sources */,
 				52E35C482644504600FE1D2A /* SplashLoadingView.swift in Sources */,
 				52E35C6D26454EEB00FE1D2A /* SplashViewModel.swift in Sources */,
+				52B05F842647F49C00E22F06 /* AddPlaceViewModel.swift in Sources */,
 				52E35BCE2642986A00FE1D2A /* ViewExtensions.swift in Sources */,
 				52E35C0326441C9E00FE1D2A /* MenuView.swift in Sources */,
 				52E35C3A26444BE200FE1D2A /* UserInfo.swift in Sources */,
@@ -713,6 +740,7 @@
 				5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */,
 				52E35C1026442CDC00FE1D2A /* MenuItem.swift in Sources */,
 				52E35BC826428C2600FE1D2A /* LoadingView.swift in Sources */,
+				52B05F892648039700E22F06 /* Tag.swift in Sources */,
 				52E35BFA26431EB100FE1D2A /* MapViewModel.swift in Sources */,
 				52E35C7C2646BF9400FE1D2A /* MapBottomMenuIcon.swift in Sources */,
 			);

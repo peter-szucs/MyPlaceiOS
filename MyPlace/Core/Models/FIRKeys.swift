@@ -32,6 +32,7 @@ enum FIRKeys {
         static let title = "title"
         static let description = "description"
         static let creationDate = "creationDate"
+        static let tags = "tags"
         static let latitude = "latitude"
         static let longitude = "longitude"
     }

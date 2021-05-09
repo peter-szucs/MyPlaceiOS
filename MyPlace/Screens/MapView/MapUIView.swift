@@ -54,7 +54,6 @@ struct MapUIView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             
             // Custom Pins
-            
             if annotation.isKind(of: MKUserLocation.self) {
                 return nil
             } else {

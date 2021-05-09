@@ -1,0 +1,37 @@
+//
+//  AddPlaceTagsView.swift
+//  MyPlace
+//
+//  Created by Peter Szücs on 2021-05-09.
+//
+
+import SwiftUI
+
+struct AddPlaceTagsView: View {
+    
+    var tags: [Tag]
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack(spacing: 5) {
+                ForEach(tags) { tag in
+                    Image((tag.type?.tagSFSymbolName()) as? String ?? "undefined")
+                        .resizable()
+                        .renderingMode(.template)
+                        .scaledToFill()
+                        .foregroundColor(Color("MainLightBlue"))
+                        .frame(width: 24, height: 24)
+                        .padding(5)
+                }
+            }
+        }
+    }
+}
+
+struct AddPlaceTagsView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddPlaceTagsView(tags: [Tag(typeValue: 0), Tag(typeValue: 4), Tag(typeValue: 1), Tag(typeValue: 5)])
+            .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 130))
+        
+    }
+}

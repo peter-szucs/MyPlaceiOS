@@ -5,6 +5,8 @@
   Created by Peter Szücs on 2021-03-11.
   
 */
+"Add"                           = "Add";
+"Add_trunc"                     = "Add...";
 "Empty"                         = "Empty";
 "Register"                      = "Register";
 "LogIn"                         = "Log in";
@@ -45,3 +47,8 @@
 "Menu_myPlaces"                 = "My Places";
 "Menu_profileSettings"          = "Profile Settings";
 "Settings_userDetails"          = "User Details";
+"AddPlace_title"                = "New place";
+"AddPlace_name"                 = "Name";
+"AddPlace_namePH"               = "Enter Name of Place";
+"AddPlace_description"          = "Description";
+"AddPlace_tags"                 = "Tags";

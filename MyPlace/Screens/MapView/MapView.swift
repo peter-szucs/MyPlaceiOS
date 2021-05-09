@@ -74,9 +74,16 @@ struct MapView: View {
             }
             VStack {
                 Spacer()
+                NavigationLink(
+                    destination: AddPlaceView(),
+                    isActive: $viewModel.goToAddPlace,
+                    label: {
+                        
+                    })
                 Button(action: {
-                    viewModel.convertCoordinateToAddress(location: viewModel.centerCoordinate)
-                    viewModel.addPlace(coordinate: viewModel.centerCoordinate)
+//                    viewModel.convertCoordinateToAddress(location: viewModel.centerCoordinate)
+//                    viewModel.addPlace(coordinate: viewModel.centerCoordinate)
+                    viewModel.goToAddPlace = true
                 }, label: {
                     Image(systemName: "plus")
                         .font(.largeTitle)
