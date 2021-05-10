@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Firebase
+import FirebaseAuth
 
 struct RegisterSecondView: View {
     
@@ -103,7 +103,8 @@ struct RegisterSecondView: View {
         .navigationBarTitle(Text(LocalizedStringKey("Register")), displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .sheet(isPresented: $viewModel.showPickerAction, onDismiss: viewModel.loadImage) {
-            ImagePicker(image: $viewModel.pickedImage)
+            // MARK: TODO: Add alert or box to choose camera of library
+            ImagePicker(image: $viewModel.pickedImage, sourceType: .photoLibrary)
         }
     }
 }

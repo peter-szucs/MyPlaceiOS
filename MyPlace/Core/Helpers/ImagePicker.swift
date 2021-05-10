@@ -17,7 +17,9 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            print("!!! pickerController didfinishpicking pre-guard check")
             if let uiImage = info[.originalImage] as? UIImage {
+                print("!!! pickerController didfinishpicking guard check succeeded, \(uiImage)")
                 parent.image = uiImage
             }
             
@@ -27,6 +29,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     
     @Environment(\.presentationMode) var presentationMode
     @Binding var image: UIImage?
+    var sourceType: UIImagePickerController.SourceType
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -35,6 +38,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
+        picker.sourceType = self.sourceType
         return picker
     }
     

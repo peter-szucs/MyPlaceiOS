@@ -5,17 +5,17 @@
 //  Created by Peter Szücs on 2021-05-04.
 //
 
-import Firebase
+import FirebaseFirestore
+import FirebaseAuth
+import FirebaseStorage
 import Combine
 
-final class FirebaseRepository: ObservableObject {
-    private let db = Firestore.firestore()
-    private let auth = Auth.auth()
+final class FirebaseRepository {
     
     @Published var places: [Place] = []
     
     func fetchPlaces(for userId: String) {
-        db.collection("users").document(userId).collection("places").addSnapshotListener { (snapshot, error) in
+        Firestore.firestore().collection("users").document(userId).collection("places").addSnapshotListener { (snapshot, error) in
             if let error = error {
                 print(error)
                 return
@@ -43,6 +43,25 @@ final class FirebaseRepository: ObservableObject {
         }
     }
     
+    // MARK: - Add Place in DB
+    
+    static func addPlaceToDB(with data: [String : Any], completion: @escaping (Result<String, Error>) -> ()) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            print("!!! UID check failed")
+            return
+        }
+        var ref: DocumentReference? = nil
+        ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(uid).collection(FIRKeys.CollectionPath.places).addDocument(data: data) { (error) in
+            if let error = error {
+                print("Error adding place doc: \(error)")
+                completion(.failure(error))
+            } else {
+                print("Place doc added with ID: \(ref!.documentID)")
+                completion(.success(ref!.documentID))
+            }
+        }
+    }
+    
     // MARK: - Retrieve User
     
     static func retrieveUser(uid: String, completion: @escaping (Result<User, Error>) -> ()) {
@@ -62,13 +81,17 @@ final class FirebaseRepository: ObservableObject {
     }
     
     // MARK: - Storage functions
-    // MARK: TODO: Add FIRKeys value for path
     
-    static func uploadToStorage(uid: String, imageData: Data, completion: @escaping (Result<Bool, Error>) -> ()) {
-        let storageRef = Storage.storage().reference().child(FIRKeys.StoragePath.profileImages).child("\(uid)")
-        
-        // MARK: TODO: If or switch statement to set correct path
-//        let storageRef = Storage.storage().reference().child(FIRKeys.StoragePath.placeImages).child("\(uid)").child(UUID().uuidString)
+    static func uploadToStorage(uid: String, path: String, imageData: Data, completion: @escaping (Result<Bool, Error>) -> ()) {
+        var storageRef = Storage.storage().reference().child("dumpBox").child(UUID().uuidString)
+        switch path {
+        case FIRKeys.StoragePath.profileImages:
+            storageRef = Storage.storage().reference().child(path).child(uid)
+        case FIRKeys.StoragePath.placeImages:
+            storageRef = Storage.storage().reference().child(path).child(uid).child(UUID().uuidString)
+        default:
+            print("!!! Something went very wrong!")
+        }
         
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -79,9 +102,9 @@ final class FirebaseRepository: ObservableObject {
                 completion(.failure(error!))
             }
             if metadata != nil {
-                print("Metadata: ", metadata)
+                print("Metadata: ", metadata!)
             }
-            print("Successfully uploaded image")
+            print("Successfully uploaded image", metadata ?? "")
             completion(.success(true))
         }
     }

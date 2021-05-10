@@ -175,24 +175,33 @@ final class SettingsViewModel: ObservableObject {
                 completion(.success(false))
                 return
             }
-            FirebaseRepository.deleteFromStorage(uid: newUserObject.uid) { (result) in
+            FirebaseRepository.uploadToStorage(uid: self.newUserObject.uid, path: FIRKeys.StoragePath.profileImages, imageData: imageData) { (result) in
                 switch result {
                 case .failure(let error):
-                    print("error deleting image: ", error)
                     self.isLoading = false
                     completion(.failure(error))
                 case .success(_):
-                    FirebaseRepository.uploadToStorage(uid: self.newUserObject.uid, imageData: imageData) { (result) in
-                        switch result {
-                        case .failure(let error):
-                            self.isLoading = false
-                            completion(.failure(error))
-                        case .success(_):
-                            completion(.success(true))
-                        }
-                    }
+                    completion(.success(true))
                 }
             }
+//            FirebaseRepository.deleteFromStorage(uid: newUserObject.uid) { (result) in
+//                switch result {
+//                case .failure(let error):
+//                    print("error deleting image: ", error)
+//                    self.isLoading = false
+//                    completion(.failure(error))
+//                case .success(_):
+//                    FirebaseRepository.uploadToStorage(uid: self.newUserObject.uid, path: FIRKeys.StoragePath.profileImages, imageData: imageData) { (result) in
+//                        switch result {
+//                        case .failure(let error):
+//                            self.isLoading = false
+//                            completion(.failure(error))
+//                        case .success(_):
+//                            completion(.success(true))
+//                        }
+//                    }
+//                }
+//            }
         } else {
             self.isLoading = false
             completion(.success(false))

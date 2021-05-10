@@ -96,7 +96,8 @@ struct SettingsView: View {
         }
         .navigationBarTitle(Text(LocalizedStringKey("Menu_profileSettings")), displayMode: .inline)
         .sheet(isPresented: $viewModel.showPickerAction, onDismiss: viewModel.loadImage) {
-            ImagePicker(image: $viewModel.pickedImage)
+            //MARK: TODO: Let user choose camera or library ?
+            ImagePicker(image: $viewModel.pickedImage, sourceType: .photoLibrary)
         }
     }
 }

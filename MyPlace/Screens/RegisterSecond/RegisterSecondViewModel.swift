@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Firebase
+import FirebaseAuth
 
 final class RegisterSecondViewModel: ObservableObject {
     
@@ -39,19 +39,19 @@ final class RegisterSecondViewModel: ObservableObject {
             }
             
             if pickedImage != nil {
-                print("pickedImage size: ", pickedImage?.size)
+                print("pickedImage size: ", pickedImage?.size ?? "")
                 let resizedImage = pickedImage?.resized(withPercentage: 0.2)
-                print("resizedImage size: ", resizedImage?.size)
+                print("resizedImage size: ", resizedImage?.size ?? "")
                 guard let imageData = resizedImage?.jpegData(compressionQuality: 0.5) else {
                     print("Image to upload failed guard check")
-                    isLoading = false
+//                    isLoading = false
                     return
                 }
-                FirebaseRepository.uploadToStorage(uid: uid, imageData: imageData) { (result) in
+                FirebaseRepository.uploadToStorage(uid: uid, path: FIRKeys.StoragePath.profileImages, imageData: imageData) { (result) in
                     switch result {
                     case .failure(let error):
                         print(error)
-                        self.isLoading = false
+//                        self.isLoading = false
                         return
                     case .success(_):
                         print("Image uploaded successfully")

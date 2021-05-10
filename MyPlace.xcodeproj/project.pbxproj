@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		35F0ACC766319AFBC901B95A /* Pods_MyPlaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF027AF48AB68D3A37B7D8BD /* Pods_MyPlaceTests.framework */; };
 		5262301826489D250018730C /* AddTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301726489D250018730C /* AddTagsView.swift */; };
+		5262301E264934B80018730C /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301D264934B80018730C /* TagCell.swift */; };
+		5262304026495F2A0018730C /* AddedPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262303F26495F2A0018730C /* AddedPhotosView.swift */; };
 		5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */; };
 		5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BE25F973E200C47D2B /* FirstPageView.swift */; };
 		5295D6C125F973E600C47D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295D6C025F973E600C47D2B /* Assets.xcassets */; };
@@ -87,6 +89,8 @@
 		2AC5EFBDF9079C98064E973A /* Pods-MyPlace-MyPlaceUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPlace-MyPlaceUITests.release.xcconfig"; path = "Target Support Files/Pods-MyPlace-MyPlaceUITests/Pods-MyPlace-MyPlaceUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3F9151435807468970BA59B7 /* Pods_MyPlace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyPlace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5262301726489D250018730C /* AddTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsView.swift; sourceTree = "<group>"; };
+		5262301D264934B80018730C /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		5262303F26495F2A0018730C /* AddedPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPhotosView.swift; sourceTree = "<group>"; };
 		5295D6B925F973E200C47D2B /* MyPlace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceApp.swift; sourceTree = "<group>"; };
 		5295D6BE25F973E200C47D2B /* FirstPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageView.swift; sourceTree = "<group>"; };
@@ -187,9 +191,19 @@
 		524E919926488DA500F6D047 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5262301C264934A70018730C /* Cells */,
 				5262301726489D250018730C /* AddTagsView.swift */,
+				5262303F26495F2A0018730C /* AddedPhotosView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5262301C264934A70018730C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5262301D264934B80018730C /* TagCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		5295D6B025F973E200C47D2B = {
@@ -714,6 +728,7 @@
 				52E35C5626446B8900FE1D2A /* FIRKeys.swift in Sources */,
 				52E35C0B26441CAE00FE1D2A /* MenuViewModel.swift in Sources */,
 				52F993DF263EA4F700B5FAB0 /* ButtonStyleRegular.swift in Sources */,
+				5262301E264934B80018730C /* TagCell.swift in Sources */,
 				52E35BF526431E1A00FE1D2A /* MapUIView.swift in Sources */,
 				52EDC03125FAC99900B0F3F9 /* LogInView.swift in Sources */,
 				5295D70825F98A9200C47D2B /* User.swift in Sources */,
@@ -732,6 +747,7 @@
 				52E35C632644BDE400FE1D2A /* FriendsListCellView.swift in Sources */,
 				52E35B8D26415A8100FE1D2A /* FormTextView.swift in Sources */,
 				52E35C482644504600FE1D2A /* SplashLoadingView.swift in Sources */,
+				5262304026495F2A0018730C /* AddedPhotosView.swift in Sources */,
 				52E35C6D26454EEB00FE1D2A /* SplashViewModel.swift in Sources */,
 				52B05F842647F49C00E22F06 /* AddPlaceViewModel.swift in Sources */,
 				52E35BCE2642986A00FE1D2A /* ViewExtensions.swift in Sources */,

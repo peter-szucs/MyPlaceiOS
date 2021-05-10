@@ -28,11 +28,11 @@ struct Place {
     }
 //    private var images: [Image]?
     
-    init(uid: String, title: String, description: String, tags: [Int], lat: Double, lng: Double) {
+    init(uid: String, title: String, description: String, tagIds: [Int], lat: Double, lng: Double) {
         self.uid = uid
         self.title = title
         self.description = description
-        self.tagIds = tags
+        self.tagIds = tagIds
         self.lat = lat
         self.lng = lng
     }
