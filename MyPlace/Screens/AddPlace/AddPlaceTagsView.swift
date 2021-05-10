@@ -15,7 +15,7 @@ struct AddPlaceTagsView: View {
         VStack(alignment: .leading) {
             HStack(spacing: 5) {
                 ForEach(tags) { tag in
-                    Image((tag.type?.tagSFSymbolName()) as? String ?? "undefined")
+                    Image((tag.type?.tagIconName()) ?? "undefined")
                         .resizable()
                         .renderingMode(.template)
                         .scaledToFill()
@@ -31,7 +31,7 @@ struct AddPlaceTagsView: View {
 struct AddPlaceTagsView_Previews: PreviewProvider {
     static var previews: some View {
         AddPlaceTagsView(tags: [Tag(typeValue: 0), Tag(typeValue: 4), Tag(typeValue: 1), Tag(typeValue: 5)])
-            .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 130))
+            .previewLayout(.sizeThatFits)
         
     }
 }

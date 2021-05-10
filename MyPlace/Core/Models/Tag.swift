@@ -7,19 +7,19 @@
 
 import Foundation
 
-struct Tag: Identifiable {
-    var id = UUID().uuidString
-    var typeEnum: Int
+struct Tag: Identifiable, Hashable {
+    
+    var id: Int
     var type: Tags? {
-        Tags(rawValue: typeEnum)
+        Tags(rawValue: id)
     }
     
     init(typeValue: Int) {
-        self.typeEnum = typeValue
+        self.id = typeValue
     }
 }
 
-enum Tags: Int {
+enum Tags: Int, CaseIterable {
     case childFriendly
     case food
     case drinks
@@ -54,7 +54,7 @@ enum Tags: Int {
         }
     }
     
-    func tagSFSymbolName() -> String {
+    func tagIconName() -> String {
         switch self {
         case .childFriendly:
             return "childfriendly"
@@ -73,7 +73,7 @@ enum Tags: Int {
         case .shopping:
             return "shopping"
         case .undefined:
-            return "Undefined"
+            return "undefined"
         }
     }
 }

@@ -19,7 +19,7 @@ struct AddPlaceAddTagsView: View {
                     .foregroundColor(Color("TextEditorBorderColor"))
                     .padding(.horizontal, 10)
             }
-            .padding(.vertical)
+            .padding(.vertical, 10)
             Divider()
         }
     }

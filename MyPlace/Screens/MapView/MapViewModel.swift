@@ -18,7 +18,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     @Published var centerCoordinate = CLLocationCoordinate2D()
     @Published var annotations: [MKPointAnnotation] = []
     @Published var goToAddPlace = false
-    
+    @Published var newPlace: Place = Place(uid: "", title: "", description: "", tags: [], lat: 0, lng: 0)
     
     // Change map type
     func updateMapType() {

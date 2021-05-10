@@ -75,7 +75,7 @@ struct MapView: View {
             VStack {
                 Spacer()
                 NavigationLink(
-                    destination: AddPlaceView(),
+                    destination: AddPlaceView(place: viewModel.newPlace),
                     isActive: $viewModel.goToAddPlace,
                     label: {
                         

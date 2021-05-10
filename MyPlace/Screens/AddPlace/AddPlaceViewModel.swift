@@ -9,5 +9,6 @@ import Foundation
 
 final class AddPlaceViewModel: ObservableObject {
     
-    @Published var place = Place(uid: "", title: "", description: "",tags: [Tag(typeValue: 0)], lat: 0, lng: 0)
+    @Published var place = Place(uid: "", title: "", description: "", tags: [], lat: 0, lng: 0)
+    @Published var showingSheet = false
 }

@@ -31,7 +31,7 @@ struct TextFieldClearButton: ViewModifier {
     @Binding var text: String
     
     func body(content: Content) -> some View {
-        HStack {
+        ZStack(alignment: .trailing) {
             content
             
             if !text.isEmpty {
@@ -41,6 +41,7 @@ struct TextFieldClearButton: ViewModifier {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(Color(UIColor.opaqueSeparator))
                 })
+                .padding(.trailing, 8)
             }
         }
     }

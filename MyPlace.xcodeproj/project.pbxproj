@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		35F0ACC766319AFBC901B95A /* Pods_MyPlaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF027AF48AB68D3A37B7D8BD /* Pods_MyPlaceTests.framework */; };
+		5262301826489D250018730C /* AddTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301726489D250018730C /* AddTagsView.swift */; };
 		5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */; };
 		5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BE25F973E200C47D2B /* FirstPageView.swift */; };
 		5295D6C125F973E600C47D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295D6C025F973E600C47D2B /* Assets.xcassets */; };
@@ -85,6 +86,7 @@
 /* Begin PBXFileReference section */
 		2AC5EFBDF9079C98064E973A /* Pods-MyPlace-MyPlaceUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPlace-MyPlaceUITests.release.xcconfig"; path = "Target Support Files/Pods-MyPlace-MyPlaceUITests/Pods-MyPlace-MyPlaceUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3F9151435807468970BA59B7 /* Pods_MyPlace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyPlace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5262301726489D250018730C /* AddTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsView.swift; sourceTree = "<group>"; };
 		5295D6B925F973E200C47D2B /* MyPlace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceApp.swift; sourceTree = "<group>"; };
 		5295D6BE25F973E200C47D2B /* FirstPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageView.swift; sourceTree = "<group>"; };
@@ -182,6 +184,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		524E919926488DA500F6D047 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5262301726489D250018730C /* AddTagsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		5295D6B025F973E200C47D2B = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +260,7 @@
 		52B05F7A2647F47B00E22F06 /* AddPlace */ = {
 			isa = PBXGroup;
 			children = (
+				524E919926488DA500F6D047 /* Views */,
 				52B05F7B2647F48E00E22F06 /* AddPlaceView.swift */,
 				52B05F832647F49C00E22F06 /* AddPlaceViewModel.swift */,
 				52B05F8D26482EC100E22F06 /* AddPlaceTagsView.swift */,
@@ -743,6 +754,7 @@
 				52B05F892648039700E22F06 /* Tag.swift in Sources */,
 				52E35BFA26431EB100FE1D2A /* MapViewModel.swift in Sources */,
 				52E35C7C2646BF9400FE1D2A /* MapBottomMenuIcon.swift in Sources */,
+				5262301826489D250018730C /* AddTagsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
