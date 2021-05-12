@@ -30,8 +30,19 @@ enum FIRKeys {
     enum Place {
         static let title = "title"
         static let description = "description"
+        static let pmData = "pmData"
         static let tags = "tags"
         static let latitude = "latitude"
         static let longitude = "longitude"
+    }
+    
+    enum Address {
+        static let name = "name"
+        static let thoroughfare = "thoroughfare"
+        static let subThoroughfare = "subThoroughfare"
+        static let postalCode = "postalCode"
+        static let subLocality = "subLocality"
+        static let administrativeArea = "administrativeArea"
+        static let country = "country"
     }
 }

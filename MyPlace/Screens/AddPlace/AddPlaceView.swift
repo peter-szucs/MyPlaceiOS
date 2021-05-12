@@ -30,6 +30,22 @@ struct AddPlaceView: View {
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                     
+                    VStack(alignment: .leading) {
+                        Text(viewModel.place.PMData.PMName)
+                        HStack {
+                            Text(viewModel.place.PMData.PMAddress)
+                            Text(viewModel.place.PMData.PMAddress2)
+                        }
+                        HStack {
+                            Text(viewModel.place.PMData.PMZipCode)
+                            Text(viewModel.place.PMData.PMNeighbourhood)
+                        }
+                        Text(viewModel.place.PMData.PMState)
+                        Text(viewModel.place.PMData.PMCountry)
+                    }
+                    .font(.footnote)
+                    .padding(.horizontal)
+                    
                     FormTextView(text: LocalizedStringKey("AddPlace_description"))
                     TextEditor(text: $viewModel.place.description)
                         .frame(width: UIScreen.main.bounds.width - 40, height: 150)
@@ -39,16 +55,19 @@ struct AddPlaceView: View {
                         .cornerRadius(3)
                         .padding(.horizontal)
                     
-                    FormTextView(text: LocalizedStringKey("AddPlace_tags"))
-                    AddPlaceTagsView(tags: viewModel.place.tags)
-                        .padding(.horizontal)
-                    Button(action: {
-                        viewModel.activeSheet = .first
-                    }, label: {
-                        AddPlaceAddTagsView()
-                            .padding(.horizontal, 10)
-                            .accentColor(.gray)
-                    })
+                    VStack(alignment: .leading) {
+                        FormTextView(text: LocalizedStringKey("AddPlace_tags"))
+                        AddPlaceTagsView(tags: viewModel.place.tags)
+                            .padding(.horizontal)
+                        Button(action: {
+                            viewModel.activeSheet = .first
+                        }, label: {
+                            AddPlaceAddTagsView()
+                                .padding(.horizontal, 10)
+                                .accentColor(.gray)
+                        })
+                    }
+                    
                     ScrollView(.horizontal) {
                         VStack(alignment: .leading) {
                             HStack(spacing: 20) {
@@ -106,6 +125,6 @@ struct AddPlaceView: View {
 
 struct AddPlaceView_Previews: PreviewProvider {
     static var previews: some View {
-        AddPlaceView(place: Place(uid: "", title: "A Place", description: "Very nice place", tagIds: [1, 0, 3], lat: 0, lng: 0))
+        AddPlaceView(place: Place(uid: "", title: "A Place", description: "Very nice place", PMData: PlaceMarkAddress(name: "Home", thoroughfare: "Homestreet", subThoroughfare: "22", postalCode: "555 55", subLocality: "State", administrativeArea: "City", country: "Country"), tagIds: [1, 0, 3], lat: 0, lng: 0))
     }
 }

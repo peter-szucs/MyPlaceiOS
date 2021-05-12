@@ -12,13 +12,14 @@ import CoreLocation
 final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var mapView = MKMapView()
+    @Published var navBarHidden = true
     @Published var region: MKCoordinateRegion!
     @Published var permissionDenied = false
     @Published var mapType: MKMapType = .standard
     @Published var centerCoordinate = CLLocationCoordinate2D()
     @Published var annotations: [MKPointAnnotation] = []
     @Published var goToAddPlace = false
-    @Published var newPlace: Place = Place(uid: "", title: "", description: "", tagIds: [], lat: 0, lng: 0)
+    @Published var newPlace: Place = Place(uid: "", title: "", description: "", PMData: PlaceMarkAddress(), tagIds: [], lat: 0, lng: 0)
     
     // Change map type
     func updateMapType() {
@@ -39,12 +40,25 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     }
     
     func addPlace(coordinate: CLLocationCoordinate2D) {
-        let pointAnnotation = MKPointAnnotation()
-        pointAnnotation.coordinate = coordinate
-        pointAnnotation.title = "Annotation"
-        pointAnnotation.subtitle = "This is a pin"
-        annotations.append(pointAnnotation)
         
+        convertCoordinateToAddress(location: coordinate) { (placemark, error) in
+            if let error = error as? CLError {
+                print("CLError: \(error)")
+                return
+            } else if let placemark = placemark?.first {
+                // MARK: TODO: Rewrite with enums in PlaceMarkAddress Struct
+                self.newPlace.PMData = PlaceMarkAddress(name: placemark.name, thoroughfare: placemark.thoroughfare, subThoroughfare: placemark.subThoroughfare, postalCode: placemark.postalCode, subLocality: placemark.subLocality, administrativeArea: placemark.administrativeArea, country: placemark.country)
+                self.newPlace.lat = coordinate.latitude
+                self.newPlace.lng = coordinate.longitude
+                print(self.newPlace)
+                self.goToAddPlace = true
+            }
+        }
+//        let pointAnnotation = MKPointAnnotation()
+//        pointAnnotation.coordinate = coordinate
+//        pointAnnotation.title = "Annotation"
+//        pointAnnotation.subtitle = "This is a pin"
+//        annotations.append(pointAnnotation)
 //        mapView.addAnnotation(pointAnnotation)
         
         // Move map to location
@@ -53,21 +67,25 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
 //        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
     }
     
-    func convertCoordinateToAddress(location: CLLocationCoordinate2D) {
+    func convertCoordinateToAddress(location: CLLocationCoordinate2D, completion: @escaping (_ placemark: [CLPlacemark]?, _ error: Error?) -> ()) {
         let geoCoder = CLGeocoder()
         let clLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
-        geoCoder.reverseGeocodeLocation(clLocation) { (placemarks, error) -> Void in
-            if (error != nil) {
-                print("!!! reverse geocode failed: \(error?.localizedDescription)")
+        geoCoder.reverseGeocodeLocation(clLocation) { (placemark, error) -> Void in
+//            if (error != nil) {
+//                print("!!! reverse geocode failed: \(String(describing: error?.localizedDescription))")
+//            }
+            guard let placemark = placemark, error == nil else {
+                completion(nil, error)
+                return
             }
-            var placeMark: CLPlacemark!
-            for i in 0..<placemarks!.count {
-                placeMark = placemarks?[i]
-                
+            completion(placemark, nil)
+//            for i in 0..<placemarks!.count {
+//                placeMark = placemarks?[i]
+//
                 // MARK: - So it seems you need to either switch to Google Maps or use API from google maps (Places SDK) on the coordinate to get the business name and all other good stuff...
                 
-                print("!!! name: \(placemarks![i].name), address: \(placeMark.thoroughfare) \(placeMark.postalCode) \(placeMark.subLocality) \(placeMark.administrativeArea) \(placeMark.country), subAdmin: \(placeMark.subAdministrativeArea)")
-            }
+//                print("!!! name: \(placemarks![i].name), address: \(placeMark.thoroughfare) \(placeMark.postalCode) \(placeMark.subLocality) \(placeMark.administrativeArea) \(placeMark.country), subAdmin: \(placeMark.subAdministrativeArea)")
+//            }
         }
     }
     

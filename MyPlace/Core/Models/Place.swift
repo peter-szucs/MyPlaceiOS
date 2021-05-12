@@ -8,11 +8,15 @@
 import Foundation
 import MapKit
 
+
+//print("!!! name: \(placemarks![i].name), address: \(placeMark.thoroughfare) \(placeMark.postalCode) \(placeMark.subLocality) \(placeMark.administrativeArea) \(placeMark.country), subAdmin: \(placeMark.subAdministrativeArea)")
+
 struct Place {
     var uid: String
     var title: String
     var description: String
 //    var creationDate: Date
+    var PMData: PlaceMarkAddress
     var tagIds: [Int]
     var tags: [Tag] {
         var array: [Tag] = []
@@ -28,10 +32,11 @@ struct Place {
     }
 //    private var images: [Image]?
     
-    init(uid: String, title: String, description: String, tagIds: [Int], lat: Double, lng: Double) {
+    init(uid: String, title: String, description: String, PMData: PlaceMarkAddress, tagIds: [Int], lat: Double, lng: Double) {
         self.uid = uid
         self.title = title
         self.description = description
+        self.PMData = PMData
         self.tagIds = tagIds
         self.lat = lat
         self.lng = lng
@@ -48,7 +53,7 @@ struct Place {
         // db.settings = settings
         // (documentSnapshot.get("created_at") as! Timestamp)
         // let date: Date = timestamp.dateValue()
-        
+        let PMData = documentData[FIRKeys.Place.pmData] as? [String : Any]
         let tagIds = documentData[FIRKeys.Place.tags] as? [Int] ?? []
         let lat = documentData[FIRKeys.Place.latitude] as? Double ?? 0.0
         let lng = documentData[FIRKeys.Place.longitude] as? Double ?? 0.0
@@ -56,23 +61,19 @@ struct Place {
         self.uid = uid
         self.title = title
         self.description = description
+        self.PMData = PlaceMarkAddress(documentData: PMData) ?? PlaceMarkAddress()
         self.tagIds = tagIds
         self.lat = lat
         self.lng = lng
         
-//        self.init(uid: uid,
-//                  title: title,
-//                  description: description,
-//                  tags: tags,
-//                  lat: lat,
-//                  lng: lng)
     }
     
-    static func dataDict(title: String, description: String, tags: [Int], lat: Double, lng: Double) -> [String : Any] {
+    static func dataDict(title: String, description: String, pmData: PlaceMarkAddress, tags: [Int], lat: Double, lng: Double) -> [String : Any] {
         var data: [String: Any]
        
         data = [FIRKeys.Place.title: title,
                 FIRKeys.Place.description: description,
+                FIRKeys.Place.pmData: PlaceMarkAddress.dataDict(placemarkAddress: pmData),
                 FIRKeys.Place.tags: tags,
                 FIRKeys.Place.latitude: lat,
                 FIRKeys.Place.longitude: lng]
@@ -85,6 +86,7 @@ struct Place {
        
         data = [FIRKeys.Place.title: place.title,
                 FIRKeys.Place.description: place.description,
+                FIRKeys.Place.pmData: PlaceMarkAddress.dataDict(placemarkAddress: place.PMData),
                 FIRKeys.Place.tags: place.tagIds,
                 FIRKeys.Place.latitude: place.lat,
                 FIRKeys.Place.longitude: place.lng]

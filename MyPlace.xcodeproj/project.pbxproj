@@ -11,6 +11,7 @@
 		5262301826489D250018730C /* AddTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301726489D250018730C /* AddTagsView.swift */; };
 		5262301E264934B80018730C /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301D264934B80018730C /* TagCell.swift */; };
 		5262304026495F2A0018730C /* AddedPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262303F26495F2A0018730C /* AddedPhotosView.swift */; };
+		52623045264BD6ED0018730C /* PlaceMarkAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52623044264BD6EC0018730C /* PlaceMarkAddress.swift */; };
 		5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */; };
 		5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BE25F973E200C47D2B /* FirstPageView.swift */; };
 		5295D6C125F973E600C47D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295D6C025F973E600C47D2B /* Assets.xcassets */; };
@@ -91,6 +92,7 @@
 		5262301726489D250018730C /* AddTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsView.swift; sourceTree = "<group>"; };
 		5262301D264934B80018730C /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		5262303F26495F2A0018730C /* AddedPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPhotosView.swift; sourceTree = "<group>"; };
+		52623044264BD6EC0018730C /* PlaceMarkAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMarkAddress.swift; sourceTree = "<group>"; };
 		5295D6B925F973E200C47D2B /* MyPlace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceApp.swift; sourceTree = "<group>"; };
 		5295D6BE25F973E200C47D2B /* FirstPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageView.swift; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 				52E35C0F26442CDB00FE1D2A /* MenuItem.swift */,
 				52E35C5526446B8800FE1D2A /* FIRKeys.swift */,
 				52B05F882648039700E22F06 /* Tag.swift */,
+				52623044264BD6EC0018730C /* PlaceMarkAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				52E35C1026442CDC00FE1D2A /* MenuItem.swift in Sources */,
 				52E35BC826428C2600FE1D2A /* LoadingView.swift in Sources */,
 				52B05F892648039700E22F06 /* Tag.swift in Sources */,
+				52623045264BD6ED0018730C /* PlaceMarkAddress.swift in Sources */,
 				52E35BFA26431EB100FE1D2A /* MapViewModel.swift in Sources */,
 				52E35C7C2646BF9400FE1D2A /* MapBottomMenuIcon.swift in Sources */,
 				5262301826489D250018730C /* AddTagsView.swift in Sources */,

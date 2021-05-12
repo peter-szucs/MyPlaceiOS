@@ -82,8 +82,8 @@ struct MapView: View {
                     })
                 Button(action: {
 //                    viewModel.convertCoordinateToAddress(location: viewModel.centerCoordinate)
-//                    viewModel.addPlace(coordinate: viewModel.centerCoordinate)
-                    viewModel.goToAddPlace = true
+                    viewModel.addPlace(coordinate: viewModel.centerCoordinate)
+//                    viewModel.goToAddPlace = true
                 }, label: {
                     Image(systemName: "plus")
                         .font(.largeTitle)
@@ -99,7 +99,7 @@ struct MapView: View {
 //        .onTapGesture(count: 2) {
 //            print("!!! double tapped")
 //        }
-        .navigationBarHidden(true)
+        .navigationBarHidden(viewModel.navBarHidden)
         .navigationBarTitle(LocalizedStringKey("Map_title"))
         
         .onAppear(perform: {
@@ -108,6 +108,9 @@ struct MapView: View {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         })
+        .onDisappear {
+            viewModel.navBarHidden = false
+        }
         .alert(isPresented: $viewModel.permissionDenied, content: {
             Alert(title: Text(LocalizedStringKey("CLPermissionDenied")), message: Text(LocalizedStringKey("CLPermDeniedMsg")), dismissButton: .default(Text(LocalizedStringKey("CLPermDeniedDismiss")), action: {
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)

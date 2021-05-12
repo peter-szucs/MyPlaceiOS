@@ -18,7 +18,7 @@ enum ActiveSheet: Identifiable {
 
 final class AddPlaceViewModel: ObservableObject {
     
-    @Published var place = Place(uid: "", title: "", description: "", tagIds: [], lat: 0, lng: 0)
+    @Published var place = Place(uid: "", title: "", description: "", PMData: PlaceMarkAddress(), tagIds: [], lat: 0, lng: 0)
     @Published var isLoading = false
     @Published var activeSheet: ActiveSheet?
     @Published var images: [UIImage] = []
@@ -26,7 +26,8 @@ final class AddPlaceViewModel: ObservableObject {
     @Published var pickedImage: UIImage?
     @Published var emptyFieldsMessage: String = ""
     @Published var placeStatus: AddPlaceStatus = .noName
-    
+    @Published var concatenatedAddressText: String = ""
+        
     private var cancellables = Set<AnyCancellable>()
     
     init() {
@@ -52,6 +53,8 @@ final class AddPlaceViewModel: ObservableObject {
             }
             .assign(to: \.emptyFieldsMessage, on: self)
             .store(in: &cancellables)
+        
+        concatenatedAddressText = "\(place.PMData.PMName)\n\(place.PMData.PMAddress)\n\(place.PMData.PMZipCode) \(place.PMData.PMNeighbourhood) \(place.PMData.PMState)\n\(place.PMData.PMCountry)"
         
     }
     
