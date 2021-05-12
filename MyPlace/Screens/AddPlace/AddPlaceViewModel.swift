@@ -83,7 +83,7 @@ final class AddPlaceViewModel: ObservableObject {
     // MARK: Private Functions
     
     private func uploadToFirestore(completion: @escaping (Bool) -> ()) {
-        let data = Place.dataDict(place: place)
+        let data = Place.dataDict(place: self.place)
         FirebaseRepository.addPlaceToDB(with: data) { (result) in
             switch result {
             case .failure(let error):
@@ -110,6 +110,7 @@ final class AddPlaceViewModel: ObservableObject {
                 completion(true)
             }
         }
+        completion(false)
     }
     
     // MARK: Combine Publishers

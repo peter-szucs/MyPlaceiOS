@@ -85,7 +85,7 @@ struct Place {
        
         data = [FIRKeys.Place.title: place.title,
                 FIRKeys.Place.description: place.description,
-                FIRKeys.Place.tags: place.tags,
+                FIRKeys.Place.tags: place.tagIds,
                 FIRKeys.Place.latitude: place.lat,
                 FIRKeys.Place.longitude: place.lng]
         
