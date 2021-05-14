@@ -7,11 +7,13 @@
 
 import Foundation
 import FirebaseAuth
+import CoreLocation
 
 class UserInfo: ObservableObject {
     
     @Published var isUserAuthenticated: FIRAuthState = .undefined
     @Published var user = User(uid: "", firstName: "", lastName: "", userName: "", hasFinishedOnboarding: false)
+    @Published var userLocation = CLLocationCoordinate2D()
     
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     

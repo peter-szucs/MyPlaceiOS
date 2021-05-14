@@ -12,6 +12,10 @@
 		5262301E264934B80018730C /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301D264934B80018730C /* TagCell.swift */; };
 		5262304026495F2A0018730C /* AddedPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262303F26495F2A0018730C /* AddedPhotosView.swift */; };
 		52623045264BD6ED0018730C /* PlaceMarkAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52623044264BD6EC0018730C /* PlaceMarkAddress.swift */; };
+		52623065264C390E0018730C /* MyPlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52623064264C390E0018730C /* MyPlacesViewModel.swift */; };
+		5262306A264E76170018730C /* MyPlacesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52623069264E76160018730C /* MyPlacesCellView.swift */; };
+		52623078264EDAC20018730C /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52623077264EDAC20018730C /* PlaceDetailView.swift */; };
+		52623080264EDAEF0018730C /* PlaceDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262307F264EDAEF0018730C /* PlaceDetailViewModel.swift */; };
 		5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */; };
 		5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BE25F973E200C47D2B /* FirstPageView.swift */; };
 		5295D6C125F973E600C47D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295D6C025F973E600C47D2B /* Assets.xcassets */; };
@@ -93,6 +97,10 @@
 		5262301D264934B80018730C /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		5262303F26495F2A0018730C /* AddedPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPhotosView.swift; sourceTree = "<group>"; };
 		52623044264BD6EC0018730C /* PlaceMarkAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMarkAddress.swift; sourceTree = "<group>"; };
+		52623064264C390E0018730C /* MyPlacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlacesViewModel.swift; sourceTree = "<group>"; };
+		52623069264E76160018730C /* MyPlacesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlacesCellView.swift; sourceTree = "<group>"; };
+		52623077264EDAC20018730C /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
+		5262307F264EDAEF0018730C /* PlaceDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewModel.swift; sourceTree = "<group>"; };
 		5295D6B925F973E200C47D2B /* MyPlace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceApp.swift; sourceTree = "<group>"; };
 		5295D6BE25F973E200C47D2B /* FirstPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageView.swift; sourceTree = "<group>"; };
@@ -208,6 +216,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		52623076264EDAB20018730C /* PlaceDetail */ = {
+			isa = PBXGroup;
+			children = (
+				52623077264EDAC20018730C /* PlaceDetailView.swift */,
+				5262307F264EDAEF0018730C /* PlaceDetailViewModel.swift */,
+			);
+			path = PlaceDetail;
+			sourceTree = "<group>";
+		};
 		5295D6B025F973E200C47D2B = {
 			isa = PBXGroup;
 			children = (
@@ -288,6 +305,7 @@
 		52E35B9426415BB400FE1D2A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				52623076264EDAB20018730C /* PlaceDetail */,
 				52B05F7A2647F47B00E22F06 /* AddPlace */,
 				52E35C3E26444D3900FE1D2A /* Splash */,
 				52E35C2A264444CD00FE1D2A /* MyPlaces */,
@@ -408,6 +426,8 @@
 			isa = PBXGroup;
 			children = (
 				52E35C342644452C00FE1D2A /* MyPlacesView.swift */,
+				52623064264C390E0018730C /* MyPlacesViewModel.swift */,
+				52623069264E76160018730C /* MyPlacesCellView.swift */,
 			);
 			path = MyPlaces;
 			sourceTree = "<group>";
@@ -762,12 +782,16 @@
 				5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */,
 				52BE2C542626F080000DB5D4 /* Place.swift in Sources */,
 				52E35C772645839300FE1D2A /* ViewModifiers.swift in Sources */,
+				52623078264EDAC20018730C /* PlaceDetailView.swift in Sources */,
 				52E35C682645443400FE1D2A /* ImageExtensions.swift in Sources */,
 				52E35C5E2644B8F800FE1D2A /* FriendsListViewModel.swift in Sources */,
 				52E35C1F264436E900FE1D2A /* SettingsView.swift in Sources */,
+				52623080264EDAEF0018730C /* PlaceDetailViewModel.swift in Sources */,
+				5262306A264E76170018730C /* MyPlacesCellView.swift in Sources */,
 				52FABA762615A92A00F88DB5 /* ImageLoader.swift in Sources */,
 				52E35BD72642B6CF00FE1D2A /* ImagePicker.swift in Sources */,
 				5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */,
+				52623065264C390E0018730C /* MyPlacesViewModel.swift in Sources */,
 				52E35C1026442CDC00FE1D2A /* MenuItem.swift in Sources */,
 				52E35BC826428C2600FE1D2A /* LoadingView.swift in Sources */,
 				52B05F892648039700E22F06 /* Tag.swift in Sources */,

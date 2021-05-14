@@ -31,6 +31,15 @@ struct Place {
         CLLocationCoordinate2D(latitude: lat, longitude: lng)
     }
 //    private var images: [Image]?
+    init() {
+        self.uid = ""
+        self.title = ""
+        self.description = ""
+        self.PMData = PlaceMarkAddress()
+        self.tagIds = []
+        self.lat = 0
+        self.lng = 0
+    }
     
     init(uid: String, title: String, description: String, PMData: PlaceMarkAddress, tagIds: [Int], lat: Double, lng: Double) {
         self.uid = uid
@@ -92,6 +101,17 @@ struct Place {
                 FIRKeys.Place.longitude: place.lng]
         
         return data
+    }
+    
+    func getDistance(placeLat: Double, placeLng: Double, userLat: Double, userLng: Double) -> String {
+        let distanceInMeters = CLLocation(latitude: userLat, longitude: userLng).distance(from: CLLocation(latitude: placeLat, longitude: placeLng))
+        print(String(distanceInMeters))
+        if distanceInMeters < 1000 {
+            return String("\(Int(distanceInMeters)) m")
+        } else {
+            let km = (distanceInMeters.rounded() / 1000)
+            return "\(km) km"
+        }
     }
     
 }

@@ -33,8 +33,7 @@ struct AddPlaceView: View {
                     VStack(alignment: .leading) {
                         Text(viewModel.place.PMData.PMName)
                         HStack {
-                            Text(viewModel.place.PMData.PMAddress)
-                            Text(viewModel.place.PMData.PMAddress2)
+                            Text("\(viewModel.place.PMData.PMAddress) \(viewModel.place.PMData.PMAddress2)")
                         }
                         HStack {
                             Text(viewModel.place.PMData.PMZipCode)

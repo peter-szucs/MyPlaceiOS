@@ -10,6 +10,7 @@ import SwiftUI
 struct AddPlaceTagsView: View {
     
     var tags: [Tag]
+    var size: CGFloat?
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,8 +21,8 @@ struct AddPlaceTagsView: View {
                         .renderingMode(.template)
                         .scaledToFill()
                         .foregroundColor(Color("MainLightBlue"))
-                        .frame(width: 24, height: 24)
-                        .padding(5)
+                        .frame(width: size ?? 24, height: size ?? 24)
+                        .padding(.trailing, 10)
                 }
             }
         }

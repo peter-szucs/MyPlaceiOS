@@ -62,6 +62,34 @@ final class FirebaseRepository {
         }
     }
     
+    // MARK: - Retrieve Places
+    // MARK: TODO: Figure out great way to use one function to fetch both from filters and full collections.
+    // Maybe enums to choose between all types of fetches?
+    
+    static func getPlaceDocuments(for uid: String, completion: @escaping (Result<[Place], Error>) -> ()) {
+        let db = Firestore.firestore()
+        let settings = Firestore.firestore().settings
+        db.settings = settings
+        
+        let reference = db.collection(FIRKeys.CollectionPath.users).document(uid).collection(FIRKeys.CollectionPath.places)
+        
+        var places: [Place] = []
+        reference.getDocuments { (snapshot, error) in
+            
+            if let error = error {
+                completion(.failure(error))
+            }
+            
+            if let documents = snapshot?.documents {
+                for document in documents {
+                    places.append(Place(documentData: document.data(), id: document.documentID)!)
+                    
+                }
+                completion(.success(places))
+            }
+        }
+    }
+    
     // MARK: - Retrieve User
     
     static func retrieveUser(uid: String, completion: @escaping (Result<User, Error>) -> ()) {
@@ -148,6 +176,7 @@ enum FireStoreError: Error {
     case noAuthDataResult
     case noCurrentUser
     case noDocumentSnapshot
+    case noCollectionSnapshot
     case noSnapshotData
     case noUser
 }
