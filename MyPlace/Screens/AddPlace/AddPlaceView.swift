@@ -26,8 +26,7 @@ struct AddPlaceView: View {
                         .modifier(TextFieldClearButton(text: $viewModel.place.title))
                         .padding([.leading, .trailing])
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
+                        .keyboardType(.alphabet)
                         .disableAutocorrection(true)
                     
                     VStack(alignment: .leading) {

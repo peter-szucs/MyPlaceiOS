@@ -105,8 +105,7 @@ final class AddPlaceViewModel: ObservableObject {
                         }
                         FirebaseRepository.uploadToStorage(uid: uid, imageID: imageIdArray[i], path: FIRKeys.StoragePath.placeImages, imageData: imageData) { (result) in
                             switch result {
-                            case .failure(let error):
-                                print("VM failed to upload image: \(error)")
+                            case .failure(_):
                                 uploadCounter += 1
                                 if uploadCounter == imageIdArray.count {
                                     completion(true)
