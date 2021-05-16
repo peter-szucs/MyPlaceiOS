@@ -9,26 +9,9 @@ import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
 import Combine
+import SwiftUI
 
 final class FirebaseRepository {
-    
-    @Published var places: [Place] = []
-    
-    func fetchPlaces(for userId: String) {
-        Firestore.firestore().collection("users").document(userId).collection("places").addSnapshotListener { (snapshot, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let documents = snapshot else {
-                print("No documents found")
-                return
-            }
-            self.places = documents.documents.compactMap {
-                try? $0.data() as? Place
-            }
-        }
-    }
     
     // MARK: - Add or update userclass in DB
     
@@ -110,13 +93,13 @@ final class FirebaseRepository {
     
     // MARK: - Storage functions
     
-    static func uploadToStorage(uid: String, path: String, imageData: Data, completion: @escaping (Result<Bool, Error>) -> ()) {
+    static func uploadToStorage(uid: String, imageID: String, path: String, imageData: Data, completion: @escaping (Result<Bool, Error>) -> ()) {
         var storageRef = Storage.storage().reference().child("dumpBox").child(UUID().uuidString)
         switch path {
         case FIRKeys.StoragePath.profileImages:
             storageRef = Storage.storage().reference().child(path).child(uid)
         case FIRKeys.StoragePath.placeImages:
-            storageRef = Storage.storage().reference().child(path).child(uid).child(UUID().uuidString)
+            storageRef = Storage.storage().reference().child(path).child(uid).child(imageID)
         default:
             print("!!! Something went very wrong!")
         }
@@ -149,6 +132,20 @@ final class FirebaseRepository {
                 completion(.success(true))
             }
         }
+    }
+    
+    static func getFromStorage(path: String, completion: @escaping (Result<Image, Error>) -> ()) {
+        let pathReference = Storage.storage().reference(withPath: path)
+        
+        pathReference.getData(maxSize: 1 * 1024 * 1024) { (data, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                let image = UIImage(data: data!)
+                completion(.success(Image(uiImage: image!)))
+            }
+        }
+        
     }
     
     // MARK: - Inner functions

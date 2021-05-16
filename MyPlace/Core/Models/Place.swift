@@ -5,7 +5,7 @@
 //  Created by Peter Szücs on 2021-04-14.
 //
 
-import Foundation
+import SwiftUI
 import MapKit
 
 
@@ -15,6 +15,8 @@ struct Place {
     var uid: String
     var title: String
     var description: String
+    var imageIDs: [String]
+    var images: [Image]?
 //    var creationDate: Date
     var PMData: PlaceMarkAddress
     var tagIds: [Int]
@@ -30,21 +32,23 @@ struct Place {
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: lat, longitude: lng)
     }
-//    private var images: [Image]?
+    
     init() {
         self.uid = ""
         self.title = ""
         self.description = ""
+        self.imageIDs = []
         self.PMData = PlaceMarkAddress()
         self.tagIds = []
         self.lat = 0
         self.lng = 0
     }
     
-    init(uid: String, title: String, description: String, PMData: PlaceMarkAddress, tagIds: [Int], lat: Double, lng: Double) {
+    init(uid: String, title: String, description: String, imageIDs: [String], PMData: PlaceMarkAddress, tagIds: [Int], lat: Double, lng: Double) {
         self.uid = uid
         self.title = title
         self.description = description
+        self.imageIDs = imageIDs
         self.PMData = PMData
         self.tagIds = tagIds
         self.lat = lat
@@ -56,6 +60,7 @@ struct Place {
         let uid = id
         let title = documentData[FIRKeys.Place.title] as? String ?? ""
         let description = documentData[FIRKeys.Place.description] as? String ?? ""
+        let imageIDs = documentData[FIRKeys.Place.imageIDs] as? [String] ?? []
         // MARK: TODO: Date conversion here (Timestamp -> Date). Remove creationDate from upload/struct ?
         // let settings = Firestore.firestore().settings
         // setting.areTimestampsInSnapshotEnabled = true
@@ -70,6 +75,7 @@ struct Place {
         self.uid = uid
         self.title = title
         self.description = description
+        self.imageIDs = imageIDs
         self.PMData = PlaceMarkAddress(documentData: PMData) ?? PlaceMarkAddress()
         self.tagIds = tagIds
         self.lat = lat
@@ -77,11 +83,12 @@ struct Place {
         
     }
     
-    static func dataDict(title: String, description: String, pmData: PlaceMarkAddress, tags: [Int], lat: Double, lng: Double) -> [String : Any] {
+    static func dataDict(title: String, description: String, imageIDs: [String], pmData: PlaceMarkAddress, tags: [Int], lat: Double, lng: Double) -> [String : Any] {
         var data: [String: Any]
        
         data = [FIRKeys.Place.title: title,
                 FIRKeys.Place.description: description,
+                FIRKeys.Place.imageIDs: imageIDs,
                 FIRKeys.Place.pmData: PlaceMarkAddress.dataDict(placemarkAddress: pmData),
                 FIRKeys.Place.tags: tags,
                 FIRKeys.Place.latitude: lat,
@@ -95,6 +102,7 @@ struct Place {
        
         data = [FIRKeys.Place.title: place.title,
                 FIRKeys.Place.description: place.description,
+                FIRKeys.Place.imageIDs: place.imageIDs,
                 FIRKeys.Place.pmData: PlaceMarkAddress.dataDict(placemarkAddress: place.PMData),
                 FIRKeys.Place.tags: place.tagIds,
                 FIRKeys.Place.latitude: place.lat,

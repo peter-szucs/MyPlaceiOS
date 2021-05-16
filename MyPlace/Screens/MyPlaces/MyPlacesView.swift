@@ -18,8 +18,7 @@ struct MyPlacesView: View {
                 List {
                     ForEach(viewModel.places, id:\.uid) { place in
                         NavigationLink(
-                            // MARK: TODO: Fetch from firebase and put in real images
-                            destination: PlaceDetailView(viewModel: PlaceDetailViewModel(place: place, images: [Image("testimage"), Image("testimage"), Image("testimage"), Image("testimage")], distance: viewModel.getDistance(lat: place.lat, lng: place.lng))),
+                            destination: PlaceDetailView(viewModel: PlaceDetailViewModel(place: place, distance: viewModel.getDistance(lat: place.lat, lng: place.lng))),
                             label: {
                                 MyPlacesCellView(place: place, distance: viewModel.getDistance(lat: place.lat, lng: place.lng))
                                     .onAppear {
@@ -28,7 +27,6 @@ struct MyPlacesView: View {
                                         // whenever what item i want it to happen on.
                                     }
                             })
-                        
                     }
                     .onDelete(perform: { indexSet in
                         // MARK: TODO: notify user with alert -> do real delete

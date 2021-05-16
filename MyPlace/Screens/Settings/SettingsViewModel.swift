@@ -175,7 +175,7 @@ final class SettingsViewModel: ObservableObject {
                 completion(.success(false))
                 return
             }
-            FirebaseRepository.uploadToStorage(uid: self.newUserObject.uid, path: FIRKeys.StoragePath.profileImages, imageData: imageData) { (result) in
+            FirebaseRepository.uploadToStorage(uid: self.newUserObject.uid, imageID: "", path: FIRKeys.StoragePath.profileImages, imageData: imageData) { (result) in
                 switch result {
                 case .failure(let error):
                     self.isLoading = false

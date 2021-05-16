@@ -20,8 +20,7 @@ struct MapView: View {
         ZStack {
             MapUIView(centerCoordinate: $viewModel.centerCoordinate, annotations: viewModel.annotations)
                 .environmentObject(viewModel)
-                .ignoresSafeArea(.all, edges: .all)
-            
+//                .edgesIgnoringSafeArea(.all)
             
             Circle()
                 .fill(Color.blue)
@@ -106,7 +105,7 @@ struct MapView: View {
 //            print("!!! double tapped")
 //        }
         .navigationBarHidden(viewModel.navBarHidden)
-        .navigationBarTitle(LocalizedStringKey("Map_title"))
+        .navigationBarTitle(LocalizedStringKey("Map_title"), displayMode: .inline)
         
         .onAppear(perform: {
             locationManager.delegate = viewModel

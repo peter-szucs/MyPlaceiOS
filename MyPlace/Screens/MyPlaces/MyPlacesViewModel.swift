@@ -5,13 +5,15 @@
 //  Created by Peter Szücs on 2021-05-12.
 //
 
-import Foundation
+import SwiftUI
 import CoreLocation
 
 final class MyPlacesViewModel: ObservableObject {
     
     @Published var isLoading = true
     @Published var places: [Place] = []
+    @Published var goToDetailView = false
+    @Published var imagesForDetailView: [Image] = []
     
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D()
 //    var user = User(uid: "", firstName: "", lastName: "", userName: "", hasFinishedOnboarding: false)
@@ -26,7 +28,6 @@ final class MyPlacesViewModel: ObservableObject {
             case .success(let fetchedPlaces):
                 self.places = fetchedPlaces
                 self.isLoading = false
-            
             }
         }
     }

@@ -14,16 +14,22 @@ struct AddPlaceTagsView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack(spacing: 5) {
-                ForEach(tags) { tag in
-                    Image((tag.type?.tagIconName()) ?? "undefined")
-                        .resizable()
-                        .renderingMode(.template)
-                        .scaledToFill()
-                        .foregroundColor(Color("MainLightBlue"))
+            HStack(spacing: 10) {
+                if tags.isEmpty {
+                    Color.clear
                         .frame(width: size ?? 24, height: size ?? 24)
-                        .padding(.trailing, 10)
+                } else {
+                    ForEach(tags) { tag in
+                        Image((tag.type?.tagIconName()) ?? "undefined")
+                            .resizable()
+                            .renderingMode(.template)
+                            .scaledToFill()
+                            .foregroundColor(Color("MainLightBlue"))
+                            .frame(width: size ?? 24, height: size ?? 24)
+    //                        .padding(.trailing, 10)
+                    }
                 }
+                
             }
         }
     }

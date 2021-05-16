@@ -117,13 +117,13 @@ struct AddPlaceView: View {
             }
         }
         .onAppear {
-            viewModel.place = place
+            viewModel.place = self.place
         }
     }
 }
 
 struct AddPlaceView_Previews: PreviewProvider {
     static var previews: some View {
-        AddPlaceView(place: Place(uid: "", title: "A Place", description: "Very nice place", PMData: PlaceMarkAddress(name: "Home", thoroughfare: "Homestreet", subThoroughfare: "22", postalCode: "555 55", subLocality: "State", administrativeArea: "City", country: "Country"), tagIds: [1, 0, 3], lat: 0, lng: 0))
+        AddPlaceView(place: Place(uid: "", title: "A Place", description: "Very nice place", imageIDs: [], PMData: PlaceMarkAddress(name: "Home", thoroughfare: "Homestreet", subThoroughfare: "22", postalCode: "555 55", subLocality: "State", administrativeArea: "City", country: "Country"), tagIds: [1, 0, 3], lat: 0, lng: 0))
     }
 }

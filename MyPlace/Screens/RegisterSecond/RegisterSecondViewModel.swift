@@ -47,7 +47,7 @@ final class RegisterSecondViewModel: ObservableObject {
 //                    isLoading = false
                     return
                 }
-                FirebaseRepository.uploadToStorage(uid: uid, path: FIRKeys.StoragePath.profileImages, imageData: imageData) { (result) in
+                FirebaseRepository.uploadToStorage(uid: uid, imageID: "", path: FIRKeys.StoragePath.profileImages, imageData: imageData) { (result) in
                     switch result {
                     case .failure(let error):
                         print(error)

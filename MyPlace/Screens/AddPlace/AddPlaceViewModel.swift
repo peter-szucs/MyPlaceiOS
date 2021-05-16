@@ -18,7 +18,7 @@ enum ActiveSheet: Identifiable {
 
 final class AddPlaceViewModel: ObservableObject {
     
-    @Published var place = Place(uid: "", title: "", description: "", PMData: PlaceMarkAddress(), tagIds: [], lat: 0, lng: 0)
+    @Published var place = Place()
     @Published var isLoading = false
     @Published var activeSheet: ActiveSheet?
     @Published var images: [UIImage] = []
@@ -86,6 +86,8 @@ final class AddPlaceViewModel: ObservableObject {
     // MARK: Private Functions
     
     private func uploadToFirestore(completion: @escaping (Bool) -> ()) {
+        let imageIdArray = makeImageIds()
+        place.imageIDs = imageIdArray
         let data = Place.dataDict(place: self.place)
         FirebaseRepository.addPlaceToDB(with: data) { (result) in
             switch result {
@@ -93,27 +95,46 @@ final class AddPlaceViewModel: ObservableObject {
                 print("error: \(error)")
                 completion(false)
             case .success(let uid):
-                if !self.images.isEmpty {
-                    for image in self.images {
-                        let resizedImage = image.resized(withPercentage: 0.2)
+                if !imageIdArray.isEmpty {
+                    var uploadCounter = 0
+                    for i in 0..<self.images.count {
+                        let resizedImage = self.images[i].resized(withPercentage: 0.2)
                         guard let imageData = resizedImage?.jpegData(compressionQuality: 0.5) else {
                             print("Image to upload failed guard check")
                             return
                         }
-                        FirebaseRepository.uploadToStorage(uid: uid, path: FIRKeys.StoragePath.placeImages, imageData: imageData) { (result) in
+                        FirebaseRepository.uploadToStorage(uid: uid, imageID: imageIdArray[i], path: FIRKeys.StoragePath.placeImages, imageData: imageData) { (result) in
                             switch result {
                             case .failure(let error):
                                 print("VM failed to upload image: \(error)")
+                                uploadCounter += 1
+                                if uploadCounter == imageIdArray.count {
+                                    completion(true)
+                                }
                             case .success(_):
                                 print("VM Uploaded image")
+                                uploadCounter += 1
+                                if uploadCounter == imageIdArray.count {
+                                    completion(true)
+                                }
                             }
                         }
                     }
+                } else {
+                    completion(true)
                 }
-                completion(true)
             }
         }
         completion(false)
+    }
+    
+    private func makeImageIds() -> [String] {
+        var array: [String] = []
+        for _ in self.images {
+            let id = UUID().uuidString
+            array.append(id)
+        }
+        return array
     }
     
     // MARK: Combine Publishers
