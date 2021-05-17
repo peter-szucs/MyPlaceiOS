@@ -15,16 +15,18 @@ struct FriendsListCellView: View {
         HStack {
             FirebaseImage(id: user.uid)
                 .frame(width: 32, height: 32, alignment: .center)
+                .padding()
             Text(user.userName)
+                .font(.title3)
             Spacer()
         }
-        .frame(width: UIScreen.main.bounds.width, height: 60)
+//        .frame(width: UIScreen.main.bounds.width)
     }
 }
 
 struct FriendsListCellView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendsListCellView(user: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", hasFinishedOnboarding: true))
-            .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 60))
+        FriendsListCellView(user: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: []))
+            .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 80))
     }
 }

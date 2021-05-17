@@ -58,7 +58,7 @@ final class RegisterSecondViewModel: ObservableObject {
                     }
                 }
             }
-            let data = User.dataDict(firstName: firstName, lastName: lastName, userName: userName, hasFinishedOnboarding: true)
+            let data = User.dataDict(firstName: firstName, lastName: lastName, userName: userName)
             
             FirebaseRepository.addOrMergeUserToDb(data, uid: uid) { (result) in
                 switch result {

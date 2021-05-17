@@ -16,6 +16,9 @@
 		5262306A264E76170018730C /* MyPlacesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52623069264E76160018730C /* MyPlacesCellView.swift */; };
 		52623078264EDAC20018730C /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52623077264EDAC20018730C /* PlaceDetailView.swift */; };
 		52623080264EDAEF0018730C /* PlaceDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262307F264EDAEF0018730C /* PlaceDetailViewModel.swift */; };
+		526230852651B8B80018730C /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526230842651B8B50018730C /* Friend.swift */; };
+		5262308B2651DED90018730C /* ScrollableTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262308A2651DED80018730C /* ScrollableTabBarView.swift */; };
+		526230902651E7BC0018730C /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262308F2651E7BC0018730C /* TabBarView.swift */; };
 		5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */; };
 		5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BE25F973E200C47D2B /* FirstPageView.swift */; };
 		5295D6C125F973E600C47D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295D6C025F973E600C47D2B /* Assets.xcassets */; };
@@ -101,6 +104,9 @@
 		52623069264E76160018730C /* MyPlacesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlacesCellView.swift; sourceTree = "<group>"; };
 		52623077264EDAC20018730C /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
 		5262307F264EDAEF0018730C /* PlaceDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewModel.swift; sourceTree = "<group>"; };
+		526230842651B8B50018730C /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		5262308A2651DED80018730C /* ScrollableTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableTabBarView.swift; sourceTree = "<group>"; };
+		5262308F2651E7BC0018730C /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		5295D6B925F973E200C47D2B /* MyPlace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceApp.swift; sourceTree = "<group>"; };
 		5295D6BE25F973E200C47D2B /* FirstPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageView.swift; sourceTree = "<group>"; };
@@ -223,6 +229,15 @@
 				5262307F264EDAEF0018730C /* PlaceDetailViewModel.swift */,
 			);
 			path = PlaceDetail;
+			sourceTree = "<group>";
+		};
+		526230892651DEB90018730C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5262308A2651DED80018730C /* ScrollableTabBarView.swift */,
+				5262308F2651E7BC0018730C /* TabBarView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		5295D6B025F973E200C47D2B = {
@@ -415,6 +430,7 @@
 		52E35C29264444B900FE1D2A /* FriendsList */ = {
 			isa = PBXGroup;
 			children = (
+				526230892651DEB90018730C /* Views */,
 				52E35C2C2644451C00FE1D2A /* FriendsListView.swift */,
 				52E35C622644BDE400FE1D2A /* FriendsListCellView.swift */,
 				52E35C5D2644B8F800FE1D2A /* FriendsListViewModel.swift */,
@@ -477,6 +493,7 @@
 				52E35C5526446B8800FE1D2A /* FIRKeys.swift */,
 				52B05F882648039700E22F06 /* Tag.swift */,
 				52623044264BD6EC0018730C /* PlaceMarkAddress.swift */,
+				526230842651B8B50018730C /* Friend.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -748,6 +765,7 @@
 				52FABA702615A6A500F88DB5 /* FirebaseImage.swift in Sources */,
 				52EDC04525FB69B700B0F3F9 /* AppDelegate.swift in Sources */,
 				52B05F8E26482EC100E22F06 /* AddPlaceTagsView.swift in Sources */,
+				526230902651E7BC0018730C /* TabBarView.swift in Sources */,
 				52E35C5626446B8900FE1D2A /* FIRKeys.swift in Sources */,
 				52E35C0B26441CAE00FE1D2A /* MenuViewModel.swift in Sources */,
 				52F993DF263EA4F700B5FAB0 /* ButtonStyleRegular.swift in Sources */,
@@ -759,6 +777,7 @@
 				52E35BA9264161CE00FE1D2A /* LoginViewModel.swift in Sources */,
 				52E35BE82642DD9300FE1D2A /* MapView.swift in Sources */,
 				52E35C352644452C00FE1D2A /* MyPlacesView.swift in Sources */,
+				526230852651B8B80018730C /* Friend.swift in Sources */,
 				52E35C2526443A6900FE1D2A /* MenuCellView.swift in Sources */,
 				5295D70325F97FE400C47D2B /* RegisterSecondView.swift in Sources */,
 				52E35BC32641FDCD00FE1D2A /* RegisterFirstViewModel.swift in Sources */,
@@ -767,6 +786,7 @@
 				52E35BAF2641764D00FE1D2A /* FirebaseRepository.swift in Sources */,
 				52E35C2D2644451C00FE1D2A /* FriendsListView.swift in Sources */,
 				52E35BF02642EB0200FE1D2A /* ActivityView.swift in Sources */,
+				5262308B2651DED90018730C /* ScrollableTabBarView.swift in Sources */,
 				52E35C632644BDE400FE1D2A /* FriendsListCellView.swift in Sources */,
 				52E35B8D26415A8100FE1D2A /* FormTextView.swift in Sources */,
 				52E35C482644504600FE1D2A /* SplashLoadingView.swift in Sources */,

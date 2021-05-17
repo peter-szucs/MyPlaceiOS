@@ -12,16 +12,53 @@ import CoreLocation
 class UserInfo: ObservableObject {
     
     @Published var isUserAuthenticated: FIRAuthState = .undefined
-    @Published var user = User(uid: "", firstName: "", lastName: "", userName: "", hasFinishedOnboarding: false)
+    @Published var user = User()
     @Published var userLocation = CLLocationCoordinate2D()
+    @Published var friendsList: [Friend] = []
     
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
-    func configureFirebaseStateDidChange() {
+    func initialSetup() {
+        configureFirebaseStateDidChange { (authState) in
+            if authState == .signedIn {
+                self.fetchFriends { (result) in
+                    if !result {
+                        print("Friends and friendrequests not fetched. Or user doesn't have any")
+                    }
+                    DispatchQueue.main.async {
+                        self.isUserAuthenticated = authState
+                    }
+                    
+                }
+                
+            } else {
+                self.isUserAuthenticated = authState
+            }
+            print(self.isUserAuthenticated)
+        }
+    }
+    
+    private func fetchFriends(completion: @escaping (Bool) -> ()) {
+        FirebaseRepository.retrieveFriends(uid: user.uid) { (result) in
+            switch result {
+            case .failure(let error):
+                print("error retrieving documents: \(error)")
+                completion(false)
+            case .success(let friends):
+                DispatchQueue.main.async {
+                    self.friendsList = friends
+                    
+                    completion(true)
+                }
+            }
+        }
+    }
+    
+    private func configureFirebaseStateDidChange(completion: @escaping (FIRAuthState) -> ()) {
         if authStateDidChangeListenerHandle == nil {
             authStateDidChangeListenerHandle = Auth.auth().addStateDidChangeListener({ (auth, user) in
                 guard let user = user else {
-                    self.isUserAuthenticated = .signedOut
+                    completion(.signedOut)
                     return
                 }
                 print("Guardcheck user passed")
@@ -30,18 +67,17 @@ class UserInfo: ObservableObject {
                     switch result {
                     case .failure(let error):
                         print("UserInfo: Error retrieving user:", error)
-                        self.isUserAuthenticated = .onBoarding
+                        completion(.onBoarding)
                         return
                     case .success(let userInfo):
                         self.user = userInfo
                         print("UI user.uid: ", user.uid)
                         self.user.uid = user.uid
-                        self.isUserAuthenticated = .signedIn
+                        completion(.signedIn)
                     }
                 }
             })
         }
-        print(isUserAuthenticated)
     }
     
     enum FIRAuthState {

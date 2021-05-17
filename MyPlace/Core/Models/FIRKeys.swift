@@ -12,6 +12,8 @@ enum FIRKeys {
     enum CollectionPath {
         static let users = "users"
         static let places = "places"
+        static let friendRequests = "friendRequests"
+        static let requests = "requests"
     }
     
     enum StoragePath {

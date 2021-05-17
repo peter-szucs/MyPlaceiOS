@@ -10,8 +10,8 @@ import Combine
 
 final class SettingsViewModel: ObservableObject {
     
-    @Published var originalUserObject: User = User(uid: "", firstName: "", lastName: "", userName: "", hasFinishedOnboarding: false)
-    @Published var newUserObject: User = User(uid: "", firstName: "", lastName: "", userName: "", hasFinishedOnboarding: false)
+    @Published var originalUserObject: User = User()
+    @Published var newUserObject: User = User()
     @Published var showPickerAction = false
     @Published var changedImage: Image?
     @Published var pickedImage: UIImage?

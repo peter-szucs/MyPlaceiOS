@@ -91,6 +91,38 @@ final class FirebaseRepository {
         }
     }
     
+    // MARK: - Get Friendslist
+    
+    static func retrieveFriends(uid: String, completion: @escaping (Result<[Friend], Error>) -> ()) {
+        let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(uid).collection(FIRKeys.CollectionPath.requests)
+        var friends: [Friend] = []
+        let dispatchOne = DispatchGroup()
+        ref.getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            }
+            if let documents = snapshot?.documents {
+                for document in documents {
+                    dispatchOne.enter()
+                    retrieveUser(uid: document.documentID) { (result) in
+                        switch result {
+                        case .failure(let error):
+                            print("!!! Error fetching user: \(error)")
+                        case .success(let user):
+                            friends.append(Friend(documentData: document.data(), user: user)!)
+                        }
+                        print("dispatch leave after: \(friends.count)")
+                        dispatchOne.leave()
+                    }
+                }
+                dispatchOne.notify(queue: .global()) {
+                    print("dispatched friends: \(friends)")
+                    completion(.success(friends))
+                }
+            }
+        }
+    }
+    
     // MARK: - Storage functions
     
     static func uploadToStorage(uid: String, imageID: String, path: String, imageData: Data, completion: @escaping (Result<Bool, Error>) -> ()) {

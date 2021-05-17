@@ -12,14 +12,22 @@ struct User {
     var firstName: String
     var lastName: String
     var userName: String
-    var hasFinishedOnboarding: Bool
+    var friends: [Friend]
     
-    init(uid: String, firstName: String, lastName: String, userName: String, hasFinishedOnboarding: Bool) {
+    init() {
+        self.uid = ""
+        self.firstName = ""
+        self.lastName = ""
+        self.userName = ""
+        self.friends = []
+    }
+    
+    init(uid: String, firstName: String, lastName: String, userName: String, friends: [Friend]) {
         self.uid = uid
         self.firstName = firstName
         self.lastName = lastName
         self.userName = userName
-        self.hasFinishedOnboarding = hasFinishedOnboarding
+        self.friends = friends
     }
     
     // Firebase Init
@@ -28,22 +36,20 @@ struct User {
         let firstName = documentData[FIRKeys.User.firstName] as? String ?? ""
         let lastName = documentData[FIRKeys.User.lastName] as? String ?? ""
         let userName = documentData[FIRKeys.User.userName] as? String ?? ""
-        let hasFinishedOnboarding = documentData[FIRKeys.User.hasFinishedOnboarding] as? Bool ?? false
         
         self.init(uid: uid,
                   firstName: firstName,
                   lastName: lastName,
                   userName: userName,
-                  hasFinishedOnboarding: hasFinishedOnboarding)
+                  friends: [])
     }
         
-    static func dataDict(firstName: String, lastName: String, userName: String, hasFinishedOnboarding: Bool) -> [String : Any] {
+    static func dataDict(firstName: String, lastName: String, userName: String) -> [String : Any] {
         var data: [String: Any]
        
         data = [FIRKeys.User.firstName: firstName,
                 FIRKeys.User.lastName: lastName,
-                FIRKeys.User.userName: userName,
-                FIRKeys.User.hasFinishedOnboarding: hasFinishedOnboarding]
+                FIRKeys.User.userName: userName]
         
         return data
     }
@@ -53,8 +59,7 @@ struct User {
        
         data = [FIRKeys.User.firstName: user.firstName,
                 FIRKeys.User.lastName: user.lastName,
-                FIRKeys.User.userName: user.userName,
-                FIRKeys.User.hasFinishedOnboarding: user.hasFinishedOnboarding]
+                FIRKeys.User.userName: user.userName]
         
         return data
     }

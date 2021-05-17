@@ -27,7 +27,7 @@ struct SplashView: View {
                 }
             }
             .onAppear {
-                self.userInfo.configureFirebaseStateDidChange()
+                self.userInfo.initialSetup()
                 
             }
         }
