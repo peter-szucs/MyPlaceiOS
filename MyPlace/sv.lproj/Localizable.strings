@@ -21,6 +21,7 @@
 "UserNamePlaceHolder"           = "Användarnamn...";
 "Done"                          = "Klar";
 "Save"                          = "Spara";
+"Search"                        = "Sök";
 "EMail"                         = "E-Mail";
 "EMailPlaceHolder"              = "email@email.com";
 "Password"                      = "Lösenord";
@@ -52,3 +53,9 @@
 "AddPlace_namePH"               = "Namn på din plats";
 "AddPlace_description"          = "Beskrivning";
 "AddPlace_tags"                 = "Taggar";
+"FriendList_pending"            = "Väntar svar";
+"FriendList_add"                = "Lägg till vän";
+"FriendList_addPH"              = "Väns användarnamn...";
+"FriendList_tab01"              = "Vänner";
+"FriendList_tab02"              = "Vänförfrågningar";
+"FriendList_tab03"              = "Lägg till vän";

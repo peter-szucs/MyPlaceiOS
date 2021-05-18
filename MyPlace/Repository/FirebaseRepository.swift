@@ -80,7 +80,7 @@ final class FirebaseRepository {
         getDocument(for: ref) { (result) in
             switch result {
             case .success(let data):
-                guard let user = User(documentData: data) else {
+                guard let user = User(documentData: data, uid: uid) else {
                     completion(.failure(FireStoreError.noUser))
                     return
                 }
@@ -119,6 +119,166 @@ final class FirebaseRepository {
                     print("dispatched friends: \(friends)")
                     completion(.success(friends))
                 }
+            }
+        }
+    }
+    
+    // MARK: - Friends Listener
+    
+    static func friendCollectionListener(uid: String) {
+        print("!!! Starting friendListener")
+        let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(uid).collection(FIRKeys.CollectionPath.requests)
+        ref.whereField("status", isEqualTo: "sent").whereField("status", isEqualTo: "recieved").addSnapshotListener { (snapshot, error) in
+            print("!!! inside listener")
+            if let error = error {
+                print("FIRRepo: FriendListener Error: \(error)")
+            }
+            guard let snap = snapshot else {
+                print("FIRRepo: Error fetching snapshot in friendslistener: \(String(describing: error))")
+                return
+            }
+            snap.documentChanges.forEach { (diff) in
+                if (diff.type == .added) {
+                    print("!!! New friend Request: \(diff.document.data())")
+                }
+                if (diff.type == .modified) {
+                    print("!!! Modified request: \(diff.document.data())")
+                }
+                if (diff.type == .removed) {
+                    print("!!! Removed request: \(diff.document.data())")
+                }
+            }
+        }
+    }
+    
+    // MARK: - Adding/Updating/Denying Friends
+    
+    static func searchForFriend(userName: String, completion: @escaping (Result<[User], Error>) -> ()) {
+        let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users)
+        var returnArray: [User] = []
+        let dispatchOne = DispatchGroup()
+        ref.whereField(FIRKeys.User.userName, isEqualTo: userName).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("FIRRepo: Error getting document: \(error)")
+                completion(.failure(error))
+            } else {
+                for document in querySnapshot!.documents {
+                    dispatchOne.enter()
+                    print("FIRRepo: user with username \(userName) found: \(document.data())")
+                    guard let user = User(documentData: document.data(), uid: document.documentID) else {
+                        print("FIRRepo: Document failed guard check.")
+                        return
+                    }
+                    returnArray.append(user)
+                    dispatchOne.leave()
+                }
+                dispatchOne.notify(queue: .global()) {
+                    print("dispatchOne done")
+                    completion(.success(returnArray))
+                }
+            }
+            
+        }
+    }
+    
+    static func updateFriendRequests(status: String, uid: String, friendStatus: String, friendID: String, completion: @escaping (Bool) -> ()) {
+        let userRef = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(uid).collection(FIRKeys.CollectionPath.requests).document(friendID)
+        let friendRef = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(friendID).collection(FIRKeys.CollectionPath.requests).document(uid)
+        
+        let dispatch = DispatchGroup()
+        userRef.updateData(["status" : status]) { error in
+            dispatch.enter()
+            if let error = error {
+                print("UpdateRequest: Error writing document: \(error)")
+                dispatch.leave()
+                completion(false)
+            } else {
+                print("UpdateRequest: Document successfully written")
+                dispatch.leave()
+            }
+        }
+        friendRef.updateData(["status" : friendStatus]) { error in
+            dispatch.enter()
+            if let error = error {
+                print("UpdateRequest: Error writing document: \(error)")
+                dispatch.leave()
+                completion(false)
+            } else {
+                print("UpdateRequest: Document successfully written")
+                dispatch.leave()
+            }
+        }
+        dispatch.notify(queue: .global()) {
+            print("Dispatch done")
+            completion(true)
+        }
+    }
+    
+    static func makeFriendRequest(uid: String, friendID: String, completion: @escaping (Bool) -> ()) {
+        let userRef = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(uid).collection(FIRKeys.CollectionPath.requests).document(friendID)
+        let friendRef = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(friendID).collection(FIRKeys.CollectionPath.requests).document(uid)
+        
+        let makeFriendDispatch = DispatchGroup()
+        
+        makeOrUpdateFriendRequestDocument(id: uid)
+        makeOrUpdateFriendRequestDocument(id: friendID)
+        
+        userRef.setData(["status" : "sent"]) { error in
+            makeFriendDispatch.enter()
+            if let error = error {
+                print("MakeRequest: Error writing document: \(error)")
+                makeFriendDispatch.leave()
+                completion(false)
+            } else {
+                print("MakeRequest: Document successfully written")
+                
+                makeFriendDispatch.leave()
+            }
+        }
+        
+        friendRef.setData(["status" : "recieved"]) { error in
+            makeFriendDispatch.enter()
+            if let error = error {
+                print("MakeRequest: Error writing document: \(error)")
+                makeFriendDispatch.leave()
+                completion(false)
+            } else {
+                print("MakeRequest: Document successfully written")
+                
+                makeFriendDispatch.leave()
+            }
+        }
+        
+        makeFriendDispatch.notify(queue: .global()) {
+            print("MakeRequest Dispatch done")
+            completion(true)
+        }
+    }
+    
+    static func denyFriendRequest(uid: String, friendID: String) {
+        let userRef = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(uid).collection(FIRKeys.CollectionPath.requests).document(friendID)
+        let friendRef = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(friendID).collection(FIRKeys.CollectionPath.requests).document(uid)
+        
+        let array = [userRef, friendRef]
+        
+        for ref in array {
+            ref.delete { (error) in
+                if let error = error {
+                    print("Deny Friend Request: Delete failed: \(error)")
+                } else {
+                    print("Deny Friend Request: Document successfully removed!")
+                }
+            }
+        }
+    }
+    
+    static private func makeOrUpdateFriendRequestDocument(id: String) {
+        let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(id)
+        ref.setData(["lastEdited" : Timestamp(date: Date())]) { err in
+            if let err = err {
+                print("makeOrUpdateFRDoc: Error writing document: \(err)")
+            } else  {
+                print("makeOrUpdateFRDoc: successfully written")
             }
         }
     }

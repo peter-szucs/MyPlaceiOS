@@ -48,3 +48,13 @@ struct ButtonStyleRegular: ButtonStyle {
     }
     
 }
+
+struct HighPriorityButtonStyle: PrimitiveButtonStyle {
+    func makeBody(configuration: PrimitiveButtonStyle.Configuration) -> some View {
+        let gesture = TapGesture()
+            .onEnded { _ in configuration.trigger() }
+        
+        return configuration.label
+            .highPriorityGesture(gesture)
+    }
+}

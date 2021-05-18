@@ -10,7 +10,9 @@ import SwiftUI
 struct TabBarView: View {
     
     @Binding var offset: CGFloat
+    @Binding var tagNr: Int
     @State var width: CGFloat = 0
+    var tabs: [LocalizedStringKey]
     
     var body: some View {
         GeometryReader { proxy -> AnyView in
@@ -26,19 +28,20 @@ struct TabBarView: View {
                     
                     Capsule()
                         .fill(Color("MainBlue"))
-                        .frame(width: equalWidth - 15, height: 40)
+                        .frame(width: equalWidth - 15, height: 4)
                         .offset(x: getOffset() + 7, y: 1)
                     
                     HStack(spacing: 0) {
                         ForEach(tabs.indices, id:\.self) { index in
                             Text(tabs[index])
+                                .font(.footnote)
                                 .fontWeight(.bold)
-                                .foregroundColor((getIndexFromOffset() == CGFloat(index) ? .white : .black))
+                                .foregroundColor((getIndexFromOffset() == CGFloat(index) ? .primary : .secondary))
                                 .frame(width: equalWidth, height: 40)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
                                     withAnimation {
-                                        offset = UIScreen.main.bounds.width * CGFloat(index)
+                                        tagNr = index
                                     }
                                 }
                         }
@@ -58,6 +61,7 @@ struct TabBarView: View {
         return progress * width
     }
     
+    // To change font color if using colored "Cell"
     func getIndexFromOffset() -> CGFloat {
         let indexFloat = offset / UIScreen.main.bounds.width
         return indexFloat.rounded(.toNearestOrAwayFromZero)

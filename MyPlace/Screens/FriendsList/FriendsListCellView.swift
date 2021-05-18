@@ -9,24 +9,65 @@ import SwiftUI
 
 struct FriendsListCellView: View {
     
-    var user: User
+    @StateObject var viewModel: FriendsListViewModel
+    @State var user: Friend
+    var userUID: String
     
     var body: some View {
         HStack {
-            FirebaseImage(id: user.uid)
-                .frame(width: 32, height: 32, alignment: .center)
-                .padding()
-            Text(user.userName)
+            FirebaseImage(id: user.info.uid)
+                .frame(width: 40, height: 40, alignment: .center)
+                .clipShape(Circle())
+                .padding(10)
+            Text(user.info.userName)
                 .font(.title3)
             Spacer()
+            if user.status == "sent" {
+                Text(LocalizedStringKey("FriendList_pending"))
+                    .font(.callout)
+                    .foregroundColor(Color("MainOrange"))
+                    .padding(.trailing, 8)
+            } else if user.status == "recieved" {
+                
+                HStack(spacing: 16) {
+                    Button(action: {
+                        viewModel.handleFriendRequest(uid: userUID, friend: user, accept: false) { (result) in
+                            if result {
+                                print("Deny")
+                            }
+                        }
+                    }, label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.red)
+                    })
+                    .buttonStyle(HighPriorityButtonStyle())
+                    
+                    Button(action: {
+                        viewModel.handleFriendRequest(uid: userUID, friend: user, accept: true) { (result) in
+                            if result {
+                                print("Accept!")
+                            }
+                        }
+                    }, label: {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.green)
+                    })
+                    .buttonStyle(HighPriorityButtonStyle())
+                    
+                }
+                .font(.title)
+                .padding()
+                
+            }
         }
-//        .frame(width: UIScreen.main.bounds.width)
     }
 }
 
 struct FriendsListCellView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendsListCellView(user: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: []))
-            .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 80))
+        ForEach(ColorScheme.allCases, id:\.self) {
+            FriendsListCellView(viewModel: FriendsListViewModel(friendsList: []), user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: []), status: "recieved"), userUID: "")
+                .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 80)).preferredColorScheme($0)
+        }
     }
 }

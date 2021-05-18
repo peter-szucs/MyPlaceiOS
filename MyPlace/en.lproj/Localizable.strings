@@ -21,6 +21,7 @@
 "UserNamePlaceHolder"           = "Username...";
 "Done"                          = "Done";
 "Save"                          = "Save";
+"Search"                        = "Search";
 "EMail"                         = "E-Mail";
 "EMailPlaceHolder"              = "email@email.com";
 "Password"                      = "Password";
@@ -52,3 +53,9 @@
 "AddPlace_namePH"               = "Enter Name of Place";
 "AddPlace_description"          = "Description";
 "AddPlace_tags"                 = "Tags";
+"FriendList_pending"            = "Pending";
+"FriendList_add"                = "Add friend";
+"FriendList_addPH"              = "Friend username...";
+"FriendList_tab01"              = "Friends";
+"FriendList_tab02"              = "Requests";
+"FriendList_tab03"              = "Add friend";

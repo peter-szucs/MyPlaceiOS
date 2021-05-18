@@ -9,50 +9,96 @@ import SwiftUI
 
 struct FriendsListView: View {
     
+    @EnvironmentObject var userInfo: UserInfo
     @StateObject var viewModel: FriendsListViewModel
-    
-    @State var offset: CGFloat = 0
     
     var body: some View {
         
-        GeometryReader { proxy in
+        ZStack {
             
-            let rect = proxy.frame(in: .global)
-            
-            ScrollableTabBarView(tabs: tabs, rect: rect, offset: $offset) {
+            VStack {
                 HStack(spacing: 0) {
-                    ForEach((0..<3), id:\.self) { i in
-                        VStack {
-                            
-                            if viewModel.allLists[i].count == 0 {
-                                Text("Nothing here yet.. 😢")
-                                    .padding()
-                                Spacer()
-                            } else {
-                                List(viewModel.allLists[i], id: \.info.uid) { friend in
-                                    FriendsListCellView(user: friend.info)
+                    ForEach(viewModel.tabTitles.indices, id:\.self) { index in
+                        Text(viewModel.tabTitles[index])
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .frame(width: viewModel.equalWidth, height: 40)
+                            .background(viewModel.tabSelection == index ? Color("MainDarkBlue") : Color("MainBlue"))
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                withAnimation {
+                                    viewModel.tabSelection = index
                                 }
                             }
-
-                        }
-                        .padding(.top, 60)
                     }
+                }
+                TabView(selection: $viewModel.tabSelection) {
+                    
+                    VStack(alignment: .leading) {
+                        List {
+                            ForEach(viewModel.friendsList, id:\.info.uid) { friend in
+                                NavigationLink(
+                                    destination: Text("Destination"),
+                                    label: {
+                                        FriendsListCellView(viewModel: viewModel, user: friend, userUID: "")
+                                    })
+                                    .padding(.trailing, -32)
+                            }
+                        }
+                    }.tag(0)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Friend Requests")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .padding()
+                        Divider()
+                        List {
+                            Section(header: Text("Recieved Requests")) {
+                                ForEach(viewModel.recievedRequestList, id:\.info.uid) { friend in
+                                    NavigationLink(
+                                        destination: Text("Destination"),
+                                        label: {
+                                            FriendsListCellView(viewModel: viewModel, user: friend, userUID: userInfo.user.uid)
+                                        })
+                                        .padding(.trailing, -32)
+                                }
+                            }
+                            Section(header: Text("Sent Requests")) {
+                                ForEach(viewModel.sentRequestList, id:\.info.uid) { friend in
+                                    NavigationLink(
+                                        destination: Text("Destination"),
+                                        label: {
+                                            FriendsListCellView(viewModel: viewModel, user: friend, userUID: userInfo.user.uid)
+                                        })
+                                        .padding(.trailing, -32)
+                                }
+                            }
+                            
+                        }
+                    }.tag(1)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Add Friends")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .padding()
+                        Divider()
+                        AddFriendView(viewModel: viewModel)
+                    }.tag(2)
                     
                 }
-                
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .hidden(viewModel.isLoading)
             }
+            
+            if viewModel.isLoading {
+                ActivityView()
+            }
+            
         }
-        .navigationBarTitle(Text(LocalizedStringKey("Menu_friends")), displayMode: .inline)
-        .toolbar(content: {
-            Button(action: {
-                print("Add friend")
-            }, label: {
-                Image(systemName: "person.crop.circle.badge.plus")
-            })
-        })
-        .overlay(TabBarView(offset: $offset), alignment: .top)
-        
-    }
+        .navigationBarTitle(Text(LocalizedStringKey("Menu_friends")), displayMode: .inline)    }
 }
 
 struct FriendsListView_Previews: PreviewProvider {
@@ -60,5 +106,3 @@ struct FriendsListView_Previews: PreviewProvider {
         FriendsListView(viewModel: FriendsListViewModel(friendsList: [Friend(info: User(uid: "dfg34gsdrfg34", firstName: "John", lastName: "Appleseed", userName: "Johnny", friends: []), status: "accepted"), Friend(info: User(uid: "234g4352g45g", firstName: "Greg", lastName: "Sender", userName: "Friendsender1000", friends: []), status: "sent"), Friend(info: User(uid: "", firstName: "Bob", lastName: "Hope", userName: "BobbyBoy", friends: []), status: "recieved")]))
     }
 }
-
-let tabs = ["Friends", "Sent", "Invites"]

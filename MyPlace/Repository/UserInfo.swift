@@ -29,6 +29,7 @@ class UserInfo: ObservableObject {
                         self.isUserAuthenticated = authState
                     }
                     
+                    self.setFriendListener()
                 }
                 
             } else {
@@ -52,6 +53,11 @@ class UserInfo: ObservableObject {
                 }
             }
         }
+    }
+    
+    // MARK: - Send back values thrue listener completion. Change whole structure to just initialize with the listener for first fetch.
+    private func setFriendListener() {
+        FirebaseRepository.friendCollectionListener(uid: user.uid)
     }
     
     private func configureFirebaseStateDidChange(completion: @escaping (FIRAuthState) -> ()) {

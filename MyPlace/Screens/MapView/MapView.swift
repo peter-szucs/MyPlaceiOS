@@ -105,7 +105,6 @@ struct MapView: View {
 //            print("!!! double tapped")
 //        }
         .navigationBarHidden(viewModel.navBarHidden)
-        .navigationBarTitle(LocalizedStringKey("Map_title"), displayMode: .inline)
         
         .onAppear(perform: {
             locationManager.delegate = viewModel

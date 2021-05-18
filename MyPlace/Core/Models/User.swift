@@ -31,8 +31,7 @@ struct User {
     }
     
     // Firebase Init
-    init?(documentData: [String: Any]) {
-        let uid = documentData[FIRKeys.User.uid] as? String ?? ""
+    init?(documentData: [String: Any], uid: String) {
         let firstName = documentData[FIRKeys.User.firstName] as? String ?? ""
         let lastName = documentData[FIRKeys.User.lastName] as? String ?? ""
         let userName = documentData[FIRKeys.User.userName] as? String ?? ""
