@@ -39,7 +39,7 @@ struct FriendsListView: View {
                         List {
                             ForEach(viewModel.friendsList, id:\.info.uid) { friend in
                                 NavigationLink(
-                                    destination: Text("Destination"),
+                                    destination: FriendDetailView(viewModel: FriendDetailViewModel(friend: friend)),
                                     label: {
                                         FriendsListCellView(viewModel: viewModel, user: friend, userUID: "")
                                     })

@@ -8,13 +8,46 @@
 import SwiftUI
 
 struct FriendDetailView: View {
+    
+    @EnvironmentObject var userInfo: UserInfo
+    @StateObject var viewModel: FriendDetailViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        VStack(alignment: .leading) {
+            HStack {
+                FirebaseImage(id: viewModel.friend.info.uid)
+                    .frame(width: 120, height: 120)
+                    .clipShape(Circle())
+                    .padding()
+                VStack(alignment: .leading) {
+                    Text(viewModel.friend.info.userName)
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .padding(.vertical)
+                        .lineLimit(1)
+                    Text("\(viewModel.friend.info.firstName) \(viewModel.friend.info.lastName)")
+                    Spacer()
+                }
+            }
+            .frame(height: 140)
+            ZStack {
+                List {
+                    ForEach(viewModel.places, id:\.uid) { place in
+                        FriendDetailCellView(place: place, distance: place.getDistance(placeLat: place.lat, placeLng: place.lng, userLat: userInfo.userLocation.latitude, userLng: userInfo.userLocation.longitude))
+                    }
+                }
+                if viewModel.isLoading {
+                    ActivityView()
+                }
+            }
+        }
+        .navigationBarTitle(viewModel.friend.info.userName, displayMode: .inline)
     }
 }
 
 struct FriendDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendDetailView()
+        FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(info: User(uid: "", firstName: "Johnny", lastName: "Cash", userName: "musicman", friends: []), status: "accepted")))
     }
 }

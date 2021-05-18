@@ -23,6 +23,7 @@
 		5262309A2652AD8C0018730C /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526230992652AD8C0018730C /* AddFriendView.swift */; };
 		526230A026546F080018730C /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262309F26546F070018730C /* FriendDetailView.swift */; };
 		526230A526546F210018730C /* FriendDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526230A426546F210018730C /* FriendDetailViewModel.swift */; };
+		526230AB265480A40018730C /* FriendDetailCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526230AA265480A30018730C /* FriendDetailCellView.swift */; };
 		5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */; };
 		5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BE25F973E200C47D2B /* FirstPageView.swift */; };
 		5295D6C125F973E600C47D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295D6C025F973E600C47D2B /* Assets.xcassets */; };
@@ -115,6 +116,7 @@
 		526230992652AD8C0018730C /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		5262309F26546F070018730C /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
 		526230A426546F210018730C /* FriendDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewModel.swift; sourceTree = "<group>"; };
+		526230AA265480A30018730C /* FriendDetailCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailCellView.swift; sourceTree = "<group>"; };
 		5295D6B925F973E200C47D2B /* MyPlace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceApp.swift; sourceTree = "<group>"; };
 		5295D6BE25F973E200C47D2B /* FirstPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageView.swift; sourceTree = "<group>"; };
@@ -252,10 +254,19 @@
 		5262309E26546EF10018730C /* FriendDetail */ = {
 			isa = PBXGroup;
 			children = (
+				526230A92654808A0018730C /* Views */,
 				5262309F26546F070018730C /* FriendDetailView.swift */,
 				526230A426546F210018730C /* FriendDetailViewModel.swift */,
 			);
 			path = FriendDetail;
+			sourceTree = "<group>";
+		};
+		526230A92654808A0018730C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				526230AA265480A30018730C /* FriendDetailCellView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		5295D6B025F973E200C47D2B = {
@@ -784,6 +795,7 @@
 				52E35B9726415C0D00FE1D2A /* FirstPageViewModel.swift in Sources */,
 				52FABA702615A6A500F88DB5 /* FirebaseImage.swift in Sources */,
 				52EDC04525FB69B700B0F3F9 /* AppDelegate.swift in Sources */,
+				526230AB265480A40018730C /* FriendDetailCellView.swift in Sources */,
 				52B05F8E26482EC100E22F06 /* AddPlaceTagsView.swift in Sources */,
 				526230902651E7BC0018730C /* TabBarView.swift in Sources */,
 				52E35C5626446B8900FE1D2A /* FIRKeys.swift in Sources */,

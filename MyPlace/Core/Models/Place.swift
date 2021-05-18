@@ -8,9 +8,6 @@
 import SwiftUI
 import MapKit
 
-
-//print("!!! name: \(placemarks![i].name), address: \(placeMark.thoroughfare) \(placeMark.postalCode) \(placeMark.subLocality) \(placeMark.administrativeArea) \(placeMark.country), subAdmin: \(placeMark.subAdministrativeArea)")
-
 struct Place {
     var uid: String
     var title: String
