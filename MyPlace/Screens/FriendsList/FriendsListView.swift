@@ -17,7 +17,6 @@ struct FriendsListView: View {
         ZStack {
             
             VStack {
-//                let equalWidth = UIScreen.main.bounds.width / CGFloat(3)
                 
                 HStack(spacing: 0) {
                     ForEach(viewModel.tabTitles.indices, id:\.self) { index in
@@ -90,8 +89,8 @@ struct FriendsListView: View {
         .navigationBarTitle(Text(LocalizedStringKey("Menu_friends")), displayMode: .inline)    }
 }
 
-//struct FriendsListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FriendsListView(viewModel: FriendsListViewModel(friendsList: [Friend(info: User(uid: "dfg34gsdrfg34", firstName: "John", lastName: "Appleseed", userName: "Johnny", friends: []), status: "accepted"), Friend(info: User(uid: "234g4352g45g", firstName: "Greg", lastName: "Sender", userName: "Friendsender1000", friends: []), status: "sent"), Friend(info: User(uid: "", firstName: "Bob", lastName: "Hope", userName: "BobbyBoy", friends: []), status: "recieved")]))
-//    }
-//}
+struct FriendsListView_Previews: PreviewProvider {
+    static var previews: some View {
+        FriendsListView(viewModel: FriendsListViewModel())
+    }
+}

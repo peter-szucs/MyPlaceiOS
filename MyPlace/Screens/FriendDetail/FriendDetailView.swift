@@ -34,7 +34,12 @@ struct FriendDetailView: View {
             ZStack {
                 List {
                     ForEach(viewModel.places, id:\.uid) { place in
-                        FriendDetailCellView(place: place, distance: place.getDistance(placeLat: place.lat, placeLng: place.lng, userLat: userInfo.userLocation.latitude, userLng: userInfo.userLocation.longitude))
+                        NavigationLink(
+                            destination: PlaceDetailView(viewModel: PlaceDetailViewModel(place: place, distance: place.getDistance(placeLat: place.lat, placeLng: place.lng, userLat: userInfo.userLocation.latitude, userLng: userInfo.userLocation.longitude))),
+                            label: {
+                                FriendDetailCellView(place: place, distance: place.getDistance(placeLat: place.lat, placeLng: place.lng, userLat: userInfo.userLocation.latitude, userLng: userInfo.userLocation.longitude))
+                                    .padding(.trailing, -32)
+                            })
                     }
                 }
                 if viewModel.isLoading {
