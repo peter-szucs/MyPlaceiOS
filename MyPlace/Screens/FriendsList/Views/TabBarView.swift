@@ -70,6 +70,6 @@ struct TabBarView: View {
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendsListView(viewModel: FriendsListViewModel(friendsList: [Friend(info: User(uid: "dfg34gsdrfg34", firstName: "John", lastName: "Appleseed", userName: "Johnny", friends: []), status: "accepted"), Friend(info: User(uid: "234g4352g45g", firstName: "Greg", lastName: "Sender", userName: "Friendsender1000", friends: []), status: "sent"), Friend(info: User(uid: "", firstName: "Bob", lastName: "Hope", userName: "BobbyBoy", friends: []), status: "recieved")]))
+        FriendsListView(viewModel: FriendsListViewModel())
     }
 }

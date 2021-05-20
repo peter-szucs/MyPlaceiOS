@@ -15,9 +15,8 @@ struct MenuView: View {
     var body: some View {
         
         VStack(alignment: .center) {
-            
             NavigationLink(
-                destination: FriendsListView(viewModel: FriendsListViewModel(friendsList: userInfo.friendsList)),
+                destination: FriendsListView(viewModel: FriendsListViewModel()),
                 label: {
                     MenuCellView(menuItem: viewModel.menuItems[0])
                 })

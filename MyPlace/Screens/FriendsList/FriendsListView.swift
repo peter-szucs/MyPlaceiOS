@@ -17,6 +17,8 @@ struct FriendsListView: View {
         ZStack {
             
             VStack {
+//                let equalWidth = UIScreen.main.bounds.width / CGFloat(3)
+                
                 HStack(spacing: 0) {
                     ForEach(viewModel.tabTitles.indices, id:\.self) { index in
                         Text(viewModel.tabTitles[index])
@@ -37,46 +39,33 @@ struct FriendsListView: View {
                     
                     VStack(alignment: .leading) {
                         List {
-                            ForEach(viewModel.friendsList, id:\.info.uid) { friend in
+                            ForEach(userInfo.friendsList, id:\.info.uid) { friend in
                                 NavigationLink(
                                     destination: FriendDetailView(viewModel: FriendDetailViewModel(friend: friend)),
                                     label: {
-                                        FriendsListCellView(viewModel: viewModel, user: friend, userUID: "")
+                                        FriendsListCellView(viewModel: viewModel, user: friend)
                                     })
                                     .padding(.trailing, -32)
                             }
                         }
+                        .padding(.top)
                     }.tag(0)
                     
                     VStack(alignment: .leading) {
-                        Text("Friend Requests")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                            .padding()
-                        Divider()
                         List {
                             Section(header: Text("Recieved Requests")) {
-                                ForEach(viewModel.recievedRequestList, id:\.info.uid) { friend in
-                                    NavigationLink(
-                                        destination: Text("Destination"),
-                                        label: {
-                                            FriendsListCellView(viewModel: viewModel, user: friend, userUID: userInfo.user.uid)
-                                        })
-                                        .padding(.trailing, -32)
+                                ForEach(userInfo.recievedRequestList, id:\.info.uid) { friend in
+                                    FriendsListCellView(viewModel: viewModel, user: friend)
                                 }
                             }
                             Section(header: Text("Sent Requests")) {
-                                ForEach(viewModel.sentRequestList, id:\.info.uid) { friend in
-                                    NavigationLink(
-                                        destination: Text("Destination"),
-                                        label: {
-                                            FriendsListCellView(viewModel: viewModel, user: friend, userUID: userInfo.user.uid)
-                                        })
-                                        .padding(.trailing, -32)
+                                ForEach(userInfo.sentRequestList, id:\.info.uid) { friend in
+                                    FriendsListCellView(viewModel: viewModel, user: friend)
                                 }
                             }
                             
                         }
+                        .padding(.top)
                     }.tag(1)
                     
                     VStack(alignment: .leading) {
@@ -101,8 +90,8 @@ struct FriendsListView: View {
         .navigationBarTitle(Text(LocalizedStringKey("Menu_friends")), displayMode: .inline)    }
 }
 
-struct FriendsListView_Previews: PreviewProvider {
-    static var previews: some View {
-        FriendsListView(viewModel: FriendsListViewModel(friendsList: [Friend(info: User(uid: "dfg34gsdrfg34", firstName: "John", lastName: "Appleseed", userName: "Johnny", friends: []), status: "accepted"), Friend(info: User(uid: "234g4352g45g", firstName: "Greg", lastName: "Sender", userName: "Friendsender1000", friends: []), status: "sent"), Friend(info: User(uid: "", firstName: "Bob", lastName: "Hope", userName: "BobbyBoy", friends: []), status: "recieved")]))
-    }
-}
+//struct FriendsListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FriendsListView(viewModel: FriendsListViewModel(friendsList: [Friend(info: User(uid: "dfg34gsdrfg34", firstName: "John", lastName: "Appleseed", userName: "Johnny", friends: []), status: "accepted"), Friend(info: User(uid: "234g4352g45g", firstName: "Greg", lastName: "Sender", userName: "Friendsender1000", friends: []), status: "sent"), Friend(info: User(uid: "", firstName: "Bob", lastName: "Hope", userName: "BobbyBoy", friends: []), status: "recieved")]))
+//    }
+//}

@@ -125,10 +125,11 @@ final class FirebaseRepository {
     
     // MARK: - Friends Listener
     
-    static func friendCollectionListener(uid: String) {
-        print("!!! Starting friendListener")
+    static func friendCollectionListener(uid: String, completion: @escaping (FriendListenerReturn) -> ()) {
+        
+        print("!!! Starting friendListener for \(uid)")
         let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(uid).collection(FIRKeys.CollectionPath.requests)
-        ref.whereField("status", isEqualTo: "sent").whereField("status", isEqualTo: "recieved").addSnapshotListener { (snapshot, error) in
+        ref.addSnapshotListener { (snapshot, error) in
             print("!!! inside listener")
             if let error = error {
                 print("FIRRepo: FriendListener Error: \(error)")
@@ -138,14 +139,23 @@ final class FirebaseRepository {
                 return
             }
             snap.documentChanges.forEach { (diff) in
+                let status = diff.document.data()["status"] as? String ?? ""
+                var friend = FriendListenerReturn(uid: diff.document.documentID, status: status, changeType: .added)
+                
                 if (diff.type == .added) {
-                    print("!!! New friend Request: \(diff.document.data())")
+                    print("!!! New friend Request: \(diff.document.data()), \(diff.document.documentID)")
+                    friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
+                    completion(friend)
                 }
                 if (diff.type == .modified) {
-                    print("!!! Modified request: \(diff.document.data())")
+                    print("!!! Modified request: \(diff.document.data()), \(diff.document.documentID)")
+                    friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
+                    completion(friend)
                 }
                 if (diff.type == .removed) {
-                    print("!!! Removed request: \(diff.document.data())")
+                    print("!!! Removed request: \(diff.document.data()), \(diff.document.documentID)")
+                    friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
+                    completion(friend)
                 }
             }
         }
@@ -209,7 +219,7 @@ final class FirebaseRepository {
             }
         }
         dispatch.notify(queue: .global()) {
-            print("Dispatch done")
+            print("update Friend Dispatch done")
             completion(true)
         }
     }

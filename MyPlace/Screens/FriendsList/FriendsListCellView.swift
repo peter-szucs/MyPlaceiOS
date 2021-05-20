@@ -9,9 +9,9 @@ import SwiftUI
 
 struct FriendsListCellView: View {
     
+    @EnvironmentObject var userInfo: UserInfo
     @StateObject var viewModel: FriendsListViewModel
     @State var user: Friend
-    var userUID: String
     
     var body: some View {
         HStack {
@@ -31,9 +31,10 @@ struct FriendsListCellView: View {
                 
                 HStack(spacing: 16) {
                     Button(action: {
-                        viewModel.handleFriendRequest(uid: userUID, friend: user, accept: false) { (result) in
+                        viewModel.handleFriendRequest(uid: userInfo.user.uid, friend: user, accept: false) { (result) in
                             if result {
                                 print("Deny")
+//                                self.userInfo.handleFriendRequest(for: user, accept: false)
                             }
                         }
                     }, label: {
@@ -43,7 +44,7 @@ struct FriendsListCellView: View {
                     .buttonStyle(HighPriorityButtonStyle())
                     
                     Button(action: {
-                        viewModel.handleFriendRequest(uid: userUID, friend: user, accept: true) { (result) in
+                        viewModel.handleFriendRequest(uid: userInfo.user.uid, friend: user, accept: true) { (result) in
                             if result {
                                 print("Accept!")
                             }
@@ -66,7 +67,7 @@ struct FriendsListCellView: View {
 struct FriendsListCellView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id:\.self) {
-            FriendsListCellView(viewModel: FriendsListViewModel(friendsList: []), user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: []), status: "recieved"), userUID: "")
+            FriendsListCellView(viewModel: FriendsListViewModel(), user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: []), status: "recieved"))
                 .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 80)).preferredColorScheme($0)
         }
     }

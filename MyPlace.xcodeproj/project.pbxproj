@@ -24,6 +24,7 @@
 		526230A026546F080018730C /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262309F26546F070018730C /* FriendDetailView.swift */; };
 		526230A526546F210018730C /* FriendDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526230A426546F210018730C /* FriendDetailViewModel.swift */; };
 		526230AB265480A40018730C /* FriendDetailCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526230AA265480A30018730C /* FriendDetailCellView.swift */; };
+		526230B9265677400018730C /* FriendListenerReturn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526230B8265677400018730C /* FriendListenerReturn.swift */; };
 		5295D6BD25F973E200C47D2B /* MyPlaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */; };
 		5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295D6BE25F973E200C47D2B /* FirstPageView.swift */; };
 		5295D6C125F973E600C47D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295D6C025F973E600C47D2B /* Assets.xcassets */; };
@@ -117,6 +118,7 @@
 		5262309F26546F070018730C /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
 		526230A426546F210018730C /* FriendDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewModel.swift; sourceTree = "<group>"; };
 		526230AA265480A30018730C /* FriendDetailCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailCellView.swift; sourceTree = "<group>"; };
+		526230B8265677400018730C /* FriendListenerReturn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListenerReturn.swift; sourceTree = "<group>"; };
 		5295D6B925F973E200C47D2B /* MyPlace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5295D6BC25F973E200C47D2B /* MyPlaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlaceApp.swift; sourceTree = "<group>"; };
 		5295D6BE25F973E200C47D2B /* FirstPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageView.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 				52B05F882648039700E22F06 /* Tag.swift */,
 				52623044264BD6EC0018730C /* PlaceMarkAddress.swift */,
 				526230842651B8B50018730C /* Friend.swift */,
+				526230B8265677400018730C /* FriendListenerReturn.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -811,6 +814,7 @@
 				52E35C352644452C00FE1D2A /* MyPlacesView.swift in Sources */,
 				526230852651B8B80018730C /* Friend.swift in Sources */,
 				52E35C2526443A6900FE1D2A /* MenuCellView.swift in Sources */,
+				526230B9265677400018730C /* FriendListenerReturn.swift in Sources */,
 				5262309A2652AD8C0018730C /* AddFriendView.swift in Sources */,
 				5295D70325F97FE400C47D2B /* RegisterSecondView.swift in Sources */,
 				52E35BC32641FDCD00FE1D2A /* RegisterFirstViewModel.swift in Sources */,
@@ -1037,7 +1041,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.peterszucs.MyPlace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1060,7 +1064,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.peterszucs.MyPlace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

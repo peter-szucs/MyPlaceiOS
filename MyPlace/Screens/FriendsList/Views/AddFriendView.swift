@@ -41,7 +41,7 @@ struct AddFriendView: View {
                 .disabled(viewModel.isFriendListLoading)
                 List {
                     ForEach(viewModel.friendSearchList, id:\.uid) { user in
-                        FriendsListCellView(viewModel: viewModel, user: Friend(info: user, status: "accepted"), userUID: userInfo.user.uid)
+                        FriendsListCellView(viewModel: viewModel, user: Friend(info: user, status: "accepted"))
                             .onTapGesture {
                                 viewModel.showingActionSheet = true
                             }
@@ -52,6 +52,9 @@ struct AddFriendView: View {
                                             DispatchQueue.main.async {
                                                 viewModel.tabSelection = 1
                                             }
+                                            userInfo.newFriendRequestSentFromUser(for: Friend(info: user, status: "sent"))
+                                        } else {
+                                            print("Something went wrong sending friendrequest")
                                         }
                                     } },
                                     .cancel()
@@ -69,6 +72,6 @@ struct AddFriendView: View {
 
 struct AddFriendView_Previews: PreviewProvider {
     static var previews: some View {
-        AddFriendView(viewModel: FriendsListViewModel(friendsList: []))
+        AddFriendView(viewModel: FriendsListViewModel())
     }
 }

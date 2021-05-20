@@ -11,10 +11,11 @@ final class FriendsListViewModel: ObservableObject {
     
     @Published var isLoading: Bool = false
     
-    @Published var fullFriendsList: [Friend]
+//    @Published var fullFriendsList: [Friend]
     @Published var friendsList: [Friend] = []
     @Published var sentRequestList: [Friend] = []
     @Published var recievedRequestList: [Friend] = []
+    
     @Published var allLists: [[Friend]] = []
     
     @Published var tabSelection = 0
@@ -32,28 +33,31 @@ final class FriendsListViewModel: ObservableObject {
                                 LocalizedStringKey("FriendList_tab03")]
     @Published var equalWidth: CGFloat = 0
     
-    init(friendsList: [Friend]) {
-        self.fullFriendsList = friendsList
-        makeLists()
+    
+//    init(friendsList: [Friend], sentRequestList: [Friend], recievedRequestList: [Friend]) {
+//        self.friendsList = friendsList
+//        self.sentRequestList = sentRequestList
+//        self.recievedRequestList = recievedRequestList
+//        makeLists()
+    init() {
         equalWidth = UIScreen.main.bounds.width / CGFloat(tabTitles.count)
-        // MARK: - fetch friends
     }
     
-    private func makeLists() {
-        for friend in fullFriendsList {
-            // MARK: TODO: Convert to Enum switch
-            if friend.status == "accepted" {
-                self.friendsList.append(friend)
-            } else if friend.status == "sent" {
-                self.sentRequestList.append(friend)
-            } else {
-                self.recievedRequestList.append(friend)
-            }
-        }
-        allLists.append(friendsList)
-        allLists.append(sentRequestList)
-        allLists.append(recievedRequestList)
-    }
+//    private func makeLists() {
+//        for friend in fullFriendsList {
+//            // MARK: TODO: Convert to Enum switch
+//            if friend.status == "accepted" {
+//                self.friendsList.append(friend)
+//            } else if friend.status == "sent" {
+//                self.sentRequestList.append(friend)
+//            } else {
+//                self.recievedRequestList.append(friend)
+//            }
+//        }
+//        allLists.append(friendsList)
+//        allLists.append(sentRequestList)
+//        allLists.append(recievedRequestList)
+//    }
     
     func performFriendSearch() {
         isFriendListLoading = true
@@ -77,9 +81,9 @@ final class FriendsListViewModel: ObservableObject {
         FirebaseRepository.makeFriendRequest(uid: uid, friendID: friend.uid, completion: { (result) in
             if result {
                 DispatchQueue.main.async {
-                    self.sentRequestList.append(Friend(info: friend, status: "sent"))
-                    self.allLists[1] = self.sentRequestList
-                    print("!!! sentList: \(self.sentRequestList), allList: \(self.allLists)")
+//                    self.sentRequestList.append(Friend(info: friend, status: "sent"))
+//                    self.allLists[1] = self.sentRequestList
+//                    print("!!! sentList: \(self.sentRequestList), allList: \(self.allLists)")
                 }
                 completion(true)
             } else {
@@ -93,39 +97,43 @@ final class FriendsListViewModel: ObservableObject {
             FirebaseRepository.updateFriendRequests(status: "accepted", uid: uid, friendStatus: "accepted", friendID: friend.info.uid) { (result) in
                 if result {
                     DispatchQueue.main.async {
-                        self.removeFromList(list: "recievedRequestList", friendID: friend.info.uid)
+//                        self.removeFromList(list: "recievedRequestList", friendID: friend.info.uid)
                         var newFriend = friend
                         newFriend.status = "accepted"
-                        self.friendsList.append(newFriend)
+//                        self.friendsList.append(newFriend)
                     }
+                    completion(true)
+                } else {
+                    completion(false)
                 }
             }
         } else {
             FirebaseRepository.denyFriendRequest(uid: uid, friendID: friend.info.uid)
-            self.removeFromList(list: "recievedRequestList", friendID: friend.info.uid)
+            completion(true)
+//            self.removeFromList(list: "recievedRequestList", friendID: friend.info.uid)
         }
         
     }
     
-    private func removeFromList(list: String, friendID: String) {
-        switch list {
-        case "sentRequestList":
-            for i in 0..<sentRequestList.count {
-                if sentRequestList[i].info.uid == friendID {
-                    sentRequestList.remove(at: i)
-                    print("removefromList: \(sentRequestList)")
-                }
-            }
-        case "recievedRequestList":
-            print(recievedRequestList.count)
-            for i in 0..<recievedRequestList.count {
-                if recievedRequestList[i].info.uid == friendID {
-                    recievedRequestList.remove(at: i)
-                    print("removefromList: \(recievedRequestList)")
-                }
-            }
-        default:
-            print("This shouldn't happen")
-        }
-    }
+//    private func removeFromList(list: String, friendID: String) {
+//        switch list {
+//        case "sentRequestList":
+//            for i in 0..<sentRequestList.count {
+//                if sentRequestList[i].info.uid == friendID {
+//                    sentRequestList.remove(at: i)
+//                    print("removefromList: \(sentRequestList)")
+//                }
+//            }
+//        case "recievedRequestList":
+//            print(recievedRequestList.count)
+//            for i in 0..<recievedRequestList.count {
+//                if recievedRequestList[i].info.uid == friendID {
+//                    recievedRequestList.remove(at: i)
+//                    print("removefromList: \(recievedRequestList)")
+//                }
+//            }
+//        default:
+//            print("This shouldn't happen")
+//        }
+//    }
 }
