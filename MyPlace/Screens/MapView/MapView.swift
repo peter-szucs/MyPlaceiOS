@@ -20,12 +20,13 @@ struct MapView: View {
         ZStack {
             MapUIView(centerCoordinate: $viewModel.centerCoordinate, annotations: viewModel.annotations)
                 .environmentObject(viewModel)
-//                .edgesIgnoringSafeArea(.all)
+                .edgesIgnoringSafeArea(.all)
             
             Circle()
                 .fill(Color.blue)
                 .opacity(0.3)
                 .frame(width: 26, height: 26)
+                .edgesIgnoringSafeArea(.all)
             
             VStack {
                 Spacer()
@@ -52,31 +53,31 @@ struct MapView: View {
                 .padding()
                 
                 
-                    HStack {
-                        NavigationLink(
-                            // MARK: TODO: Change to filter view
-                            destination: MenuView(),
-                            label: {
-                                MapBottomMenuIcon(iconSystemName: "line.horizontal.3.decrease.circle", iconTitle: LocalizedStringKey("Map_filter_title"))
-                            })
-                        
-                        Spacer()
-                        
-                        NavigationLink(
-                            destination: MenuView(),
-                            label: {
-                                MapBottomMenuIcon(iconSystemName: "ellipsis.rectangle", iconTitle: LocalizedStringKey("Menu_title"))
-                            })
-                    }
-                    .edgesIgnoringSafeArea(.bottom)
-                    .frame(width: UIScreen.main.bounds.width, alignment: .leading)
-                    .padding(.bottom, 30)
-                    .background(Color("BottomMapBackground"))
-                    .cornerRadius(10)
-                    .shadow(color: Color("BottomMapShadowBackground"), radius: 2, x: 0, y: -1)
+                HStack {
+                    NavigationLink(
+                        destination: FilterView(),
+                        label: {
+                            MapBottomMenuIcon(iconSystemName: "line.horizontal.3.decrease.circle", iconTitle: LocalizedStringKey("Map_filter_title"))
+                        })
+                    
+                    Spacer()
+                    
+                    NavigationLink(
+                        destination: MenuView(),
+                        label: {
+                            MapBottomMenuIcon(iconSystemName: "ellipsis.rectangle", iconTitle: LocalizedStringKey("Menu_title"))
+                        })
+                }
+                .edgesIgnoringSafeArea(.all)
+                .frame(width: UIScreen.main.bounds.width, alignment: .leading)
+                .padding(.bottom, 30)
+                .background(Color("BottomMapBackground"))
+                .cornerRadius(10)
+                .shadow(color: Color("BottomMapShadowBackground"), radius: 2, x: 0, y: -1)
                 
                 
             }
+            .edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
                 NavigationLink(
@@ -98,24 +99,21 @@ struct MapView: View {
                 })
                 .padding(.bottom, 40)
             }
+            .edgesIgnoringSafeArea(.all)
         }
-        .edgesIgnoringSafeArea(.all)
         .background(Color.clear)
-//        .onTapGesture(count: 2) {
-//            print("!!! double tapped")
-//        }
         .navigationBarHidden(viewModel.navBarHidden)
         
         .onAppear(perform: {
             locationManager.delegate = viewModel
             locationManager.requestWhenInUseAuthorization()
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//            locationManager.startUpdatingLocation()
             userInfo.userLocation = viewModel.centerCoordinate
         })
         .onDisappear {
             viewModel.navBarHidden = false
-            locationManager.stopUpdatingLocation()
+//            locationManager.stopUpdatingLocation()
         }
         .alert(isPresented: $viewModel.permissionDenied, content: {
             Alert(title: Text(LocalizedStringKey("CLPermissionDenied")), message: Text(LocalizedStringKey("CLPermDeniedMsg")), dismissButton: .default(Text(LocalizedStringKey("CLPermDeniedDismiss")), action: {

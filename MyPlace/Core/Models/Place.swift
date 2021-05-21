@@ -58,12 +58,14 @@ struct Place {
         let title = documentData[FIRKeys.Place.title] as? String ?? ""
         let description = documentData[FIRKeys.Place.description] as? String ?? ""
         let imageIDs = documentData[FIRKeys.Place.imageIDs] as? [String] ?? []
+        
         // MARK: TODO: Date conversion here (Timestamp -> Date). Remove creationDate from upload/struct ?
         // let settings = Firestore.firestore().settings
         // setting.areTimestampsInSnapshotEnabled = true
         // db.settings = settings
         // (documentSnapshot.get("created_at") as! Timestamp)
         // let date: Date = timestamp.dateValue()
+        
         let PMData = documentData[FIRKeys.Place.pmData] as? [String : Any]
         let tagIds = documentData[FIRKeys.Place.tags] as? [Int] ?? []
         let lat = documentData[FIRKeys.Place.latitude] as? Double ?? 0.0

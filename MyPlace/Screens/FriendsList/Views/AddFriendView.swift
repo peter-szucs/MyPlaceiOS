@@ -42,6 +42,7 @@ struct AddFriendView: View {
                 List {
                     ForEach(viewModel.friendSearchList, id:\.uid) { user in
                         FriendsListCellView(viewModel: viewModel, user: Friend(info: user, status: "accepted"))
+                            .contentShape(Rectangle())
                             .onTapGesture {
                                 viewModel.showingActionSheet = true
                             }

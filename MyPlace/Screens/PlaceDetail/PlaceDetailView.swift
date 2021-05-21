@@ -109,6 +109,6 @@ struct PlaceDetailView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        PlaceDetailView(viewModel: PlaceDetailViewModel(place: Place(uid: "", title: "Home", description: "Best place in the world. Here we can enjoy a rich, healthy, benelovent atmosphere with lots of good food, awesome drinks, really long descriptions of the place.", imageIDs: ["dasf"], PMData: PlaceMarkAddress(name: "Home", thoroughfare: "Storgatan", subThoroughfare: "72", postalCode: "171 52", subLocality: "Solna", administrativeArea: "Stockholm", country: "Sverige"), tagIds: [0, 4, 6], lat: 0, lng: 0), distance: "1.2 km"))
+        PlaceDetailView(viewModel: PlaceDetailViewModel(place: Place(uid: "", title: "Home", description: "Best place in the world. Here we can enjoy a rich, healthy, benelovent atmosphere with lots of good food, awesome drinks, really long descriptions of the place.", imageIDs: ["dasf"], PMData: PlaceMarkAddress(name: "Home", thoroughfare: "Storgatan", subThoroughfare: "72", postalCode: "171 52", subLocality: "Solna", administrativeArea: "Stockholm", country: "Sverige", countryCode: "SE"), tagIds: [0, 4, 6], lat: 0, lng: 0), distance: "1.2 km"))
     }
 }

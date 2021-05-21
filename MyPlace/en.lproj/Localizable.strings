@@ -22,6 +22,9 @@
 "Done"                          = "Done";
 "Save"                          = "Save";
 "Search"                        = "Search";
+"Search_trunc"                  = "Search...";
+"Clear"                         = "Clear";
+"Cancel"                        = "Cancel";
 "EMail"                         = "E-Mail";
 "EMailPlaceHolder"              = "email@email.com";
 "Password"                      = "Password";
@@ -59,3 +62,4 @@
 "FriendList_tab01"              = "Friends";
 "FriendList_tab02"              = "Requests";
 "FriendList_tab03"              = "Add friend";
+"Filter_country"                = "Country";

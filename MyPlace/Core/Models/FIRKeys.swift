@@ -47,5 +47,6 @@ enum FIRKeys {
         static let subLocality = "subLocality"
         static let administrativeArea = "administrativeArea"
         static let country = "country"
+        static let countryCode = "countryCode"
     }
 }

@@ -40,9 +40,7 @@ struct MenuView: View {
         .navigationBarTitle(Text(LocalizedStringKey("Menu_title")), displayMode: .inline)
         .toolbar(content: {
             Button(action: {
-                // MARK: TODO - Refactor
                 viewModel.signOut()
-                
             }, label: {
                 VStack {
                     Image(systemName: "lock.square")

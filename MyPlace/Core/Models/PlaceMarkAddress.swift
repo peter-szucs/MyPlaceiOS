@@ -15,6 +15,7 @@ struct PlaceMarkAddress {
     var PMNeighbourhood: String
     var PMState: String
     var PMCountry: String
+    var PMCountryCode: String
     
     init() {
         self.PMName = ""
@@ -24,9 +25,10 @@ struct PlaceMarkAddress {
         self.PMNeighbourhood = ""
         self.PMState = ""
         self.PMCountry = ""
+        self.PMCountryCode = ""
     }
     
-    init(name: String?, thoroughfare: String?, subThoroughfare: String?, postalCode: String?, subLocality: String?, administrativeArea: String?, country: String?) {
+    init(name: String?, thoroughfare: String?, subThoroughfare: String?, postalCode: String?, subLocality: String?, administrativeArea: String?, country: String?, countryCode: String) {
         self.PMName = name ?? ""
         self.PMAddress = thoroughfare ?? ""
         self.PMAddress2 = subThoroughfare ?? ""
@@ -34,6 +36,7 @@ struct PlaceMarkAddress {
         self.PMNeighbourhood = subLocality ?? ""
         self.PMState = administrativeArea ?? ""
         self.PMCountry = country ?? ""
+        self.PMCountryCode = countryCode
     }
     
     init?(documentData: [String : Any]?) {
@@ -49,6 +52,7 @@ struct PlaceMarkAddress {
         let neighbourhood = documentData[FIRKeys.Address.subLocality] as? String ?? "unknown"
         let state = documentData[FIRKeys.Address.administrativeArea] as? String ?? "unknown"
         let country = documentData[FIRKeys.Address.country] as? String ?? "unknown"
+        let countryCode = documentData[FIRKeys.Address.countryCode] as? String ?? "unknown"
         
         self.init(name: name,
                   thoroughfare: address,
@@ -56,11 +60,11 @@ struct PlaceMarkAddress {
                   postalCode: zipcode,
                   subLocality: neighbourhood,
                   administrativeArea: state,
-                  country: country)
-        
+                  country: country,
+                  countryCode: countryCode)
     }
     
-    static func dataDict(name: String, thoroughfare: String, subThoroughfare: String, postalCode: String, subLocality: String, administrativeArea: String, country: String) -> [String : Any] {
+    static func dataDict(name: String, thoroughfare: String, subThoroughfare: String, postalCode: String, subLocality: String, administrativeArea: String, country: String, countryCode: String) -> [String : Any] {
         var data: [String : Any]
         
         data = [FIRKeys.Address.name: name,
@@ -69,7 +73,8 @@ struct PlaceMarkAddress {
                 FIRKeys.Address.postalCode: postalCode,
                 FIRKeys.Address.subLocality: subLocality,
                 FIRKeys.Address.administrativeArea: administrativeArea,
-                FIRKeys.Address.country: country]
+                FIRKeys.Address.country: country,
+                FIRKeys.Address.countryCode: countryCode]
         
         return data
     }
@@ -83,7 +88,8 @@ struct PlaceMarkAddress {
                 FIRKeys.Address.postalCode: placemarkAddress.PMZipCode,
                 FIRKeys.Address.subLocality: placemarkAddress.PMNeighbourhood,
                 FIRKeys.Address.administrativeArea: placemarkAddress.PMState,
-                FIRKeys.Address.country: placemarkAddress.PMCountry]
+                FIRKeys.Address.country: placemarkAddress.PMCountry,
+                FIRKeys.Address.countryCode: placemarkAddress.PMCountryCode]
         
         return data
     }

@@ -47,7 +47,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
                 return
             } else if let placemark = placemark?.first {
                 // MARK: TODO: Rewrite with enums in PlaceMarkAddress Struct
-                self.newPlace.PMData = PlaceMarkAddress(name: placemark.name, thoroughfare: placemark.thoroughfare, subThoroughfare: placemark.subThoroughfare, postalCode: placemark.postalCode, subLocality: placemark.subLocality, administrativeArea: placemark.administrativeArea, country: placemark.country)
+                self.newPlace.PMData = PlaceMarkAddress(name: placemark.name, thoroughfare: placemark.thoroughfare, subThoroughfare: placemark.subThoroughfare, postalCode: placemark.postalCode, subLocality: placemark.subLocality, administrativeArea: placemark.administrativeArea, country: placemark.country, countryCode: placemark.isoCountryCode ?? "unknown")
                 self.newPlace.lat = coordinate.latitude
                 self.newPlace.lng = coordinate.longitude
                 print(self.newPlace)
@@ -71,21 +71,15 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         let geoCoder = CLGeocoder()
         let clLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
         geoCoder.reverseGeocodeLocation(clLocation) { (placemark, error) -> Void in
-//            if (error != nil) {
-//                print("!!! reverse geocode failed: \(String(describing: error?.localizedDescription))")
-//            }
+            if (error != nil) {
+                print("!!! reverse geocode failed: \(String(describing: error?.localizedDescription))")
+            }
             guard let placemark = placemark, error == nil else {
                 completion(nil, error)
                 return
             }
             completion(placemark, nil)
-//            for i in 0..<placemarks!.count {
-//                placeMark = placemarks?[i]
-//
-                // MARK: - So it seems you need to either switch to Google Maps or use API from google maps (Places SDK) on the coordinate to get the business name and all other good stuff...
-                
-//                print("!!! name: \(placemarks![i].name), address: \(placeMark.thoroughfare) \(placeMark.postalCode) \(placeMark.subLocality) \(placeMark.administrativeArea) \(placeMark.country), subAdmin: \(placeMark.subAdministrativeArea)")
-//            }
+            // MARK: - So it seems you need to either switch to Google Maps or use API from google maps (Places SDK) on the coordinate to get the business name and all other good stuff...
         }
     }
     
@@ -112,7 +106,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         print("!!! didupdateloc")
         guard let location = locations.last else { return }
         
-        self.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+        self.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         
         self.mapView.setRegion(self.region, animated: true)
         

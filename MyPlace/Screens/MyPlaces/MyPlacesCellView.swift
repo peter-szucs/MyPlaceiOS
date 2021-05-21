@@ -46,7 +46,7 @@ struct MyPlacesCellView: View {
 
 struct MyPlacesCellView_Previews: PreviewProvider {
     static var previews: some View {
-        MyPlacesCellView(place: Place(uid: "", title: "My Fav place", description: "Test tes test testest setsetst sdga", imageIDs: [], PMData: PlaceMarkAddress(name: "Hopefully a place", thoroughfare: "CobberStreet", subThoroughfare: "44", postalCode: "555 55", subLocality: "SubLocality", administrativeArea: "Tokyo", country: "CobbelCountry"), tagIds: [1, 2, 3, 6, 7], lat: 12.23123, lng: 12.12345), distance: "1.2 km")
+        MyPlacesCellView(place: Place(uid: "", title: "My Fav place", description: "Test tes test testest setsetst sdga", imageIDs: [], PMData: PlaceMarkAddress(name: "Hopefully a place", thoroughfare: "CobberStreet", subThoroughfare: "44", postalCode: "555 55", subLocality: "SubLocality", administrativeArea: "Tokyo", country: "CobbelCountry", countryCode: "SE"), tagIds: [1, 2, 3, 6, 7], lat: 12.23123, lng: 12.12345), distance: "1.2 km")
             .padding(8)
             .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 120))
     }

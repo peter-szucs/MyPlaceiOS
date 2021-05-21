@@ -20,6 +20,8 @@ class UserInfo: ObservableObject {
     @Published var sentRequestList: [Friend] = []
     @Published var recievedRequestList: [Friend] = []
     
+    @Published var currentMapFilters: MapFilters = MapFilters()
+    
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
     func initialSetup() {

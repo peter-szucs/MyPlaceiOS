@@ -22,6 +22,9 @@
 "Done"                          = "Klar";
 "Save"                          = "Spara";
 "Search"                        = "Sök";
+"Search_trunc"                  = "Sök...";
+"Clear"                         = "Rensa";
+"Cancel"                        = "Avbryt";
 "EMail"                         = "E-Mail";
 "EMailPlaceHolder"              = "email@email.com";
 "Password"                      = "Lösenord";
@@ -31,7 +34,7 @@
 "Next"                          = "Nästa";
 "OnboardingPassesMismatch"      = "Lösenorden matchar inte";
 "OnboardingFieldsEmpty"         = "Fyll i alla fält";
-"OnboardingSuccess"              = "Registrering lyckades!";
+"OnboardingSuccess"             = "Registrering lyckades!";
 "OnboardingInvalidEmail"        = "Felaktig Email";
 "FIRerror_NetworkError"         = "Nätverksfel";
 "FIRerror_InvalidEmail"         = "Felaktig Email";
@@ -59,3 +62,4 @@
 "FriendList_tab01"              = "Vänner";
 "FriendList_tab02"              = "Vänförfrågningar";
 "FriendList_tab03"              = "Lägg till vän";
+"Filter_country"                = "Land";

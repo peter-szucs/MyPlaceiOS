@@ -20,10 +20,12 @@ struct MapBottomMenuIcon: View {
                 .font(.footnote)
             
         }
-        .padding(EdgeInsets(top: 20,
-                            leading: 30,
-                            bottom: 0,
-                            trailing: 30))
+//        .padding(EdgeInsets(top: 20,
+//                            leading: 30,
+//                            bottom: 0,
+//                            trailing: 30))
+        .padding(.top, 20)
+        .padding(.horizontal, 30)
         .foregroundColor(Color("BottomMapMenuIcons"))
     }
 }
