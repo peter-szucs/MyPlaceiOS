@@ -70,41 +70,68 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
                 self.goToAddPlace = true
             }
         }
-//        let pointAnnotation = MKPointAnnotation()
-//        pointAnnotation.coordinate = coordinate
-//        pointAnnotation.title = "Annotation"
-//        pointAnnotation.subtitle = "This is a pin"
-//        annotations.append(pointAnnotation)
-//        mapView.addAnnotation(pointAnnotation)
         
-        // Move map to location
-//        let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 50, longitudinalMeters: 50)
-//        mapView.setRegion(coordinateRegion, animated: true)
-//        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
+        
+
     }
     
     func setupMapWithFilters() {
         if self.recievedFilters.hasEqualFilters(with: currentFilters) {
             print("no update needed")
+            return
         } else {
             print("update needed!!")
             currentFilters = recievedFilters
-            // fetch
-            FirebaseRepository.getFilteredPlaces(filteredList: recievedFilters, friendsList: friendsList) { (result) in
-                switch result {
-                case .failure(let error):
-                    print("Error getting places: \(error)")
-                case.success(let filteredFriendArray):
-                    self.filteredFriends = filteredFriendArray
+            if recievedFilters.selectedTags.isEmpty && recievedFilters.selectedCountry.isEmpty && recievedFilters.selectedFriends.isEmpty {
+                print("resetting filters")
+                DispatchQueue.main.async {
+                    self.annotations.removeAll()
+                    self.mapView.removeAnnotations(self.annotations)
                 }
-                print("Friends for annotations fetched: \(self.filteredFriends)")
+                return
+            } else {
+                // fetch new filtered places
+                FirebaseRepository.getFilteredPlaces(filteredList: recievedFilters, friendsList: friendsList) { (result) in
+                    switch result {
+                    case .failure(let error):
+                        print("Error getting places: \(error)")
+                    case.success(let filteredFriendArray):
+                        self.filteredFriends = filteredFriendArray
+                    }
+                    print("Friends for annotations fetched: \(self.filteredFriends)")
+                    // place on map
+                    for friend in self.filteredFriends {
+                        self.produceAnnotationsFromFilter(friend: friend)
+                    }
+                }
             }
-            // place on map
             
         }
+        // Move map to location
+        guard let centerCoordinate = CenterLocations().countryCenterCoordinates[recievedFilters.selectedCountry] else { return }
+        let coordinateRegion = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: 1000000, longitudinalMeters: 1000000)
+        mapView.setRegion(coordinateRegion, animated: true)
+        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
     }
     
-    func produceAnnotation(place: Place) {
+    private func produceAnnotationsFromFilter(friend: Friend) {
+        DispatchQueue.main.async {
+            self.annotations.removeAll()
+            self.mapView.removeAnnotations(self.annotations)
+        }
+        
+        for place in friend.info.places {
+            let pointAnnotation = MKPointAnnotation()
+            pointAnnotation.coordinate = place.coordinate
+            pointAnnotation.title = place.title
+            pointAnnotation.subtitle = place.description
+            DispatchQueue.main.async {
+                self.annotations.append(pointAnnotation)
+                self.mapView.addAnnotation(pointAnnotation)
+                print("Added annotation")
+            }
+            
+        }
         
     }
     

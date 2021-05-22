@@ -57,25 +57,25 @@ struct MapUIView: UIViewRepresentable {
             if annotation.isKind(of: MKUserLocation.self) {
                 return nil
             } else {
-                var pinAnnotation: MKAnnotationView?
-                if let dequedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "PIN") {
-                    pinAnnotation = dequedAnnotationView
-                    pinAnnotation?.annotation = annotation
-                } else {
-                    pinAnnotation = MKAnnotationView(annotation: annotation, reuseIdentifier: "PIN")
-                    pinAnnotation?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-                }
+//                var pinAnnotation: MKAnnotationView?
+//                if let dequedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "PIN") {
+//                    pinAnnotation = dequedAnnotationView
+//                    pinAnnotation?.annotation = annotation
+//                } else {
+//                    pinAnnotation = MKAnnotationView(annotation: annotation, reuseIdentifier: "PIN")
+//                    pinAnnotation?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//                }
+//
+//                if let pinAnnotation = pinAnnotation {
+//                    pinAnnotation.canShowCallout = true
+//                    pinAnnotation.image = UIImage(named: "Logo")
+//                }
                 
-                if let pinAnnotation = pinAnnotation {
-                    pinAnnotation.canShowCallout = true
-                    pinAnnotation.image = UIImage(named: "Logo")
-                }
-                
-//                let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "PIN_VIEW")
+                let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "PIN_VIEW")
 //                pinAnnotation.tintColor = .red
-//                pinAnnotation.animatesDrop = true
-//                pinAnnotation.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-//                pinAnnotation.canShowCallout = true
+                pinAnnotation.animatesDrop = true
+                pinAnnotation.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+                pinAnnotation.canShowCallout = true
 //                pinAnnotation.pinTintColor = .blue
 //                pinAnnotation.image = UIImage(named: "Logo")
                 
