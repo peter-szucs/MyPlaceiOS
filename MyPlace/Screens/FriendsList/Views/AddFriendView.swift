@@ -48,13 +48,15 @@ struct AddFriendView: View {
                             }
                             .actionSheet(isPresented: $viewModel.showingActionSheet) {
                                 ActionSheet(title: Text("Send friendrequest?"), message: Text("Do you want to add \(user.userName) as a friend?"), buttons: [
-                                    .default(Text("Yes")) { viewModel.sendFriendRequest(uid: userInfo.user.uid, friend: user) { (result) in
-                                        if result {
-                                            DispatchQueue.main.async {
-                                                viewModel.tabSelection = 1
-                                            }
-                                            userInfo.newFriendRequestSentFromUser(for: Friend(info: user, status: "sent"))
-                                        } else {
+                                    .default(Text("Yes")) {
+                                        viewModel.sendFriendRequest(uid: userInfo.user.uid, friend: user) { (result) in
+                                            hideKeyboard()
+                                            if result {
+                                                DispatchQueue.main.async {
+                                                    viewModel.tabSelection = 1
+                                                }
+                                                userInfo.newFriendRequestSentFromUser(for: Friend(info: user, status: "sent"))
+                                            } else {
                                             print("Something went wrong sending friendrequest")
                                         }
                                     } },
