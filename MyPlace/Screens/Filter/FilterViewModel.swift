@@ -14,32 +14,41 @@ final class FilterViewModel: ObservableObject {
     @Published var tabSelection: Int = 0
     @Published var equalWidth: CGFloat = 0
     
-    @Published var friendsSelected: [Friend] = []
-    @Published var tagsSelected: [Int] = []
-    @Published var countriesSelected: [String] = []
+//    @Published var friendsSelected: [Friend]
+//    @Published var tagsSelected: [Int]
+//    @Published var countriesSelected: [String]
+    
+    @Published var filters: MapFilters
+    @Published var filteredFriends: [Friend] = []
     
     @Published var tagsList: [Tag] = []
     
     @Published var isEditing = false
     @Published var searchString: String = ""
     
-    init() {
+    init(filters: MapFilters) {
+        self.filters = filters
         equalWidth = UIScreen.main.bounds.width / CGFloat(tabTitles.count)
         makeTaglist()
+        
+    }
+    
+    func getFilteredPlaces(friendsList: [Friend], completion: @escaping (Bool) -> ()) {
+        FirebaseRepository.getFilteredPlaces(filteredList: filters, friendsList: friendsList) { (result) in
+            switch result {
+            case .failure(let error):
+                print("Error getting places: \(error)")
+                completion(false)
+            case.success(let filteredFriendArray):
+                self.filteredFriends = filteredFriendArray
+                completion(true)
+            }
+        }
     }
     
     func isFriendSelected(friend: Friend) -> Bool {
-        for i in 0..<friendsSelected.count {
-            if friendsSelected[i].info.uid == friend.info.uid {
-                return true
-            }
-        }
-        return false
-    }
-    
-    func isCountrySelected(countryCode: String) -> Bool {
-        for i in 0..<countriesSelected.count {
-            if countriesSelected[i] == countryCode {
+        for i in 0..<filters.selectedFriends.count {
+            if filters.selectedFriends[i].info.uid == friend.info.uid {
                 return true
             }
         }
@@ -47,22 +56,22 @@ final class FilterViewModel: ObservableObject {
     }
     
     func isAllFiltersEmpty() -> Bool {
-        return friendsSelected.isEmpty && tagsSelected.isEmpty && countriesSelected.isEmpty
+        return filters.selectedFriends.isEmpty && filters.selectedTags.isEmpty && filters.selectedCountry.isEmpty
     }
     
     func addFriendToFilter(friend: Friend) {
         if isFriendSelected(friend: friend) {
             removeFriendFromList(friend: friend)
         } else {
-            self.friendsSelected.append(friend)
+            self.filters.selectedFriends.append(friend)
         }
     }
     
-    func addCountryToFilter(countryCode: String) {
-        if isCountrySelected(countryCode: countryCode) {
-            removeCountryFromList(countryCode: countryCode)
+    func addOrRemoveCountryToFilter(countryCode: String) {
+        if filters.selectedCountry == countryCode {
+            filters.selectedCountry = ""
         } else {
-            self.countriesSelected.append(countryCode)
+            filters.selectedCountry = countryCode
         }
     }
     
@@ -72,9 +81,9 @@ final class FilterViewModel: ObservableObject {
     }
     
     func clearAllFilters() {
-        friendsSelected.removeAll()
-        tagsSelected.removeAll()
-        countriesSelected.removeAll()
+        filters.selectedFriends.removeAll()
+        filters.selectedTags.removeAll()
+        filters.selectedCountry = ""
     }
     
     private func makeTaglist() {
@@ -86,21 +95,11 @@ final class FilterViewModel: ObservableObject {
     }
     
     private func removeFriendFromList(friend: Friend) {
-        print("selected friends: \(friendsSelected)")
-        for i in 0..<friendsSelected.count {
+        for i in 0..<filters.selectedFriends.count {
             print("index: \(i), friend: \(friend)")
-            if friendsSelected[i].info.uid == friend.info.uid {
+            if filters.selectedFriends[i].info.uid == friend.info.uid {
                 print("friend is here, removing")
-                friendsSelected.remove(at: i)
-                return
-            }
-        }
-    }
-    
-    private func removeCountryFromList(countryCode: String) {
-        for i in 0..<countriesSelected.count {
-            if countriesSelected[i] == countryCode {
-                countriesSelected.remove(at: i)
+                filters.selectedFriends.remove(at: i)
                 return
             }
         }

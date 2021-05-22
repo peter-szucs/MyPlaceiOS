@@ -67,7 +67,7 @@ struct FriendsListCellView: View {
 struct FriendsListCellView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id:\.self) {
-            FriendsListCellView(viewModel: FriendsListViewModel(), user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: []), status: "filterScreen"))
+            FriendsListCellView(viewModel: FriendsListViewModel(), user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: [], places: []), status: "filterScreen"))
                 .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 80)).preferredColorScheme($0)
         }
     }

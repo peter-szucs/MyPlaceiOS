@@ -73,6 +73,55 @@ final class FirebaseRepository {
         }
     }
     
+    // MARK: - Filtered Place Fetches
+    
+    static func getFilteredPlaces(filteredList: MapFilters, friendsList: [Friend], completion: @escaping (Result<[Friend], Error>) -> ()) {
+        let filterDispatch = DispatchGroup()
+        var ref: Query?
+        var queryFriendsList: [Friend] = []
+        var returnList: [Friend] = []
+        if filteredList.selectedFriends.isEmpty {
+            queryFriendsList = friendsList
+        } else {
+            queryFriendsList = filteredList.selectedFriends
+        }
+        
+        for friend in queryFriendsList {
+            filterDispatch.enter()
+            var returnFriend = Friend(info: friend.info, status: friend.status)
+            ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(friend.info.uid).collection(FIRKeys.CollectionPath.places)
+            if !filteredList.selectedCountry.isEmpty {
+                ref = ref?.whereField("pmData.countryCode", isEqualTo: filteredList.selectedCountry)
+            }
+            if !filteredList.selectedTags.isEmpty {
+               ref = ref?.whereField("tags", arrayContainsAny: filteredList.selectedTags)
+            }
+            ref?.getDocuments(completion: { (querysnapshot, error) in
+                if let error = error {
+                    print("GetFilteredPlaces: Error fetching documents: \(error)")
+                    completion(.failure(error))
+                } else {
+                    guard let documents = querysnapshot?.documents else {
+                        print("GetFilteredPlaces: snapshot failed guard check")
+                        return
+                    }
+                    for document in documents {
+                        returnFriend.info.places.append(Place(documentData: document.data(), id: document.documentID)!)
+                    }
+                    if !returnFriend.info.places.isEmpty {
+                        returnList.append(returnFriend)
+                    }
+                    
+                    filterDispatch.leave()
+                }
+            })
+        }
+        filterDispatch.notify(queue: .global()) {
+            print("### GetFilteredPlaces: Dispatched all fetches ###")
+            completion(.success(returnList))
+        }
+    }
+    
     // MARK: - Retrieve User
     
     static func retrieveUser(uid: String, completion: @escaping (Result<User, Error>) -> ()) {
@@ -282,6 +331,7 @@ final class FirebaseRepository {
         }
     }
     
+    // To adress that the actual document for the user doesn't exist without having one field in it
     static private func makeOrUpdateFriendRequestDocument(id: String) {
         let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(id)
         ref.setData(["lastEdited" : Timestamp(date: Date())]) { err in
@@ -378,4 +428,14 @@ enum FireStoreError: Error {
     case noCollectionSnapshot
     case noSnapshotData
     case noUser
+}
+
+enum FilterQuery {
+    case all
+    case onlyFriend
+    case onlyTags
+    case onlyCountries
+    case friendAndTags
+    case friendAndCountries
+    case tagsAndCountries
 }

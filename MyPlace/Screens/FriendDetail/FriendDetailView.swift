@@ -53,6 +53,6 @@ struct FriendDetailView: View {
 
 struct FriendDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(info: User(uid: "", firstName: "Johnny", lastName: "Cash", userName: "musicman", friends: []), status: "accepted")))
+        FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(info: User(uid: "", firstName: "Johnny", lastName: "Cash", userName: "musicman", friends: [], places: []), status: "accepted")))
     }
 }

@@ -27,4 +27,14 @@ struct Friend {
         
         self.init(info: user, status: status)
     }
+    
+    public func isIn(listOfFriends: [Friend]) -> Bool {
+        let thisFriend = self
+        for friend in listOfFriends {
+            if friend.info.uid == thisFriend.info.uid {
+                return true
+            }
+        }
+        return false
+    }
 }

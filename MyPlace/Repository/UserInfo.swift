@@ -9,6 +9,9 @@ import SwiftUI
 import FirebaseAuth
 import CoreLocation
 
+// debug/trials
+import FirebaseFirestore
+
 class UserInfo: ObservableObject {
     
     @Published var isUserAuthenticated: FIRAuthState = .undefined
@@ -20,11 +23,20 @@ class UserInfo: ObservableObject {
     @Published var sentRequestList: [Friend] = []
     @Published var recievedRequestList: [Friend] = []
     
-    @Published var currentMapFilters: MapFilters = MapFilters()
+    @Published var currentMapFilters: MapFilters = MapFilters() {
+        didSet {
+            print("!!! userInfo filters didSet")
+        }
+    }
     
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
     func initialSetup() {
+        
+        // debug/trials
+        debugAndTrialsFunction()
+        
+        
         configureFirebaseStateDidChange { (authState) in
             if authState == .signedIn {
                 self.fetchFriends { (result) in
@@ -42,6 +54,42 @@ class UserInfo: ObservableObject {
             print(self.isUserAuthenticated)
         }
     }
+    
+    // MARK: - ###### Debug and Trials area #######
+    
+    private func debugAndTrialsFunction() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        var ref = Firestore.firestore().collection("users").document(uid).collection("places").whereField("pmData.countryCode", isEqualTo: "DE")
+        var ref: Query?
+        
+        // first one must initialize path as well, depending on if multiple countries or not ->
+        // multiple countries:
+        ref = Firestore.firestore().collection("users").document(uid).collection("places").whereField("pmData.countryCode", isEqualTo: "")
+        // one country
+//        ref = Firestore.firestore().collection("users").document(uid).collection("places").whereField("pmData.countryCode", isEqualTo: "DE")
+        // chain multiple queries for filter
+//        ref = ref?.whereField("pmData.countryCode", isEqualTo: "SE")
+//        ref = ref?.whereField("tags", arrayContainsAny: [0, 1, 2])
+        var places: [Place] = []
+        ref?.getDocuments { (snap, err) in
+            if let err = err {
+                print("error: \(err)")
+            } else {
+                guard let documents = snap?.documents else {
+                    print("failed guard")
+                    return
+                }
+                for document in documents {
+                    let p = Place(documentData: document.data(), id: document.documentID)!
+                    places.append(p)
+                    print("### QUERY returns: \(p) ###")
+                }
+            }
+        }
+    }
+    
+    // MARK: _ ###### END DebugTrials area ########
+    
     
     private func fetchFriends(completion: @escaping (Bool) -> ()) {
         FirebaseRepository.retrieveFriends(uid: user.uid) { (result) in

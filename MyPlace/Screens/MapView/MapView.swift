@@ -36,7 +36,8 @@ struct MapView: View {
                         Image(systemName: "location.fill")
                             .font(.title2)
                             .padding(10)
-                            .background(Color.primary)
+                            .background(Color("MainDarkBlue"))
+                            .foregroundColor(.white)
                             .clipShape(Circle())
                     })
                     
@@ -44,7 +45,8 @@ struct MapView: View {
                         Image(systemName: viewModel.mapType == .standard ? "network" : "map")
                             .font(.title2)
                             .padding(10)
-                            .background(Color.primary)
+                            .background(Color("MainDarkBlue"))
+                            .foregroundColor(.white)
                             .clipShape(Circle())
                     })
                     
@@ -55,7 +57,7 @@ struct MapView: View {
                 
                 HStack {
                     NavigationLink(
-                        destination: FilterView(),
+                        destination: FilterView(viewModel: FilterViewModel(filters: userInfo.currentMapFilters), filters: $viewModel.recievedFilters),
                         label: {
                             MapBottomMenuIcon(iconSystemName: "line.horizontal.3.decrease.circle", iconTitle: LocalizedStringKey("Map_filter_title"))
                         })
@@ -103,13 +105,15 @@ struct MapView: View {
         }
         .background(Color.clear)
         .navigationBarHidden(viewModel.navBarHidden)
-        
         .onAppear(perform: {
             locationManager.delegate = viewModel
             locationManager.requestWhenInUseAuthorization()
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
 //            locationManager.startUpdatingLocation()
             userInfo.userLocation = viewModel.centerCoordinate
+//            viewModel.setupMapWithFilters(filters: userInfo.currentMapFilters)
+            viewModel.friendsList = userInfo.friendsList
+            print("!!! MapView onAppear")
         })
         .onDisappear {
             viewModel.navBarHidden = false
@@ -123,8 +127,8 @@ struct MapView: View {
     }
 }
 
-struct MapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapView()
-    }
-}
+//struct MapView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MapView()
+//    }
+//}

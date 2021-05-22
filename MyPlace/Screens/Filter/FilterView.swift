@@ -11,8 +11,8 @@ struct FilterView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject private var userInfo: UserInfo
-    @StateObject private var viewModel = FilterViewModel()
-    @GestureState private var isPressed = false
+    @StateObject var viewModel: FilterViewModel
+    @Binding var filters: MapFilters
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -36,7 +36,7 @@ struct FilterView: View {
                 VStack {
                     List {
                         ForEach(userInfo.friendsList, id:\.info.uid) { friend in
-                            FilterViewFriendCellView(user: friend, selectedUsers: $viewModel.friendsSelected)
+                            FilterViewFriendCellView(user: friend, selectedUsers: $viewModel.filters.selectedFriends)
                                 .contentShape(Rectangle())
                                 .gesture(TapGesture()
                                             .onEnded {
@@ -52,20 +52,42 @@ struct FilterView: View {
                 VStack {
                     List {
                         ForEach(viewModel.tagsList, id:\.id) { tag in
-                            TagCell(selectedTags: $viewModel.tagsSelected, tag: tag)
+                            TagCell(selectedTags: $viewModel.filters.selectedTags, tag: tag)
                         }
                     }
                 }.tag(1)
                 
-                VStack {
+                VStack(alignment: .leading) {
                     SearchBarView(searchString: $viewModel.searchString)
                         .padding(.vertical, 4)
+                    Text("Selected Country")
+                        .font(.title3)
+                        .padding(.horizontal, 8)
+                        .padding(.top, 4)
+                    HStack {
+                        Text(viewModel.filters.selectedCountry.isEmpty ? "" : viewModel.countryFlag(countryCode: viewModel.filters.selectedCountry))
+                            .padding(.leading, 16)
+                            .padding([.vertical, .trailing], 8)
+                        Text(viewModel.filters.selectedCountry.isEmpty ? "-" : NSLocale.getCountryName(from: viewModel.filters.selectedCountry))
+                            .padding(.trailing, 16)
+                            .padding(.vertical, 8)
+                    }
+                    .background(viewModel.filters.selectedCountry.isEmpty ? Color.clear : Color("TagSelected"))
+                    .clipShape(Capsule())
+                    .onTapGesture {
+                        if !viewModel.filters.selectedCountry.isEmpty {
+                            viewModel.filters.selectedCountry = ""
+                        }
+                    }
+                    .padding(.horizontal)
+                    Divider()
+                    
                     List {
                         ForEach(NSLocale.locales().filter({ viewModel.searchString.isEmpty ? true : $0.countryName.contains(viewModel.searchString)}), id:\.countryCode) { locale in
-                            FilterCountryCellView(selectedCountries: $viewModel.countriesSelected, countryCode: locale.countryCode, countryName: locale.countryName, countryFlag: viewModel.countryFlag(countryCode: locale.countryCode))
+                            FilterCountryCellView(selectedCountry: $viewModel.filters.selectedCountry, countryCode: locale.countryCode, countryName: locale.countryName, countryFlag: viewModel.countryFlag(countryCode: locale.countryCode))
                                 .contentShape(Rectangle())
                                 .onTapGesture {
-                                    self.viewModel.addCountryToFilter(countryCode: locale.countryCode)
+                                    viewModel.addOrRemoveCountryToFilter(countryCode: locale.countryCode)
                                 }
                         }
                     }
@@ -80,7 +102,8 @@ struct FilterView: View {
                 Button(action: {
                     // Dismiss, go to map and show pins after filter
                     
-                    userInfo.currentMapFilters = MapFilters(selectedFriends: viewModel.friendsSelected, selectedTags: viewModel.tagsSelected, selectedCountries: viewModel.countriesSelected)
+                    userInfo.currentMapFilters = viewModel.filters
+                    filters = viewModel.filters
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text(LocalizedStringKey("Done"))
@@ -99,6 +122,6 @@ struct FilterView: View {
 
 struct FilterView_Previews: PreviewProvider {
     static var previews: some View {
-        FilterView()
+        FilterView(viewModel: FilterViewModel(filters: MapFilters(selectedFriends: [], selectedTags: [1, 2], selectedCountry: "SE")), filters: .constant(MapFilters()))
     }
 }

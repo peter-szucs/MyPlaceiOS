@@ -9,17 +9,12 @@ import SwiftUI
 
 struct FilterCountryCellView: View {
     
-    @Binding var selectedCountries: [String]
+    @Binding var selectedCountry: String
     @State var countryCode: String
     @State var countryName: String
     @State var countryFlag: String
     var isSelected: Bool {
-        for i in 0..<selectedCountries.count {
-            if selectedCountries[i] == countryCode {
-                return true
-            }
-        }
-        return false
+        return selectedCountry == countryCode
     }
     
     var body: some View {
@@ -40,6 +35,6 @@ struct FilterCountryCellView: View {
 
 struct FilterCountryCellView_Previews: PreviewProvider {
     static var previews: some View {
-        FilterCountryCellView(selectedCountries: .constant(["SE"]), countryCode: "SE", countryName: "Sverige", countryFlag: "")
+        FilterCountryCellView(selectedCountry: .constant("SE"), countryCode: "SE", countryName: "Sverige", countryFlag: "")
     }
 }

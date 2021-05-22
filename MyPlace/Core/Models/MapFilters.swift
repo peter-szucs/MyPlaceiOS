@@ -10,17 +10,28 @@ import Foundation
 struct MapFilters {
     var selectedFriends: [Friend]
     var selectedTags: [Int]
-    var selectedCountries: [String]
+    var selectedCountry: String
     
     init() {
         self.selectedFriends = []
         self.selectedTags = []
-        self.selectedCountries = []
+        self.selectedCountry = ""
     }
     
-    init(selectedFriends: [Friend], selectedTags: [Int], selectedCountries: [String]) {
+    init(selectedFriends: [Friend], selectedTags: [Int], selectedCountry: String) {
         self.selectedFriends = selectedFriends
         self.selectedTags = selectedTags
-        self.selectedCountries = selectedCountries
+        self.selectedCountry = selectedCountry
+    }
+    
+    func hasEqualFilters(with otherFilters: MapFilters) -> Bool {
+        let thisFilter = self
+        if thisFilter.selectedFriends.containsSameFriends(as: otherFilters.selectedFriends) &&
+            thisFilter.selectedCountry == otherFilters.selectedCountry &&
+            thisFilter.selectedTags.containsSameElements(as: otherFilters.selectedTags) {
+            return true
+        } else {
+            return false
+        }
     }
 }

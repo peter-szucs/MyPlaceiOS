@@ -13,6 +13,7 @@ struct User {
     var lastName: String
     var userName: String
     var friends: [Friend]
+    var places: [Place]
     
     init() {
         self.uid = ""
@@ -20,14 +21,16 @@ struct User {
         self.lastName = ""
         self.userName = ""
         self.friends = []
+        self.places = []
     }
     
-    init(uid: String, firstName: String, lastName: String, userName: String, friends: [Friend]) {
+    init(uid: String, firstName: String, lastName: String, userName: String, friends: [Friend], places: [Place]) {
         self.uid = uid
         self.firstName = firstName
         self.lastName = lastName
         self.userName = userName
         self.friends = friends
+        self.places = places
     }
     
     // Firebase Init
@@ -40,7 +43,8 @@ struct User {
                   firstName: firstName,
                   lastName: lastName,
                   userName: userName,
-                  friends: [])
+                  friends: [],
+                  places: [])
     }
         
     static func dataDict(firstName: String, lastName: String, userName: String) -> [String : Any] {

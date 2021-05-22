@@ -20,6 +20,22 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     @Published var annotations: [MKPointAnnotation] = []
     @Published var goToAddPlace = false
     @Published var newPlace: Place = Place()
+    @Published var friendsList: [Friend] = []
+    
+    @Published var currentFilters = MapFilters()
+    @Published var recievedFilters: MapFilters = MapFilters() {
+        didSet {
+            print("!!! didSet filters: \(recievedFilters)")
+            // fetch
+            setupMapWithFilters()
+        }
+    }
+    
+    var filteredFriends: [Friend] = []
+    
+//    init(friendsList: [Friend]) {
+//        self.friendsList = friendsList
+//    }
     
     // Change map type
     func updateMapType() {
@@ -65,6 +81,31 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
 //        let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: 50, longitudinalMeters: 50)
 //        mapView.setRegion(coordinateRegion, animated: true)
 //        mapView.setVisibleMapRect(mapView.visibleMapRect, animated: true)
+    }
+    
+    func setupMapWithFilters() {
+        if self.recievedFilters.hasEqualFilters(with: currentFilters) {
+            print("no update needed")
+        } else {
+            print("update needed!!")
+            currentFilters = recievedFilters
+            // fetch
+            FirebaseRepository.getFilteredPlaces(filteredList: recievedFilters, friendsList: friendsList) { (result) in
+                switch result {
+                case .failure(let error):
+                    print("Error getting places: \(error)")
+                case.success(let filteredFriendArray):
+                    self.filteredFriends = filteredFriendArray
+                }
+                print("Friends for annotations fetched: \(self.filteredFriends)")
+            }
+            // place on map
+            
+        }
+    }
+    
+    func produceAnnotation(place: Place) {
+        
     }
     
     func convertCoordinateToAddress(location: CLLocationCoordinate2D, completion: @escaping (_ placemark: [CLPlacemark]?, _ error: Error?) -> ()) {

@@ -14,3 +14,26 @@ extension Array where Element: Hashable {
         return Array(thisSet.symmetricDifference(otherSet))
     }
 }
+
+extension Array where Element: Comparable {
+    func containsSameElements(as other: [Element]) -> Bool {
+        return self.count == other.count && self.sorted() == other.sorted()
+    }
+}
+
+extension Array where Element == Friend {
+    func containsSameFriends(as otherListOfFriends: [Friend]) -> Bool {
+        let thisListOfFriends = self
+        if thisListOfFriends.count == otherListOfFriends.count {
+            for friend in thisListOfFriends {
+                if !friend.isIn(listOfFriends: otherListOfFriends) {
+                    return false
+                }
+            }
+            return true
+        } else {
+            return false
+        }
+        
+    }
+}

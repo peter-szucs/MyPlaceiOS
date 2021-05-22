@@ -44,7 +44,7 @@ struct FilterViewFriendCellView: View {
 struct FilterViewFriendCellView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id:\.self) {
-            FilterViewFriendCellView(user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: []), status: "accepted"), selectedUsers: .constant([]))
+            FilterViewFriendCellView(user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: [], places: []), status: "accepted"), selectedUsers: .constant([]))
 //                .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 80)).preferredColorScheme($0)
                 .previewLayout(.sizeThatFits).preferredColorScheme($0)
         }

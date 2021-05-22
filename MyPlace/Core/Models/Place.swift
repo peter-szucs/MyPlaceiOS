@@ -121,4 +121,13 @@ struct Place {
         }
     }
     
+    func isIn(listOfPlaces: [Place]) -> Bool {
+        let thisPlace = self
+        for place in listOfPlaces {
+            if place.uid == thisPlace.uid {
+                return true
+            }
+        }
+        return false
+    }
 }
