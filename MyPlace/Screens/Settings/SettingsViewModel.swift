@@ -161,7 +161,18 @@ final class SettingsViewModel: ObservableObject {
     // MARK: - Private Functions
     
     private func setupProfileImage() {
-        guard let avatarImage = lruImageCache.retrieveObject(at: originalUserObject.uid) else { return }
+        guard let avatarImage = lruImageCache.retrieveObject(at: originalUserObject.uid) else {
+            FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(originalUserObject.uid)") { (result) in
+                switch result {
+                case .failure(let error):
+                    print("failed to fetch user image: \(error)")
+                case .success(let image):
+                    self.profileImage = image
+                    self.lruImageCache.setObject(for: self.newUserObject.uid, value: image)
+                }
+            }
+            return
+        }
         profileImage = avatarImage
     }
     

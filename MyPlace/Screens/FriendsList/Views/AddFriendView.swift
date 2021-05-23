@@ -41,7 +41,7 @@ struct AddFriendView: View {
                 .disabled(viewModel.isFriendListLoading)
                 List {
                     ForEach(viewModel.friendSearchList, id:\.uid) { user in
-                        FriendsListCellView(viewModel: viewModel, user: Friend(info: user, status: "accepted"))
+                        FriendsListCellView(viewModel: viewModel, friend: Friend(info: user, status: "accepted"))
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 viewModel.showingActionSheet = true
@@ -75,6 +75,6 @@ struct AddFriendView: View {
 
 struct AddFriendView_Previews: PreviewProvider {
     static var previews: some View {
-        AddFriendView(viewModel: FriendsListViewModel())
+        AddFriendView(viewModel: FriendsListViewModel(cache: LRUCache<String, Image>(capacity: 1)))
     }
 }

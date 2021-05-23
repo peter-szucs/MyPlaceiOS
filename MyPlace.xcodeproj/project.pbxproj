@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		35F0ACC766319AFBC901B95A /* Pods_MyPlaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF027AF48AB68D3A37B7D8BD /* Pods_MyPlaceTests.framework */; };
+		5238A184265A9D0900AB5BDE /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238A183265A9D0900AB5BDE /* AvatarImageView.swift */; };
 		5262301826489D250018730C /* AddTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301726489D250018730C /* AddTagsView.swift */; };
 		5262301E264934B80018730C /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301D264934B80018730C /* TagCell.swift */; };
 		5262304026495F2A0018730C /* AddedPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262303F26495F2A0018730C /* AddedPhotosView.swift */; };
@@ -115,6 +116,7 @@
 /* Begin PBXFileReference section */
 		2AC5EFBDF9079C98064E973A /* Pods-MyPlace-MyPlaceUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPlace-MyPlaceUITests.release.xcconfig"; path = "Target Support Files/Pods-MyPlace-MyPlaceUITests/Pods-MyPlace-MyPlaceUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3F9151435807468970BA59B7 /* Pods_MyPlace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyPlace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5238A183265A9D0900AB5BDE /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		5262301726489D250018730C /* AddTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsView.swift; sourceTree = "<group>"; };
 		5262301D264934B80018730C /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		5262303F26495F2A0018730C /* AddedPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPhotosView.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 			isa = PBXGroup;
 			children = (
 				52E35BEF2642EB0200FE1D2A /* ActivityView.swift */,
+				5238A183265A9D0900AB5BDE /* AvatarImageView.swift */,
 				52F993DE263EA4F600B5FAB0 /* ButtonStyleRegular.swift */,
 				52FABA6F2615A6A400F88DB5 /* FirebaseImage.swift */,
 				52E35B8C26415A8100FE1D2A /* FormTextView.swift */,
@@ -909,6 +912,7 @@
 				52E35BB82641FAD600FE1D2A /* RegisterFirstView.swift in Sources */,
 				52E35BA1264161B100FE1D2A /* RegisterSecondViewModel.swift in Sources */,
 				526230BF26569A790018730C /* FilterViewModel.swift in Sources */,
+				5238A184265A9D0900AB5BDE /* AvatarImageView.swift in Sources */,
 				52E35C4026444D4F00FE1D2A /* SplashView.swift in Sources */,
 				5295D6BF25F973E200C47D2B /* FirstPageView.swift in Sources */,
 				52BE2C542626F080000DB5D4 /* Place.swift in Sources */,

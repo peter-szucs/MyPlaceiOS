@@ -36,7 +36,7 @@ struct FilterView: View {
                 VStack {
                     List {
                         ForEach(userInfo.friendsList, id:\.info.uid) { friend in
-                            FilterViewFriendCellView(user: friend, selectedUsers: $viewModel.filters.selectedFriends)
+                            FilterViewFriendCellView(viewModel: viewModel, user: friend, selectedUsers: $viewModel.filters.selectedFriends)
                                 .contentShape(Rectangle())
                                 .gesture(TapGesture()
                                             .onEnded {
@@ -122,6 +122,6 @@ struct FilterView: View {
 
 struct FilterView_Previews: PreviewProvider {
     static var previews: some View {
-        FilterView(viewModel: FilterViewModel(filters: MapFilters(selectedFriends: [], selectedTags: [1, 2], selectedCountry: "SE")), filters: .constant(MapFilters()))
+        FilterView(viewModel: FilterViewModel(filters: MapFilters(selectedFriends: [], selectedTags: [1, 2], selectedCountry: "SE"), cache: LRUCache<String, Image>(capacity: 1)), filters: .constant(MapFilters()))
     }
 }

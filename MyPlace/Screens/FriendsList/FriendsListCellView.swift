@@ -11,27 +11,27 @@ struct FriendsListCellView: View {
     
     @EnvironmentObject var userInfo: UserInfo
     @StateObject var viewModel: FriendsListViewModel
-    @State var user: Friend
+    @State var friend: Friend
     
     var body: some View {
         HStack {
-            FirebaseImage(id: user.info.uid)
+            AvatarImageView(image: viewModel.loadImage(id: friend.info.uid))
                 .frame(width: 40, height: 40, alignment: .center)
                 .clipShape(Circle())
                 .padding(10)
-            Text(user.info.userName)
+            Text(friend.info.userName)
                 .font(.title3)
             Spacer()
-            if user.status == "sent" {
+            if friend.status == "sent" {
                 Text(LocalizedStringKey("FriendList_pending"))
                     .font(.callout)
                     .foregroundColor(Color("MainOrange"))
                     .padding(.trailing, 8)
-            } else if user.status == "recieved" {
+            } else if friend.status == "recieved" {
                 
                 HStack(spacing: 16) {
                     Button(action: {
-                        viewModel.handleFriendRequest(uid: userInfo.user.uid, friend: user, accept: false) { (result) in
+                        viewModel.handleFriendRequest(uid: userInfo.user.uid, friend: friend, accept: false) { (result) in
                             if result {
                                 print("Deny")
 //                                self.userInfo.handleFriendRequest(for: user, accept: false)
@@ -44,7 +44,7 @@ struct FriendsListCellView: View {
                     .buttonStyle(HighPriorityButtonStyle())
                     
                     Button(action: {
-                        viewModel.handleFriendRequest(uid: userInfo.user.uid, friend: user, accept: true) { (result) in
+                        viewModel.handleFriendRequest(uid: userInfo.user.uid, friend: friend, accept: true) { (result) in
                             if result {
                                 print("Accept!")
                             }
@@ -67,8 +67,10 @@ struct FriendsListCellView: View {
 struct FriendsListCellView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id:\.self) {
-            FriendsListCellView(viewModel: FriendsListViewModel(), user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: [], places: []), status: "filterScreen"))
+            FriendsListCellView(viewModel: FriendsListViewModel(cache: LRUCache<String, Image>(capacity: 10)), friend: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: [], places: []), status: "filterScreen"))
                 .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 80)).preferredColorScheme($0)
         }
     }
 }
+
+

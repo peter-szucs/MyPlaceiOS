@@ -33,16 +33,36 @@ final class FriendsListViewModel: ObservableObject {
                                 LocalizedStringKey("FriendList_tab03")]
     @Published var equalWidth: CGFloat = 0
     
+    var lruFriendsImageCache: LRUCache<String, Image>
     
 //    init(friendsList: [Friend], sentRequestList: [Friend], recievedRequestList: [Friend]) {
 //        self.friendsList = friendsList
 //        self.sentRequestList = sentRequestList
 //        self.recievedRequestList = recievedRequestList
 //        makeLists()
-    init() {
+    init(cache: LRUCache<String, Image>) {
+        self.lruFriendsImageCache = cache
         equalWidth = UIScreen.main.bounds.width / CGFloat(tabTitles.count)
     }
     
+    func loadImage(id: String) -> Image? {
+        if let avatarImage = lruFriendsImageCache.retrieveObject(at: id) {
+            return avatarImage
+        } else {
+            var returnImage: Image?
+            FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(id)") { (result) in
+                switch result {
+                case .failure(let error):
+                    print("failed to fetch user image: \(error)")
+                    returnImage = Image(systemName: "person.circle.fill")
+                case .success(let image):
+                    self.lruFriendsImageCache.setObject(for: id, value: image)
+                    returnImage = image
+                }
+            }
+            return returnImage
+        }
+    }
 //    private func makeLists() {
 //        for friend in fullFriendsList {
 //            // MARK: TODO: Convert to Enum switch

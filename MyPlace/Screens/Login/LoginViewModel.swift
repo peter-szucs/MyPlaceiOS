@@ -32,7 +32,7 @@ final class LoginViewModel: ObservableObject {
                 return
             }
             self.errorMessageColor = Color("MainBW")
-            print(result)
+            print(result!)
             self.logIn = true
             self.isLoading = false
         }

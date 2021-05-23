@@ -26,11 +26,33 @@ final class FilterViewModel: ObservableObject {
     @Published var isEditing = false
     @Published var searchString: String = ""
     
-    init(filters: MapFilters) {
+    var lruFriendsImageCache: LRUCache<String, Image>
+    
+    init(filters: MapFilters, cache: LRUCache<String, Image>) {
         self.filters = filters
+        self.lruFriendsImageCache = cache
         equalWidth = UIScreen.main.bounds.width / CGFloat(tabTitles.count)
         makeTaglist()
         
+    }
+    
+    func loadImage(id: String) -> Image? {
+        if let avatarImage = lruFriendsImageCache.retrieveObject(at: id) {
+            return avatarImage
+        } else {
+            var returnImage: Image?
+            FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(id)") { (result) in
+                switch result {
+                case .failure(let error):
+                    print("failed to fetch user image: \(error)")
+                    returnImage = Image(systemName: "person.circle.fill")
+                case .success(let image):
+                    self.lruFriendsImageCache.setObject(for: id, value: image)
+                    returnImage = image
+                }
+            }
+            return returnImage
+        }
     }
     
     func getFilteredPlaces(friendsList: [Friend], completion: @escaping (Bool) -> ()) {

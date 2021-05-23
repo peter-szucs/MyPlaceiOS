@@ -40,9 +40,9 @@ struct FriendsListView: View {
                         List {
                             ForEach(userInfo.friendsList, id:\.info.uid) { friend in
                                 NavigationLink(
-                                    destination: FriendDetailView(viewModel: FriendDetailViewModel(friend: friend)),
+                                    destination: FriendDetailView(viewModel: FriendDetailViewModel(friend: friend, cache: userInfo.lruFriendsImagesCache)),
                                     label: {
-                                        FriendsListCellView(viewModel: viewModel, user: friend)
+                                        FriendsListCellView(viewModel: viewModel, friend: friend)
                                     })
                                     .padding(.trailing, -32)
                             }
@@ -54,12 +54,12 @@ struct FriendsListView: View {
                         List {
                             Section(header: Text("Recieved Requests")) {
                                 ForEach(userInfo.recievedRequestList, id:\.info.uid) { friend in
-                                    FriendsListCellView(viewModel: viewModel, user: friend)
+                                    FriendsListCellView(viewModel: viewModel, friend: friend)
                                 }
                             }
                             Section(header: Text("Sent Requests")) {
                                 ForEach(userInfo.sentRequestList, id:\.info.uid) { friend in
-                                    FriendsListCellView(viewModel: viewModel, user: friend)
+                                    FriendsListCellView(viewModel: viewModel, friend: friend)
                                 }
                             }
                             
@@ -91,6 +91,6 @@ struct FriendsListView: View {
 
 struct FriendsListView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendsListView(viewModel: FriendsListViewModel())
+        FriendsListView(viewModel: FriendsListViewModel(cache: LRUCache<String, Image>(capacity: 1)))
     }
 }

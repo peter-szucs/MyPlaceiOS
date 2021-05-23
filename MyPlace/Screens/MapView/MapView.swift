@@ -57,7 +57,7 @@ struct MapView: View {
                 
                 HStack {
                     NavigationLink(
-                        destination: FilterView(viewModel: FilterViewModel(filters: userInfo.currentMapFilters), filters: $viewModel.recievedFilters),
+                        destination: FilterView(viewModel: FilterViewModel(filters: userInfo.currentMapFilters, cache: userInfo.lruFriendsImagesCache), filters: $viewModel.recievedFilters),
                         label: {
                             MapBottomMenuIcon(iconSystemName: "line.horizontal.3.decrease.circle", iconTitle: LocalizedStringKey("Map_filter_title"))
                         })
