@@ -125,7 +125,6 @@ struct MapView: View {
                 locationManager.stopUpdatingLocation()
                 print("DispatchQueue stopped updating Location")
             }
-            print("!!! MapView onAppear")
         })
         .onDisappear {
             viewModel.navBarHidden = false

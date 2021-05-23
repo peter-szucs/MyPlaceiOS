@@ -11,7 +11,6 @@ final class FriendsListViewModel: ObservableObject {
     
     @Published var isLoading: Bool = false
     
-//    @Published var fullFriendsList: [Friend]
     @Published var friendsList: [Friend] = []
     @Published var sentRequestList: [Friend] = []
     @Published var recievedRequestList: [Friend] = []
@@ -31,15 +30,11 @@ final class FriendsListViewModel: ObservableObject {
     @Published var tabTitles = [LocalizedStringKey("FriendList_tab01"),
                                 LocalizedStringKey("FriendList_tab02"),
                                 LocalizedStringKey("FriendList_tab03")]
+    
     @Published var equalWidth: CGFloat = 0
     
     var lruFriendsImageCache: LRUCache<String, Image>
     
-//    init(friendsList: [Friend], sentRequestList: [Friend], recievedRequestList: [Friend]) {
-//        self.friendsList = friendsList
-//        self.sentRequestList = sentRequestList
-//        self.recievedRequestList = recievedRequestList
-//        makeLists()
     init(cache: LRUCache<String, Image>) {
         self.lruFriendsImageCache = cache
         equalWidth = UIScreen.main.bounds.width / CGFloat(tabTitles.count)
@@ -66,21 +61,6 @@ final class FriendsListViewModel: ObservableObject {
             return returnImage
         }
     }
-//    private func makeLists() {
-//        for friend in fullFriendsList {
-//            // MARK: TODO: Convert to Enum switch
-//            if friend.status == "accepted" {
-//                self.friendsList.append(friend)
-//            } else if friend.status == "sent" {
-//                self.sentRequestList.append(friend)
-//            } else {
-//                self.recievedRequestList.append(friend)
-//            }
-//        }
-//        allLists.append(friendsList)
-//        allLists.append(sentRequestList)
-//        allLists.append(recievedRequestList)
-//    }
     
     func performFriendSearch() {
         isFriendListLoading = true
@@ -120,7 +100,7 @@ final class FriendsListViewModel: ObservableObject {
             }
         }
         dispatch.notify(queue: .global()) {
-            // in future, add image to friends "avatarImage"
+            // MARK: TODO: in future, maybe add image to friends "avatarImage" instead. Or make a good global imageloader.
             completion(true)
         }
     }

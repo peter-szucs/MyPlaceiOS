@@ -96,7 +96,7 @@ struct PlaceDetailView: View {
                         Text("Take me there")
                     })
                     .buttonStyle(ButtonStyleRegular(foregroundColor: .white, backgroundColor: Color("MainBlue")))
-                    .disabled(viewModel.isImagesLoading)
+                    .disabled(true)
                     Spacer()
                 }
                 .padding(.vertical)

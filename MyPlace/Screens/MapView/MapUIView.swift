@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import MapKit
 
 struct MapUIView: UIViewRepresentable {
@@ -70,22 +71,33 @@ struct MapUIView: UIViewRepresentable {
 //                    pinAnnotation.canShowCallout = true
 //                    pinAnnotation.image = UIImage(named: "Logo")
 //                }
-                
+                let button = UIButton(type: .detailDisclosure)
                 let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "PIN_VIEW")
 //                pinAnnotation.tintColor = .red
                 pinAnnotation.animatesDrop = true
-                pinAnnotation.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+                pinAnnotation.rightCalloutAccessoryView = button
                 pinAnnotation.canShowCallout = true
 //                pinAnnotation.pinTintColor = .blue
 //                pinAnnotation.image = UIImage(named: "Logo")
+                
+                button.addTarget(self, action: #selector(self.buttonAction), for: .touchUpInside)
                 
                 return pinAnnotation
             }
             
         }
         
+        
+        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+            
+        }
+        
         func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
             parent.centerCoordinate = mapView.centerCoordinate
+        }
+        
+        @objc func buttonAction(annotation: MKAnnotation) {
+            print("Tapped \(annotation)")
         }
     }
 }
