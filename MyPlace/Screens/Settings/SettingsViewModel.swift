@@ -15,6 +15,7 @@ final class SettingsViewModel: ObservableObject {
     @Published var showPickerAction = false
     @Published var changedImage: Image?
     @Published var pickedImage: UIImage?
+    @Published var profileImage: Image = Image(systemName: "person.circle.fill")
     @Published var firstName: String = ""
     @Published var lastName: String = ""
     @Published var userName: String = ""
@@ -22,10 +23,16 @@ final class SettingsViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var editStatus: EditStatus = .unchanged
     
+    var lruImageCache: LRUCache<String, Image>
+    
     private var cancellables = Set<AnyCancellable>()
     
     
-    init() {
+    init(cache: LRUCache<String, Image>, user: User) {
+        self.originalUserObject = user
+        self.newUserObject = user
+        self.lruImageCache = cache
+        setupProfileImage()
         
         editStatusPublisher
             .receive(on: RunLoop.main)
@@ -59,18 +66,6 @@ final class SettingsViewModel: ObservableObject {
             .map { $0 != nil }
             .eraseToAnyPublisher()
     }
-    
-//    private var hasEditedInfoPublisher: AnyPublisher<Bool, Never> {
-//        Publishers.CombineLatest3($firstName, $lastName, $userName)
-//            .debounce(for: 0.5, scheduler: RunLoop.main)
-//            .map {
-//                if $0 != self.originalUserObject.firstName { return true }
-//                if $1 != self.originalUserObject.lastName { return true }
-//                if $2 != self.originalUserObject.userName { return true }
-//                return false
-//            }
-//            .eraseToAnyPublisher()
-//    }
     
     private var hasEditedInfoPublisher: AnyPublisher<Bool, Never> {
         $newUserObject
@@ -113,14 +108,14 @@ final class SettingsViewModel: ObservableObject {
         case .imageAndInfoChanged:
             uploadNewImage { (result) in
                 switch result {
-                case .failure(let error):
+                case .failure(_):
                     self.isLoading = false
                     // MARK: TODO: Handle alert toggle to alert user something went wrong
                     completion(false)
                 case .success(_):
                     self.updateUserDatabase { (result) in
                         switch result {
-                        case .failure(let error):
+                        case .failure(_):
                             self.isLoading = false
                             // MARK: TODO Handle alert
                             completion(false)
@@ -134,7 +129,7 @@ final class SettingsViewModel: ObservableObject {
         case .imageChanged:
             uploadNewImage { (result) in
                 switch result {
-                case .failure(let error):
+                case .failure(_):
                     self.isLoading = false
                     // MARK: TODO: Handle alert toggle to alert user something went wrong
                     completion(false)
@@ -146,7 +141,7 @@ final class SettingsViewModel: ObservableObject {
         case .infoChanged:
             updateUserDatabase { (result) in
                 switch result {
-                case .failure(let error):
+                case .failure(_):
                     self.isLoading = false
                     // MARK: TODO Handle alert
                     completion(false)
@@ -165,6 +160,11 @@ final class SettingsViewModel: ObservableObject {
     
     // MARK: - Private Functions
     
+    private func setupProfileImage() {
+        guard let avatarImage = lruImageCache.retrieveObject(at: originalUserObject.uid) else { return }
+        profileImage = avatarImage
+    }
+    
     private func uploadNewImage(completion: @escaping (Result<Bool, Error>) -> ()) {
         
         if pickedImage != nil {
@@ -175,33 +175,17 @@ final class SettingsViewModel: ObservableObject {
                 completion(.success(false))
                 return
             }
+            let image = Image(uiImage: resizedImage!)
             FirebaseRepository.uploadToStorage(uid: self.newUserObject.uid, imageID: "", path: FIRKeys.StoragePath.profileImages, imageData: imageData) { (result) in
                 switch result {
                 case .failure(let error):
                     self.isLoading = false
                     completion(.failure(error))
                 case .success(_):
+                    self.lruImageCache.setObject(for: self.newUserObject.uid, value: image)
                     completion(.success(true))
                 }
             }
-//            FirebaseRepository.deleteFromStorage(uid: newUserObject.uid) { (result) in
-//                switch result {
-//                case .failure(let error):
-//                    print("error deleting image: ", error)
-//                    self.isLoading = false
-//                    completion(.failure(error))
-//                case .success(_):
-//                    FirebaseRepository.uploadToStorage(uid: self.newUserObject.uid, path: FIRKeys.StoragePath.profileImages, imageData: imageData) { (result) in
-//                        switch result {
-//                        case .failure(let error):
-//                            self.isLoading = false
-//                            completion(.failure(error))
-//                        case .success(_):
-//                            completion(.success(true))
-//                        }
-//                    }
-//                }
-//            }
         } else {
             self.isLoading = false
             completion(.success(false))

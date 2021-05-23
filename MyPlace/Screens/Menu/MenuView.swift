@@ -29,7 +29,7 @@ struct MenuView: View {
                 })
             Divider().frame(width: UIScreen.main.bounds.width - 50)
             NavigationLink(
-                destination: SettingsView(),
+                destination: SettingsView(viewModel: SettingsViewModel(cache: userInfo.lruUserImageCache, user: userInfo.user)),
                 label: {
                     MenuCellView(menuItem: viewModel.menuItems[2])
                 })
@@ -43,15 +43,12 @@ struct MenuView: View {
                 viewModel.signOut()
             }, label: {
                 VStack {
-                    Image(systemName: "lock.square")
+//                    Image(systemName: "lock.square")
                     Text(LocalizedStringKey("SignOut"))
                         .font(.caption)
                 }
             })
         })
-        .onAppear {
-            print(userInfo.user)
-        }
     }
 }
 

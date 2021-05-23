@@ -9,8 +9,6 @@ import SwiftUI
 
 let placeholderImage = Image(systemName: "person.circle.fill")
 
-//let placeholderImage = UIImage(systemName: "person.circle.fill")!
-
 struct FirebaseImage: View {
     
     init(id: String) {
@@ -20,7 +18,8 @@ struct FirebaseImage: View {
     @ObservedObject private var imageLoader: ImageLoader
     
     var image: UIImage? {
-        imageLoader.data.flatMap(UIImage.init)
+//        imageLoader.data.flatMap(UIImage.init)
+        imageLoader.data
     }
     
     var body: some View {
@@ -34,13 +33,6 @@ struct FirebaseImage: View {
                 .scaledToFill()
                 .foregroundColor(Color("MainLightBlue"))
         }
-        
-            
-        
-//        Image(uiImage: image ?? placeholderImage)
-//            .resizable()
-//            .scaledToFill()
-//            .foregroundColor(Color("MainLightBlue"))
     }
 }
 

@@ -29,13 +29,16 @@ class UserInfo: ObservableObject {
         }
     }
     
+    var lruUserImageCache: LRUCache<String, Image> = LRUCache(capacity: 1)
+    var lruFriendsImagesCache: LRUCache<String, Image> = LRUCache(capacity: 50)
+    
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
     func initialSetup() {
         
         // debug/trials
         debugAndTrialsFunction()
-        
+        // ------------
         
         configureFirebaseStateDidChange { (authState) in
             if authState == .signedIn {
@@ -46,6 +49,9 @@ class UserInfo: ObservableObject {
                     DispatchQueue.main.async {
                         self.isUserAuthenticated = authState
                     }
+                    DispatchQueue.global().async {
+                        self.cacheProfileImages()
+                    }
                     self.setFriendListener()
                 }
             } else {
@@ -55,7 +61,7 @@ class UserInfo: ObservableObject {
         }
     }
     
-    // MARK: - ###### Debug and Trials area #######
+    // MARK: - ###### DEBUG #######
     
     private func debugAndTrialsFunction() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -87,9 +93,40 @@ class UserInfo: ObservableObject {
             }
         }
     }
+    // MARK: _ ###### END DEBUG ########
     
-    // MARK: _ ###### END DebugTrials area ########
     
+    // MARK: - Image Caching of Friends and User profile image.
+    private func cacheProfileImages() {
+        if !user.uid.isEmpty {
+            let path = FIRKeys.StoragePath.profileImages+"/\(user.uid)"
+            FirebaseRepository.getFromStorage(path: path) { (result) in
+                switch result {
+                case .failure(let error):
+                    print("Failure retrieving users profileImage: \(error)")
+                case .success(let image):
+                    self.lruUserImageCache.setObject(for: self.user.uid, value: image)
+                    print("added user profile image to cache.")
+                }
+            }
+            DispatchQueue.global().async {
+                for friend in self.user.friends {
+                    print("friend: \(friend)")
+                    let path = FIRKeys.StoragePath.profileImages+"/\(friend.info.uid)"
+                    FirebaseRepository.getFromStorage(path: path) { (result) in
+                        switch result {
+                        case .failure(let error):
+                            print("error fetching \(friend.info.userName): \(error)")
+                        case .success(let image):
+                            self.lruFriendsImagesCache.setObject(for: friend.info.uid, value: image)
+                            print("added friend \(friend.info.userName) profile image to cache.")
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
     
     private func fetchFriends(completion: @escaping (Bool) -> ()) {
         FirebaseRepository.retrieveFriends(uid: user.uid) { (result) in
@@ -100,6 +137,7 @@ class UserInfo: ObservableObject {
             case .success(let friends):
                 DispatchQueue.main.async {
                     self.fullFriendsList = friends
+                    self.user.friends = friends
                     self.makeLists()
                     completion(true)
                 }

@@ -11,13 +11,11 @@ struct SettingsView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var userInfo: UserInfo
-    @StateObject private var viewModel = SettingsViewModel()
+    @StateObject var viewModel: SettingsViewModel
     
     var body: some View {
         
         VStack(alignment: .center) {
-            
-            // MARK: Find a way to Cache this image (or use another method). it rerenders everytime a change is made (unless you change the image)
             
             ZStack {
                 Button(action: {
@@ -28,7 +26,11 @@ struct SettingsView: View {
                             .resizable()
                             .scaledToFill()
                     } else {
-                        FirebaseImage(id: userInfo.user.uid)
+                        viewModel.profileImage
+                            .resizable()
+                            .scaledToFill()
+                            .foregroundColor(Color("MainLightBlue"))
+//                        FirebaseImage(id: userInfo.user.uid)
                     }
                 })
                 .frame(width: 130, height: 130, alignment: .center)
@@ -91,9 +93,9 @@ struct SettingsView: View {
             
             Spacer()
         }
-        .onAppear {
-            viewModel.setUpInfo(user: userInfo.user)
-        }
+//        .onAppear {
+//            viewModel.setUpInfo(user: userInfo.user)
+//        }
         .navigationBarTitle(Text(LocalizedStringKey("Menu_profileSettings")), displayMode: .inline)
         .sheet(isPresented: $viewModel.showPickerAction, onDismiss: viewModel.loadImage) {
             //MARK: TODO: Let user choose camera or library ?
@@ -104,6 +106,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(viewModel: SettingsViewModel(cache: LRUCache<String, Image>(capacity: 1), user: User()))
     }
 }

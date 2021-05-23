@@ -25,12 +25,15 @@ final class Cache<Key: Hashable, Value> {
     func insert(_ value: Value, forKey key: Key) {
         let date = dateProvider().addingTimeInterval(entryLifetime)
         let entry = Entry(key: key, value: value, expirationDate: date)
+        print("!!! ### entry: \(entry)")
         wrapped.setObject(entry, forKey: WrappedKey(key))
         keyTracker.keys.insert(key)
+        print("!!! ### Cache insert: Key: \(key), Value: \(value)")
     }
     
     func value(forKey key: Key) -> Value? {
         guard let entry = wrapped.object(forKey: WrappedKey(key)) else {
+            print("!!! ## valurForKey failed guard check")
             return nil
         }
         
@@ -129,6 +132,7 @@ private extension Cache {
             self.key = key
             self.value = value
             self.expirationDate = expirationDate
+            print("!!! #### -- Entry: \(self.key) \(self.value) \(self.expirationDate)")
         }
     }
 }
@@ -142,7 +146,7 @@ private extension Cache {
             guard let entry = object as? Entry else {
                 return
             }
-            
+            print("keys: \(keys)")
             keys.remove(entry.key)
         }
     }
@@ -168,3 +172,4 @@ private extension Cache {
         keyTracker.keys.insert(entry.key)
     }
 }
+
