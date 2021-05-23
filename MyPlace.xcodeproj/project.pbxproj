@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		35F0ACC766319AFBC901B95A /* Pods_MyPlaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF027AF48AB68D3A37B7D8BD /* Pods_MyPlaceTests.framework */; };
 		5238A184265A9D0900AB5BDE /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238A183265A9D0900AB5BDE /* AvatarImageView.swift */; };
+		5238A18C265AC85400AB5BDE /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238A18B265AC85400AB5BDE /* NetworkMonitor.swift */; };
+		5238A191265AC9BD00AB5BDE /* NetworkToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238A190265AC9BD00AB5BDE /* NetworkToast.swift */; };
 		5262301826489D250018730C /* AddTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301726489D250018730C /* AddTagsView.swift */; };
 		5262301E264934B80018730C /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262301D264934B80018730C /* TagCell.swift */; };
 		5262304026495F2A0018730C /* AddedPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5262303F26495F2A0018730C /* AddedPhotosView.swift */; };
@@ -117,6 +119,8 @@
 		2AC5EFBDF9079C98064E973A /* Pods-MyPlace-MyPlaceUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyPlace-MyPlaceUITests.release.xcconfig"; path = "Target Support Files/Pods-MyPlace-MyPlaceUITests/Pods-MyPlace-MyPlaceUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3F9151435807468970BA59B7 /* Pods_MyPlace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyPlace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5238A183265A9D0900AB5BDE /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
+		5238A18B265AC85400AB5BDE /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		5238A190265AC9BD00AB5BDE /* NetworkToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkToast.swift; sourceTree = "<group>"; };
 		5262301726489D250018730C /* AddTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsView.swift; sourceTree = "<group>"; };
 		5262301D264934B80018730C /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		5262303F26495F2A0018730C /* AddedPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedPhotosView.swift; sourceTree = "<group>"; };
@@ -573,6 +577,7 @@
 				52E35C7B2646BF9400FE1D2A /* MapBottomMenuIcon.swift */,
 				526230D32657A06B0018730C /* SearchBarView.swift */,
 				52E35C762645839300FE1D2A /* ViewModifiers.swift */,
+				5238A190265AC9BD00AB5BDE /* NetworkToast.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -594,6 +599,7 @@
 				5281CD5E2659B9B900B2E3EA /* SimpleImageCache.swift */,
 				52B05F882648039700E22F06 /* Tag.swift */,
 				5295D70725F98A9200C47D2B /* User.swift */,
+				5238A18B265AC85400AB5BDE /* NetworkMonitor.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -898,6 +904,7 @@
 				52E35BAF2641764D00FE1D2A /* FirebaseRepository.swift in Sources */,
 				52E35C2D2644451C00FE1D2A /* FriendsListView.swift in Sources */,
 				52E35BF02642EB0200FE1D2A /* ActivityView.swift in Sources */,
+				5238A18C265AC85400AB5BDE /* NetworkMonitor.swift in Sources */,
 				5262308B2651DED90018730C /* ScrollableTabBarView.swift in Sources */,
 				52E35C632644BDE400FE1D2A /* FriendsListCellView.swift in Sources */,
 				52E35B8D26415A8100FE1D2A /* FormTextView.swift in Sources */,
@@ -926,6 +933,7 @@
 				52E35C1F264436E900FE1D2A /* SettingsView.swift in Sources */,
 				5281CD6A2659CBA400B2E3EA /* ImageCache.swift in Sources */,
 				52623080264EDAEF0018730C /* PlaceDetailViewModel.swift in Sources */,
+				5238A191265AC9BD00AB5BDE /* NetworkToast.swift in Sources */,
 				5262306A264E76170018730C /* MyPlacesCellView.swift in Sources */,
 				52FABA762615A92A00F88DB5 /* ImageLoader.swift in Sources */,
 				526230CA2656CAC10018730C /* FilterViewFriendCellView.swift in Sources */,

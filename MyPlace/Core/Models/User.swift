@@ -5,7 +5,7 @@
 //  Created by Peter Szücs on 2021-03-11.
 //
 
-import Foundation
+import SwiftUI
 
 struct User {
     var uid: String

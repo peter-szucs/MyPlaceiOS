@@ -11,6 +11,7 @@
 "Register"                      = "Register";
 "LogIn"                         = "Log in";
 "SignOut"                       = "Sign Out";
+"NoNetwork"                     = "No network access";
 "AlreadyHaveAccount?"           = "Already have an account?";
 "LogInHere"                     = "Log in here";
 "FirstName"                     = "First name";

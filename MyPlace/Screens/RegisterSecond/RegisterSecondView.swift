@@ -81,7 +81,7 @@ struct RegisterSecondView: View {
                                     print("Error retrieving user:", error)
                                 case .success(let user):
                                     self.userInfo.user = user
-                                    self.userInfo.user.uid = uid
+//                                    self.userInfo.user.uid = uid
                                     userInfo.isUserAuthenticated = .signedIn
                                 }
                             }

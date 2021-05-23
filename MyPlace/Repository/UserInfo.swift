@@ -14,6 +14,8 @@ import FirebaseFirestore
 
 class UserInfo: ObservableObject {
     
+    @ObservedObject var monitor = NetworkMonitor()
+    
     @Published var isUserAuthenticated: FIRAuthState = .undefined
     @Published var user = User()
     @Published var userLocation = CLLocationCoordinate2D()
@@ -181,7 +183,16 @@ class UserInfo: ObservableObject {
                             case .failure(let error):
                                 print("Failed fetching user inside friendListener: \(error)")
                             case .success(let user):
-                                self.recievedRequestList.append(Friend(info: user, status: newFriend.status))
+                                FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(user.uid)") { (result) in
+                                    switch result {
+                                    case .failure(let error):
+                                        print("failed to retrieve user image: \(error)")
+                                        self.recievedRequestList.append(Friend(info: user, status: newFriend.status))
+                                    case .success(let image):
+                                        self.lruFriendsImagesCache.setObject(for: user.uid, value: image)
+                                        self.recievedRequestList.append(Friend(info: user, status: newFriend.status))
+                                    }
+                                }
                             }
                         }
                     }

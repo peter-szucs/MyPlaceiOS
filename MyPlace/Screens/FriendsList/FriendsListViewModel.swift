@@ -47,8 +47,10 @@ final class FriendsListViewModel: ObservableObject {
     
     func loadImage(id: String) -> Image? {
         if let avatarImage = lruFriendsImageCache.retrieveObject(at: id) {
+            print("!!! ## is in Cache")
             return avatarImage
         } else {
+            print("!!! ## is not in cache, retrieving")
             var returnImage: Image?
             FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(id)") { (result) in
                 switch result {
@@ -57,6 +59,7 @@ final class FriendsListViewModel: ObservableObject {
                     returnImage = Image(systemName: "person.circle.fill")
                 case .success(let image):
                     self.lruFriendsImageCache.setObject(for: id, value: image)
+                    print("!!! ## Cached friends Image")
                     returnImage = image
                 }
             }
@@ -88,12 +91,37 @@ final class FriendsListViewModel: ObservableObject {
                 self.friendSearchResultText = "No users found with the username \(self.friendSearchString)"
                 self.isFriendListLoading = false
             case .success(let users):
-                DispatchQueue.main.async {
-                    self.friendSearchList.removeAll()
-                    self.friendSearchList = users
-                    self.isFriendListLoading = false
+                self.getAndCacheSearchedFriendImages(users: users) { (success) in
+                    if success {
+                        DispatchQueue.main.async {
+                            self.friendSearchList.removeAll()
+                            self.friendSearchList = users
+                            self.isFriendListLoading = false
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+    
+    private func getAndCacheSearchedFriendImages(users: [User], completion: @escaping (Bool) -> ()) {
+        let dispatch = DispatchGroup()
+        for user in users {
+            dispatch.enter()
+            FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(user.uid)") { (result) in
+                switch result {
+                case .failure(let error):
+                    print("error fetching image for user : \(user), \(error)")
+                case .success(let image):
+                    self.lruFriendsImageCache.setObject(for: user.uid, value: image)
+                    dispatch.leave()
                 }
             }
+        }
+        dispatch.notify(queue: .global()) {
+            // in future, add image to friends "avatarImage"
+            completion(true)
         }
     }
     

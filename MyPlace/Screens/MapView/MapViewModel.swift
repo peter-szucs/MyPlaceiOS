@@ -174,7 +174,7 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         print("!!! didupdateloc")
         guard let location = locations.last else { return }
         
-        self.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+        self.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 200, longitudinalMeters: 200)
         
         self.mapView.setRegion(self.region, animated: true)
         

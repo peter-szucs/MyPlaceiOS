@@ -102,17 +102,29 @@ struct MapView: View {
                 .padding(.bottom, 40)
             }
             .edgesIgnoringSafeArea(.all)
+            if !userInfo.monitor.isConnected {
+                withAnimation {
+                    VStack {
+                        NetworkToast()
+                        Spacer()
+                    }.transition(.move(edge: .top)).animation(.spring())
+                }
+            }
         }
         .background(Color.clear)
         .navigationBarHidden(viewModel.navBarHidden)
         .onAppear(perform: {
             locationManager.delegate = viewModel
             locationManager.requestWhenInUseAuthorization()
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
             userInfo.userLocation = viewModel.centerCoordinate
 //            viewModel.setupMapWithFilters(filters: userInfo.currentMapFilters)
             viewModel.friendsList = userInfo.friendsList
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                locationManager.stopUpdatingLocation()
+                print("DispatchQueue stopped updating Location")
+            }
             print("!!! MapView onAppear")
         })
         .onDisappear {

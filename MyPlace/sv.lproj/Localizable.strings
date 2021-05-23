@@ -11,6 +11,7 @@
 "Register"                      = "Registrera";
 "LogIn"                         = "Logga in";
 "SignOut"                       = "Logga ut";
+"NoNetwork"                     = "Ingen anslutning till internet";
 "AlreadyHaveAccount?"           = "Har du redan ett konto?";
 "LogInHere"                     = "Logga in här";
 "FirstName"                     = "Förnamn";
