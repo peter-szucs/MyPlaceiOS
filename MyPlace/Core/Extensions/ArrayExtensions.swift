@@ -37,3 +37,18 @@ extension Array where Element == Friend {
         
     }
 }
+
+extension Array where Element == Friend {
+    func findPlace(with placeId: String, in friendID: String) -> Place? {
+        for friend in self {
+            if friend.info.uid == friendID {
+                for place in friend.info.places {
+                    if place.uid == placeId {
+                        return place
+                    }
+                }
+            }
+        }
+        return nil
+    }
+}

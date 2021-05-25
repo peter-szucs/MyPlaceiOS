@@ -18,7 +18,13 @@ struct MapView: View {
     var body: some View {
         
         ZStack {
-            MapUIView(centerCoordinate: $viewModel.centerCoordinate, annotations: viewModel.annotations)
+            NavigationLink(
+                destination: PlaceDetailView(viewModel: PlaceDetailViewModel(place: viewModel.placeDetailPlace, distance: viewModel.getDistance(lat: viewModel.placeDetailPlace.lat, lng: viewModel.placeDetailPlace.lng))),
+                isActive: $viewModel.goToPlaceDetail,
+                label: {
+                    
+                })
+            MapUIView(centerCoordinate: $viewModel.centerCoordinate, placeID: $viewModel.placeID, friendID: $viewModel.friendID, annotations: viewModel.annotations)
                 .environmentObject(viewModel)
                 .edgesIgnoringSafeArea(.all)
             
@@ -121,6 +127,7 @@ struct MapView: View {
             userInfo.userLocation = viewModel.centerCoordinate
 //            viewModel.setupMapWithFilters(filters: userInfo.currentMapFilters)
             viewModel.friendsList = userInfo.friendsList
+            viewModel.userLocation = userInfo.userLocation
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
                 locationManager.stopUpdatingLocation()
                 print("DispatchQueue stopped updating Location")

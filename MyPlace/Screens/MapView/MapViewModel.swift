@@ -17,10 +17,22 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     @Published var permissionDenied = false
     @Published var mapType: MKMapType = .standard
     @Published var centerCoordinate = CLLocationCoordinate2D()
-    @Published var annotations: [MKPointAnnotation] = []
+//    @Published var annotations: [MKPointAnnotation] = []
+    @Published var annotations: [MKAnnotation] = []
     @Published var goToAddPlace = false
     @Published var newPlace: Place = Place()
     @Published var friendsList: [Friend] = []
+    
+    @Published var goToPlaceDetail = false
+    @Published var placeDetailPlace: Place = Place()
+    
+    @Published var placeID: String = ""
+    @Published var friendID: String = "" {
+        didSet {
+            print("### didSet for gotoplacedetailview: p: \(placeID), f: \(friendID) ###")
+            goToPlaceDetailView(for: placeID, in: friendID)
+        }
+    }
     
     @Published var currentFilters = MapFilters()
     @Published var recievedFilters: MapFilters = MapFilters() {
@@ -30,12 +42,33 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
             setupMapWithFilters()
         }
     }
-    
+    var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D()
     var filteredFriends: [Friend] = []
     
 //    init(friendsList: [Friend]) {
 //        self.friendsList = friendsList
 //    }
+    
+    // Go to detail of place when tapped pin callout
+    func goToPlaceDetailView(for id: String, in friendID: String) {
+        guard let place = filteredFriends.findPlace(with: id, in: friendID) else {
+            print("failed guard check")
+            return
+        }
+        placeDetailPlace = place
+        goToPlaceDetail = true
+    }
+    
+    func getDistance(lat: Double, lng: Double) -> String {
+        let distanceInMeters = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude).distance(from: CLLocation(latitude: lat, longitude: lng))
+        print(String(distanceInMeters))
+        if distanceInMeters < 1000 {
+            return String("\(Int(distanceInMeters)) m")
+        } else {
+            let km = (distanceInMeters.rounded() / 1000)
+            return "\(km) km"
+        }
+    }
     
     // Change map type
     func updateMapType() {
@@ -70,9 +103,6 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
                 self.goToAddPlace = true
             }
         }
-        
-        
-
     }
     
     func setupMapWithFilters() {
@@ -121,10 +151,12 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         }
         
         for place in friend.info.places {
-            let pointAnnotation = MKPointAnnotation()
-            pointAnnotation.coordinate = place.coordinate
-            pointAnnotation.title = place.title
-            pointAnnotation.subtitle = place.description
+            let pointAnnotation = PlaceAnnotation(title: place.title, coordinate: place.coordinate, info: place.description, id: place.uid, friendID: friend.info.uid)
+//            let pointAnnotation = MKPointAnnotation()
+//            pointAnnotation.coordinate = place.coordinate
+//            pointAnnotation.title = place.title
+//            pointAnnotation.info = place.description
+//            pointAnnotation.id = place.uid
             DispatchQueue.main.async {
                 self.annotations.append(pointAnnotation)
                 self.mapView.addAnnotation(pointAnnotation)

@@ -13,7 +13,11 @@ struct MapUIView: UIViewRepresentable {
     
     @EnvironmentObject var viewModel: MapViewModel
     @Binding var centerCoordinate: CLLocationCoordinate2D
-    var annotations: [MKPointAnnotation]
+    @Binding var placeID: String
+    @Binding var friendID: String
+//    var annotations: [MKPointAnnotation]
+    
+    var annotations: [MKAnnotation]
 //    @State private var centerCoordinate = CLLocationCoordinate2D()
     
     func makeCoordinator() -> Coordinator {
@@ -55,6 +59,7 @@ struct MapUIView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             
             // Custom Pins
+            let button = UIButton(type: .detailDisclosure)
             if annotation.isKind(of: MKUserLocation.self) {
                 return nil
             } else {
@@ -63,22 +68,33 @@ struct MapUIView: UIViewRepresentable {
 //                    pinAnnotation = dequedAnnotationView
 //                    pinAnnotation?.annotation = annotation
 //                } else {
-//                    pinAnnotation = MKAnnotationView(annotation: annotation, reuseIdentifier: "PIN")
+//                    pinAnnotation = MKAnnotationView(annotation: annotation, reuseIdentifier: "PIN_ELSE")
 //                    pinAnnotation?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
 //                }
 //
 //                if let pinAnnotation = pinAnnotation {
 //                    pinAnnotation.canShowCallout = true
+//                    pinAnnotation.rightCalloutAccessoryView = button
 //                    pinAnnotation.image = UIImage(named: "Logo")
 //                }
-                let button = UIButton(type: .detailDisclosure)
+                if annotation is PlaceAnnotation {
+                    let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "PIN_VIEW")
+    //                pinAnnotation.tintColor = .red
+                    pinAnnotation.animatesDrop = true
+                    pinAnnotation.rightCalloutAccessoryView = button
+                    pinAnnotation.canShowCallout = true
+    //                pinAnnotation.pinTintColor = .blue
+                    
+                    button.addTarget(self, action: #selector(self.buttonAction), for: .touchUpInside)
+                    
+                    return pinAnnotation
+                }
                 let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "PIN_VIEW")
 //                pinAnnotation.tintColor = .red
                 pinAnnotation.animatesDrop = true
                 pinAnnotation.rightCalloutAccessoryView = button
                 pinAnnotation.canShowCallout = true
 //                pinAnnotation.pinTintColor = .blue
-//                pinAnnotation.image = UIImage(named: "Logo")
                 
                 button.addTarget(self, action: #selector(self.buttonAction), for: .touchUpInside)
                 
@@ -89,6 +105,14 @@ struct MapUIView: UIViewRepresentable {
         
         
         func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+            let a = view.annotation as! PlaceAnnotation
+            print("\(view.annotation?.title), \(a.id)")
+            // Combine for this maybe? Getting all info but cant get it into viewmodel (like below)
+//            viewModel.goToPlaceDetailView(for: a.id, in: a.friendID)
+            parent.placeID = a.id
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.parent.friendID = a.friendID
+            }
             
         }
         
@@ -96,9 +120,8 @@ struct MapUIView: UIViewRepresentable {
             parent.centerCoordinate = mapView.centerCoordinate
         }
         
-        @objc func buttonAction(annotation: MKAnnotation) {
-            print("Tapped \(annotation)")
+        @objc func buttonAction() {
+//            print("Tapped")
         }
     }
 }
-
