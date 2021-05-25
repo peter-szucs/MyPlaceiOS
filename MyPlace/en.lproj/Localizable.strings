@@ -65,3 +65,12 @@
 "FriendList_tab03"              = "Add friend";
 "Filter_country"                = "Country";
 "Filter_chooseacountry"         = "Choose a country";
+"tag_childfriendly"             = "Child Friendly";
+"tag_food"                      = "Food";
+"tag_drinks"                    = "Drinks";
+"tag_cafe"                      = "Café";
+"tag_playground"                = "Playground";
+"tag_nightclub"                 = "Nightclub";
+"tag_park"                      = "Park";
+"tag_shopping"                  = "Shopping";
+"tag_undefined"                 = "Undefined";

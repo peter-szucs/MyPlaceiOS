@@ -65,3 +65,12 @@
 "FriendList_tab03"              = "Lägg till vän";
 "Filter_country"                = "Land";
 "Filter_chooseacountry"         = "Välj ett land";
+"tag_childfriendly"             = "Barnvänligt";
+"tag_food"                      = "Mat";
+"tag_drinks"                    = "Drinkar";
+"tag_cafe"                      = "Café";
+"tag_playground"                = "Lekplats";
+"tag_nightclub"                 = "Nattklubb";
+"tag_park"                      = "Park";
+"tag_shopping"                  = "Shopping";
+"tag_undefined"                 = "Odefinierad";

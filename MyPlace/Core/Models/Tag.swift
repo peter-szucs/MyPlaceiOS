@@ -5,7 +5,7 @@
 //  Created by Peter Szücs on 2021-05-09.
 //
 
-import Foundation
+import SwiftUI
 
 struct Tag: Identifiable, Hashable {
     
@@ -31,26 +31,26 @@ enum Tags: Int, CaseIterable {
     case undefined
     
     // MARK: TODO: Localize this
-    func tagName() -> String {
+    func tagName() -> LocalizedStringKey {
         switch self {
         case .childFriendly:
-            return "Child friendly"
+            return LocalizedStringKey("tag_childfriendly")
         case .food:
-            return "Food"
+            return LocalizedStringKey("tag_food")
         case .drinks:
-            return "Drinks"
+            return LocalizedStringKey("tag_drinks")
         case .cafe:
-            return "Café"
+            return LocalizedStringKey("tag_cafe")
         case .playground:
-            return "Playground"
+            return LocalizedStringKey("tag_playground")
         case .nightclub:
-            return "Nightclub"
+            return LocalizedStringKey("tag_nightclub")
         case .park:
-            return "Park"
+            return LocalizedStringKey("tag_park")
         case .shopping:
-            return "Shopping"
+            return LocalizedStringKey("tag_shopping")
         case .undefined:
-            return "Undefined"
+            return LocalizedStringKey("tag_undefined")
         }
     }
     
