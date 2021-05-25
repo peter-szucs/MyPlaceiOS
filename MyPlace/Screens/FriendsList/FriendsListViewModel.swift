@@ -93,6 +93,7 @@ final class FriendsListViewModel: ObservableObject {
                 switch result {
                 case .failure(let error):
                     print("error fetching image for user : \(user), \(error)")
+                    completion(true)
                 case .success(let image):
                     self.lruFriendsImageCache.setObject(for: user.uid, value: image)
                     dispatch.leave()

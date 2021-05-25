@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import CoreLocation
+import Combine
 
 // debug/trials
 import FirebaseFirestore
@@ -16,7 +17,14 @@ class UserInfo: ObservableObject {
     
     @ObservedObject var monitor = NetworkMonitor()
     
-    @Published var isUserAuthenticated: FIRAuthState = .undefined
+    @Published var isUserAuthenticated: FIRAuthState = .undefined {
+        didSet {
+            if isUserAuthenticated == .signedIn {
+                print("!!! user signed in")
+                setFriendListener()
+            }
+        }
+    }
     @Published var user = User()
     @Published var userLocation = CLLocationCoordinate2D()
     
@@ -36,6 +44,8 @@ class UserInfo: ObservableObject {
     
     var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
     
+    private var cancellables = Set<AnyCancellable>()
+    
     func initialSetup() {
         
         // debug/trials
@@ -54,7 +64,7 @@ class UserInfo: ObservableObject {
                     DispatchQueue.global().async {
                         self.cacheProfileImages()
                     }
-                    self.setFriendListener()
+//                    self.setFriendListener()
                 }
             } else {
                 self.isUserAuthenticated = authState
@@ -97,6 +107,25 @@ class UserInfo: ObservableObject {
     }
     // MARK: _ ###### END DEBUG ########
     
+    var authStatusPublisher: AnyPublisher<Bool, Never> {
+        $isUserAuthenticated
+            .debounce(for: 0.2, scheduler: RunLoop.main)
+            .map {
+                if $0 == .signedIn { return true }
+                return false
+            }
+            .eraseToAnyPublisher()
+        
+//        $newUserObject
+//            .debounce(for: 0.5, scheduler: RunLoop.main)
+//            .map {
+//                if $0.firstName != self.originalUserObject.firstName { return true }
+//                if $0.lastName != self.originalUserObject.lastName { return true }
+//                if $0.userName != self.originalUserObject.userName { return true }
+//                return false
+//            }
+//            .eraseToAnyPublisher()
+    }
     
     // MARK: - Image Caching of Friends and User profile image.
     private func cacheProfileImages() {
@@ -163,6 +192,7 @@ class UserInfo: ObservableObject {
     // MARK: - Send back values thrue listener completion.
     // MARK: TODO: Refactor to just use the changeType enum for actions.
     private func setFriendListener() {
+        print("Friend listener initiated")
         FirebaseRepository.friendCollectionListener(uid: user.uid) { (newFriend) in
             print("!!! userinfo recieved change in: \(newFriend)")
             let isDuplicate = self.checkForDuplicateFriend(friend: newFriend)
