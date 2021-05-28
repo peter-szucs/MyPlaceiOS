@@ -23,6 +23,29 @@ class MyPlaceTests: XCTestCase {
 
 }
 
+class TestBubbleSort: XCTestCase {
+    var friends = [Friend(info: User(uid: "a1", firstName: "Karl", lastName: "Karlsson", userName: "karl", friends: [Friend()], places: [Place()]), status: ""),
+                   Friend(info: User(uid: "b2", firstName: "Bert", lastName: "Bertsson", userName: "Berte", friends: [Friend()], places: [Place()]), status: ""),
+                   Friend(info: User(uid: "c3", firstName: "Anders", lastName: "Andersson", userName: "anderz99", friends: [Friend()], places: [Place()]), status: ""),
+                   Friend(info: User(uid: "d4", firstName: "Göran", lastName: "Göransson", userName: "Gorski", friends: [Friend()], places: [Place()]), status: ""),
+                   Friend(info: User(uid: "e5", firstName: "Sven", lastName: "Svensson", userName: "mill4tre", friends: [Friend()], places: [Place()]), status: ""),
+                   Friend(info: User(uid: "f5", firstName: "Harald", lastName: "Haraldsson", userName: "mill4u", friends: [Friend()], places: [Place()]), status: "")]
+    
+    func test_sort() {
+        
+        let sorted = friends.sortFriendsByUsername()
+        
+        XCTAssert(sorted[0].info.uid == "c3")
+        XCTAssert(sorted[1].info.uid == "b2")
+        XCTAssert(sorted[2].info.uid == "d4")
+        XCTAssert(sorted[3].info.uid == "a1")
+        XCTAssert(sorted[4].info.uid == "e5")
+        XCTAssert(sorted[5].info.uid == "f5")
+        print(sorted.prettyPrint())
+        print(friends.prettyPrint())
+    }
+}
+
 class TestLRUCache: XCTestCase {
     
     let cache = LRUCache<String, String>(capacity: 6)
