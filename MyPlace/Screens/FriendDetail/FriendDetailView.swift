@@ -16,8 +16,7 @@ struct FriendDetailView: View {
         
         VStack(alignment: .leading) {
             HStack {
-                AvatarImageView(image: viewModel.loadImage(id: viewModel.friend.info.uid))
-//                FirebaseImage(id: viewModel.friend.info.uid)
+                FIRImageView(id: viewModel.friend.info.uid, cache: userInfo.lruFriendsImagesCache)
                     .frame(width: 120, height: 120)
                     .clipShape(Circle())
                     .padding()
@@ -54,6 +53,6 @@ struct FriendDetailView: View {
 
 struct FriendDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(info: User(uid: "", firstName: "Johnny", lastName: "Cash", userName: "musicman", friends: [], places: []), status: "accepted"), cache: LRUCache<String, Image>(capacity: 1)))
+        FriendDetailView(viewModel: FriendDetailViewModel(friend: Friend(info: User(uid: "", firstName: "Johnny", lastName: "Cash", userName: "musicman", friends: [], places: []), status: "accepted")))
     }
 }

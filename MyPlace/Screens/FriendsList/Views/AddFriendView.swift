@@ -75,6 +75,6 @@ struct AddFriendView: View {
 
 struct AddFriendView_Previews: PreviewProvider {
     static var previews: some View {
-        AddFriendView(viewModel: FriendsListViewModel(cache: LRUCache<String, Image>(capacity: 1)))
+        AddFriendView(viewModel: FriendsListViewModel())
     }
 }

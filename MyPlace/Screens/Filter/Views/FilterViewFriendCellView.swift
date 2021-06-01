@@ -10,6 +10,7 @@ import SwiftUI
 struct FilterViewFriendCellView: View {
     
     @StateObject var viewModel: FilterViewModel
+    @EnvironmentObject var userInfo: UserInfo
     @State var user: Friend
     @State var isPressed = false
     @Binding var selectedUsers: [Friend]
@@ -25,8 +26,7 @@ struct FilterViewFriendCellView: View {
     
     var body: some View {
         HStack {
-            AvatarImageView(image: viewModel.loadImage(id: user.info.uid))
-//            FirebaseImage(id: user.info.uid)
+            FIRImageView(id: user.info.uid, cache: userInfo.lruFriendsImagesCache)
                 .frame(width: 40, height: 40, alignment: .center)
                 .clipShape(Circle())
                 .padding(10)
@@ -46,8 +46,7 @@ struct FilterViewFriendCellView: View {
 struct FilterViewFriendCellView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id:\.self) {
-            FilterViewFriendCellView(viewModel: FilterViewModel(filters: MapFilters(), cache: LRUCache<String, Image>(capacity: 1)), user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: [], places: []), status: "accepted"), selectedUsers: .constant([]))
-//                .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 80)).preferredColorScheme($0)
+            FilterViewFriendCellView(viewModel: FilterViewModel(filters: MapFilters()), user: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: [], places: []), status: "accepted"), selectedUsers: .constant([]))
                 .previewLayout(.sizeThatFits).preferredColorScheme($0)
         }
     }

@@ -63,18 +63,30 @@ struct MapView: View {
                 
                 HStack {
                     NavigationLink(
-                        destination: FilterView(viewModel: FilterViewModel(filters: userInfo.currentMapFilters, cache: userInfo.lruFriendsImagesCache), filters: $viewModel.recievedFilters),
+                        destination: FilterView(viewModel: FilterViewModel(filters: userInfo.currentMapFilters), filters: $viewModel.recievedFilters),
                         label: {
                             MapBottomMenuIcon(iconSystemName: "line.horizontal.3.decrease.circle", iconTitle: LocalizedStringKey("Map_filter_title"))
                         })
                     
                     Spacer()
                     
-                    NavigationLink(
-                        destination: MenuView(),
-                        label: {
-                            MapBottomMenuIcon(iconSystemName: "ellipsis.rectangle", iconTitle: LocalizedStringKey("Menu_title"))
+                    ZStack {
+                        NavigationLink(
+                            destination: MenuView(),
+                            label: {
+                                MapBottomMenuIcon(iconSystemName: "ellipsis.rectangle", iconTitle: LocalizedStringKey("Menu_title"))
                         })
+                        // MARK: - Future badge system
+                        HStack {
+                            Text("12")
+                                .foregroundColor(.white)
+                                .font(.caption)
+                                .padding(5)
+                        }
+                        .background(Color.red)
+                        .clipShape(Circle())
+                        .padding([.bottom, .leading], 35)
+                    }
                 }
                 .edgesIgnoringSafeArea(.all)
                 .frame(width: UIScreen.main.bounds.width, alignment: .leading)

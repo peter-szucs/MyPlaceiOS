@@ -15,7 +15,7 @@ struct FriendsListCellView: View {
     
     var body: some View {
         HStack {
-            AvatarImageView(image: viewModel.loadImage(id: friend.info.uid))
+            FIRImageView(id: friend.info.uid, cache: userInfo.lruFriendsImagesCache)
                 .frame(width: 40, height: 40, alignment: .center)
                 .clipShape(Circle())
                 .padding(10)
@@ -67,7 +67,7 @@ struct FriendsListCellView: View {
 struct FriendsListCellView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id:\.self) {
-            FriendsListCellView(viewModel: FriendsListViewModel(cache: LRUCache<String, Image>(capacity: 10)), friend: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: [], places: []), status: "filterScreen"))
+            FriendsListCellView(viewModel: FriendsListViewModel(), friend: Friend(info: User(uid: "", firstName: "Pete", lastName: "Switch", userName: "Pettin", friends: [], places: []), status: "filterScreen"))
                 .previewLayout(.fixed(width: UIScreen.main.bounds.width, height: 80)).preferredColorScheme($0)
         }
     }

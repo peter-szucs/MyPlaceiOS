@@ -13,31 +13,9 @@ final class FriendDetailViewModel: ObservableObject {
     @Published var places: [Place] = []
     @Published var isLoading = false
     
-    var lruFriendsImageCache: LRUCache<String, Image>
-    
-    init(friend: Friend, cache: LRUCache<String, Image>) {
+    init(friend: Friend) {
         self.friend = friend
-        self.lruFriendsImageCache = cache
         fetchPlaces()
-    }
-    
-    func loadImage(id: String) -> Image? {
-        if let avatarImage = lruFriendsImageCache.retrieveObject(at: id) {
-            return avatarImage
-        } else {
-            var returnImage: Image?
-            FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(id)") { (result) in
-                switch result {
-                case .failure(let error):
-                    print("failed to fetch user image: \(error)")
-                    returnImage = Image(systemName: "person.circle.fill")
-                case .success(let image):
-                    self.lruFriendsImageCache.setObject(for: id, value: image)
-                    returnImage = image
-                }
-            }
-            return returnImage
-        }
     }
     
     private func fetchPlaces() {

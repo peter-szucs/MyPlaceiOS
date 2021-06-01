@@ -70,6 +70,6 @@ struct TabBarView: View {
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendsListView(viewModel: FriendsListViewModel(cache: LRUCache<String, Image>(capacity: 1)))
+        FriendsListView(viewModel: FriendsListViewModel())
     }
 }

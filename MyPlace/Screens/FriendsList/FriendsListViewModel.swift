@@ -33,33 +33,8 @@ final class FriendsListViewModel: ObservableObject {
     
     @Published var equalWidth: CGFloat = 0
     
-    var lruFriendsImageCache: LRUCache<String, Image>
-    
-    init(cache: LRUCache<String, Image>) {
-        self.lruFriendsImageCache = cache
+    init() {
         equalWidth = UIScreen.main.bounds.width / CGFloat(tabTitles.count)
-    }
-    
-    func loadImage(id: String) -> Image? {
-        if let avatarImage = lruFriendsImageCache.retrieveObject(at: id) {
-            print("!!! ## is in Cache")
-            return avatarImage
-        } else {
-            print("!!! ## is not in cache, retrieving")
-            var returnImage: Image?
-            FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(id)") { (result) in
-                switch result {
-                case .failure(let error):
-                    print("failed to fetch user image: \(error)")
-                    returnImage = Image(systemName: "person.circle.fill")
-                case .success(let image):
-                    self.lruFriendsImageCache.setObject(for: id, value: image)
-                    print("!!! ## Cached friends Image")
-                    returnImage = image
-                }
-            }
-            return returnImage
-        }
     }
     
     func performFriendSearch() {
@@ -71,40 +46,40 @@ final class FriendsListViewModel: ObservableObject {
                 self.friendSearchResultText = "No users found with the username \(self.friendSearchString)"
                 self.isFriendListLoading = false
             case .success(let users):
-                self.getAndCacheSearchedFriendImages(users: users) { (success) in
-                    if success {
+//                self.getAndCacheSearchedFriendImages(users: users) { (success) in
+//                    if success {
                         DispatchQueue.main.async {
                             self.friendSearchList.removeAll()
                             self.friendSearchList = users
                             self.isFriendListLoading = false
                         }
-                    }
-                }
+//                    }
+//                }
                 
             }
         }
     }
     
-    private func getAndCacheSearchedFriendImages(users: [User], completion: @escaping (Bool) -> ()) {
-        let dispatch = DispatchGroup()
-        for user in users {
-            dispatch.enter()
-            FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(user.uid)") { (result) in
-                switch result {
-                case .failure(let error):
-                    print("error fetching image for user : \(user), \(error)")
-                    completion(true)
-                case .success(let image):
-                    self.lruFriendsImageCache.setObject(for: user.uid, value: image)
-                    dispatch.leave()
-                }
-            }
-        }
-        dispatch.notify(queue: .global()) {
-            // MARK: TODO: in future, maybe add image to friends "avatarImage" instead. Or make a good global imageloader.
-            completion(true)
-        }
-    }
+//    private func getAndCacheSearchedFriendImages(users: [User], completion: @escaping (Bool) -> ()) {
+//        let dispatch = DispatchGroup()
+//        for user in users {
+//            dispatch.enter()
+//            FirebaseRepository.getFromStorage(path: FIRKeys.StoragePath.profileImages+"/\(user.uid)") { (result) in
+//                switch result {
+//                case .failure(let error):
+//                    print("error fetching image for user : \(user), \(error)")
+//                    completion(true)
+//                case .success(let image):
+//                    self.lruFriendsImageCache.setObject(for: user.uid, value: image)
+//                    dispatch.leave()
+//                }
+//            }
+//        }
+//        dispatch.notify(queue: .global()) {
+//            // MARK: TODO: in future, maybe add image to friends "avatarImage" instead. Or make a good global imageloader.
+//            completion(true)
+//        }
+//    }
     
     func sendFriendRequest(uid: String, friend: User, completion:@escaping (Bool) -> ()) {
         FirebaseRepository.makeFriendRequest(uid: uid, friendID: friend.uid, completion: { (result) in

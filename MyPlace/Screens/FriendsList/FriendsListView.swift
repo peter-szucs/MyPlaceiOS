@@ -40,7 +40,7 @@ struct FriendsListView: View {
                         List {
                             ForEach(userInfo.friendsList, id:\.info.uid) { friend in
                                 NavigationLink(
-                                    destination: FriendDetailView(viewModel: FriendDetailViewModel(friend: friend, cache: userInfo.lruFriendsImagesCache)),
+                                    destination: FriendDetailView(viewModel: FriendDetailViewModel(friend: friend)),
                                     label: {
                                         FriendsListCellView(viewModel: viewModel, friend: friend)
                                     })
@@ -91,6 +91,6 @@ struct FriendsListView: View {
 
 struct FriendsListView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendsListView(viewModel: FriendsListViewModel(cache: LRUCache<String, Image>(capacity: 1)))
+        FriendsListView(viewModel: FriendsListViewModel())
     }
 }

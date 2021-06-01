@@ -82,6 +82,6 @@ struct ScrollableTabBarView<Content: View>: UIViewRepresentable {
 
 struct ScrollableTabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendsListView(viewModel: FriendsListViewModel(cache: LRUCache<String, Image>(capacity: 1)))
+        FriendsListView(viewModel: FriendsListViewModel())
     }
 }
