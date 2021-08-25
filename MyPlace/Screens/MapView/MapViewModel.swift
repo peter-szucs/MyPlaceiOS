@@ -96,7 +96,14 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
                 return
             } else if let placemark = placemark?.first {
                 // MARK: TODO: Rewrite with enums in PlaceMarkAddress Struct
-                self.newPlace.PMData = PlaceMarkAddress(name: placemark.name, thoroughfare: placemark.thoroughfare, subThoroughfare: placemark.subThoroughfare, postalCode: placemark.postalCode, subLocality: placemark.subLocality, administrativeArea: placemark.administrativeArea, country: placemark.country, countryCode: placemark.isoCountryCode ?? "unknown")
+                self.newPlace.PMData = PlaceMarkAddress(name: placemark.name,
+                                                        thoroughfare: placemark.thoroughfare,
+                                                        subThoroughfare: placemark.subThoroughfare,
+                                                        postalCode: placemark.postalCode,
+                                                        subLocality: placemark.subLocality,
+                                                        administrativeArea: placemark.administrativeArea,
+                                                        country: placemark.country,
+                                                        countryCode: placemark.isoCountryCode ?? "unknown")
                 self.newPlace.lat = coordinate.latitude
                 self.newPlace.lng = coordinate.longitude
                 print(self.newPlace)
@@ -151,7 +158,11 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         }
         
         for place in friend.info.places {
-            let pointAnnotation = PlaceAnnotation(title: place.title, coordinate: place.coordinate, info: place.description, id: place.uid, friendID: friend.info.uid)
+            let pointAnnotation = PlaceAnnotation(title: place.title,
+                                                  coordinate: place.coordinate,
+                                                  info: place.description,
+                                                  id: place.uid,
+                                                  friendID: friend.info.uid)
 //            let pointAnnotation = MKPointAnnotation()
 //            pointAnnotation.coordinate = place.coordinate
 //            pointAnnotation.title = place.title

@@ -19,12 +19,18 @@ struct MapView: View {
         
         ZStack {
             NavigationLink(
-                destination: PlaceDetailView(viewModel: PlaceDetailViewModel(place: viewModel.placeDetailPlace, distance: viewModel.getDistance(lat: viewModel.placeDetailPlace.lat, lng: viewModel.placeDetailPlace.lng))),
+                destination: PlaceDetailView(viewModel: PlaceDetailViewModel(
+                                                place: viewModel.placeDetailPlace,
+                                                distance: viewModel.getDistance(lat: viewModel.placeDetailPlace.lat,
+                                                                                lng: viewModel.placeDetailPlace.lng))),
                 isActive: $viewModel.goToPlaceDetail,
                 label: {
                     
                 })
-            MapUIView(centerCoordinate: $viewModel.centerCoordinate, placeID: $viewModel.placeID, friendID: $viewModel.friendID, annotations: viewModel.annotations)
+            MapUIView(centerCoordinate: $viewModel.centerCoordinate,
+                      placeID: $viewModel.placeID,
+                      friendID: $viewModel.friendID,
+                      annotations: viewModel.annotations)
                 .environmentObject(viewModel)
                 .edgesIgnoringSafeArea(.all)
             
@@ -63,9 +69,11 @@ struct MapView: View {
                 
                 HStack {
                     NavigationLink(
-                        destination: FilterView(viewModel: FilterViewModel(filters: userInfo.currentMapFilters), filters: $viewModel.recievedFilters),
+                        destination: FilterView(viewModel: FilterViewModel(filters: userInfo.currentMapFilters),
+                                                filters: $viewModel.recievedFilters),
                         label: {
-                            MapBottomMenuIcon(iconSystemName: "line.horizontal.3.decrease.circle", iconTitle: LocalizedStringKey("Map_filter_title"))
+                            MapBottomMenuIcon(iconSystemName: "line.horizontal.3.decrease.circle",
+                                              iconTitle: LocalizedStringKey("Map_filter_title"))
                         })
                     
                     Spacer()
@@ -74,7 +82,8 @@ struct MapView: View {
                         NavigationLink(
                             destination: MenuView(),
                             label: {
-                                MapBottomMenuIcon(iconSystemName: "ellipsis.rectangle", iconTitle: LocalizedStringKey("Menu_title"))
+                                MapBottomMenuIcon(iconSystemName: "ellipsis.rectangle",
+                                                  iconTitle: LocalizedStringKey("Menu_title"))
                         })
                         // MARK: - Future badge system
                         HStack {
@@ -150,7 +159,9 @@ struct MapView: View {
 //            locationManager.stopUpdatingLocation()
         }
         .alert(isPresented: $viewModel.permissionDenied, content: {
-            Alert(title: Text(LocalizedStringKey("CLPermissionDenied")), message: Text(LocalizedStringKey("CLPermDeniedMsg")), dismissButton: .default(Text(LocalizedStringKey("CLPermDeniedDismiss")), action: {
+            Alert(title: Text(LocalizedStringKey("CLPermissionDenied")),
+                  message: Text(LocalizedStringKey("CLPermDeniedMsg")),
+                  dismissButton: .default(Text(LocalizedStringKey("CLPermDeniedDismiss")), action: {
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
             }))
         })
