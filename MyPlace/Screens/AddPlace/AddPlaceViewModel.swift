@@ -142,10 +142,10 @@ final class AddPlaceViewModel: ObservableObject {
         $place
             .debounce(for: 0.5, scheduler: RunLoop.main)
             .map {
-                if $0.title == "" && $0.description == "" { return AddPlaceStatus.noNameOrDescription }
-                if $0.title == "" { return AddPlaceStatus.noName }
-                if $0.description == "" { return AddPlaceStatus.noDescription }
-                return AddPlaceStatus.validPlace
+                if $0.title == "" && $0.description == "" { return .noNameOrDescription }
+                if $0.title == "" { return .noName }
+                if $0.description == "" { return .noDescription }
+                return .validPlace
             }
             .eraseToAnyPublisher()
     }
