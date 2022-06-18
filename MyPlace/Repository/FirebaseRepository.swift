@@ -12,6 +12,7 @@ import Combine
 import SwiftUI
 
 final class FirebaseRepository {
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Add or update userclass in DB
     
@@ -24,6 +25,19 @@ final class FirebaseRepository {
             }
             completion(.success(true))
         }
+    }
+    
+    // Combine version
+    static func addOrMergeUserToDb(_ data: [String : Any], uid: String) -> AnyPublisher<Bool, Error> {
+        let resultSubject = PassthroughSubject<Bool, Error>()
+        let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(uid)
+        ref.setData(data, merge: true) { error in
+            if let error = error {
+                resultSubject.send(completion: .failure(error))
+            }
+            resultSubject.send(true)
+        }
+        return resultSubject.eraseToAnyPublisher()
     }
     
     // MARK: - Add Place in DB
@@ -71,6 +85,60 @@ final class FirebaseRepository {
                 completion(.success(places))
             }
         }
+    }
+    
+    // Combine version
+    
+//    static func getPlaceDocuments(for uid: String) -> AnyPublisher<[Place], Error> {
+//        let resultSubject = PassthroughSubject<[Place], Error>()
+//        let db = Firestore.firestore()
+//        let settings = Firestore.firestore().settings
+//        db.settings = settings
+//        
+//        let reference = db.collection(FIRKeys.CollectionPath.users).document(uid).collection(FIRKeys.CollectionPath.places)
+//        
+//        var places: [Place] = []
+//        reference.getDocuments { (snapshot, error) in
+//            if let error = error {
+//                resultSubject.send(completion: .failure(error))
+//            }
+//            if let documents = snapshot?.documents {
+//                for document in documents {
+//                    places.append(Place(documentData: document.data(), id: document.documentID)!)
+//                }
+//                resultSubject.send(places)
+//            }
+//        }
+//        return resultSubject.eraseToAnyPublisher()
+//    }
+    
+    // Combine Future version
+    
+    /// Returns a Publisher for an array of Place
+    /// - Parameters:
+    ///     - uid: Users UID
+    static func getPlaceDocuments(for uid: String) -> AnyPublisher<[Place], Error> {
+        let db = Firestore.firestore()
+        let settings = Firestore.firestore().settings
+        db.settings = settings
+        
+        let reference = db.collection(FIRKeys.CollectionPath.users).document(uid).collection(FIRKeys.CollectionPath.places)
+        
+        var places: [Place] = []
+        let placeFetchFuture = Future<[Place], Error> { promise in
+            reference.getDocuments { (snapshot, error) in
+                if let error = error {
+                    promise(.failure(error))
+                }
+                if let documents = snapshot?.documents {
+                    for document in documents {
+                        places.append(Place(documentData: document.data(), id: document.documentID)!)
+                    }
+                    promise(.success(places))
+                }
+            }
+        }
+        return placeFetchFuture.eraseToAnyPublisher()
     }
     
     // MARK: - Filtered Place Fetches
@@ -421,21 +489,23 @@ final class FirebaseRepository {
     }
 }
 
-enum FireStoreError: Error {
-    case noAuthDataResult
-    case noCurrentUser
-    case noDocumentSnapshot
-    case noCollectionSnapshot
-    case noSnapshotData
-    case noUser
-}
+extension FirebaseRepository {
+    enum FireStoreError: Error {
+        case noAuthDataResult
+        case noCurrentUser
+        case noDocumentSnapshot
+        case noCollectionSnapshot
+        case noSnapshotData
+        case noUser
+    }
 
-enum FilterQuery {
-    case all
-    case onlyFriend
-    case onlyTags
-    case onlyCountries
-    case friendAndTags
-    case friendAndCountries
-    case tagsAndCountries
+    enum FilterQuery {
+        case all
+        case onlyFriend
+        case onlyTags
+        case onlyCountries
+        case friendAndTags
+        case friendAndCountries
+        case tagsAndCountries
+    }
 }
