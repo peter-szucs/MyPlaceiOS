@@ -28,6 +28,10 @@ final class FirebaseRepository {
     }
     
     // Combine version
+    /// Returns a publisher for when adding or altering the user to the DB
+    /// - Parameters:
+    ///     - data: Dictionary of the user
+    ///     - uid: User id
     static func addOrMergeUserToDb(_ data: [String : Any], uid: String) -> AnyPublisher<Bool, Error> {
         let resultSubject = PassthroughSubject<Bool, Error>()
         let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(uid)
@@ -59,6 +63,26 @@ final class FirebaseRepository {
         }
     }
     
+    //Combine version
+    /// Returns a publisher for adding a place to database
+    /// - Parameters:
+    ///     - data: Dictionary of data
+    static func addPlaceToDB(with data: [String : Any]) -> AnyPublisher<String, Error> {
+        let addPlaceFuture = Future<String, Error> { promise in
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            var ref: DocumentReference? = nil
+            ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(uid).collection(FIRKeys.CollectionPath.places).addDocument(data: data) { (error) in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    guard let docID = ref?.documentID else { return }
+                    promise(.success(docID))
+                }
+            }
+        }
+        return addPlaceFuture.eraseToAnyPublisher()
+    }
+    
     // MARK: - Retrieve Places
     // MARK: TODO: Figure out great way to use one function to fetch both from filters and full collections.
     // Maybe enums to choose between all types of fetches?
@@ -87,33 +111,7 @@ final class FirebaseRepository {
         }
     }
     
-    // Combine version
-    
-//    static func getPlaceDocuments(for uid: String) -> AnyPublisher<[Place], Error> {
-//        let resultSubject = PassthroughSubject<[Place], Error>()
-//        let db = Firestore.firestore()
-//        let settings = Firestore.firestore().settings
-//        db.settings = settings
-//        
-//        let reference = db.collection(FIRKeys.CollectionPath.users).document(uid).collection(FIRKeys.CollectionPath.places)
-//        
-//        var places: [Place] = []
-//        reference.getDocuments { (snapshot, error) in
-//            if let error = error {
-//                resultSubject.send(completion: .failure(error))
-//            }
-//            if let documents = snapshot?.documents {
-//                for document in documents {
-//                    places.append(Place(documentData: document.data(), id: document.documentID)!)
-//                }
-//                resultSubject.send(places)
-//            }
-//        }
-//        return resultSubject.eraseToAnyPublisher()
-//    }
-    
     // Combine Future version
-    
     /// Returns a Publisher for an array of Place
     /// - Parameters:
     ///     - uid: Users UID
@@ -190,6 +188,57 @@ final class FirebaseRepository {
         }
     }
     
+    // Combine Version
+    /// Returns a publisher for filtered places
+    /// - Parameters:
+    ///     - filteredList: a filtered list of MapFilters
+    ///     - friendsList: array of Friend
+    
+    static func getFilteredPlaces(filteredList: MapFilters, friendsList: [Friend]) -> AnyPublisher<[Friend], Error> {
+        let filterDispatch = DispatchGroup()
+        var ref: Query?
+        var queryFriendsList: [Friend] = filteredList.selectedFriends.isEmpty ? friendsList : filteredList.selectedFriends
+        var returnList: [Friend] = []
+        
+        let filteredPlacesFuture = Future<[Friend], Error> { promise in
+            for friend in queryFriendsList {
+                filterDispatch.enter()
+                var returnFriend = Friend(info: friend.info, status: friend.status)
+                ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(friend.info.uid).collection(FIRKeys.CollectionPath.places)
+                if !filteredList.selectedCountry.isEmpty {
+                    ref = ref?.whereField("pmData.countryCode", isEqualTo: filteredList.selectedCountry)
+                }
+                if !filteredList.selectedTags.isEmpty {
+                   ref = ref?.whereField("tags", arrayContainsAny: filteredList.selectedTags)
+                }
+                ref?.getDocuments(completion: { (querysnapshot, error) in
+                    if let error = error {
+                        print("GetFilteredPlaces: Error fetching documents: \(error)")
+                        promise(.failure(error))
+                    } else {
+                        guard let documents = querysnapshot?.documents else {
+                            print("GetFilteredPlaces: snapshot failed guard check")
+                            return
+                        }
+                        for document in documents {
+                            returnFriend.info.places.append(Place(documentData: document.data(), id: document.documentID)!)
+                        }
+                        if !returnFriend.info.places.isEmpty {
+                            returnList.append(returnFriend)
+                        }
+                        
+                        filterDispatch.leave()
+                    }
+                })
+            }
+            filterDispatch.notify(queue: .global()) {
+                print("### GetFilteredPlaces: Dispatched all fetches ###")
+                promise(.success(returnList))
+            }
+        }
+        return filteredPlacesFuture.eraseToAnyPublisher()
+    }
+    
     // MARK: - Retrieve User
     
     static func retrieveUser(uid: String, completion: @escaping (Result<User, Error>) -> ()) {
@@ -206,6 +255,30 @@ final class FirebaseRepository {
                 completion(.failure(error))
             }
         }
+    }
+    
+    // Combine version
+    /// Returns a publisher with the user
+    /// - Parameters:
+    ///    - uid: the uid for the user
+    
+    static func retrieveUser(with uid: String) -> AnyPublisher<User, Error> {
+        let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users).document(uid)
+        let returnUserPromise = Future<User, Error> { promise in
+            getDocument(for: ref) { result in
+                switch result {
+                case .success(let data):
+                    guard let user = User(documentData: data, uid: uid) else {
+                        promise(.failure(FireStoreError.noUser))
+                        return
+                    }
+                    promise(.success(user))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            }
+        }
+        return returnUserPromise.eraseToAnyPublisher()
     }
     
     // MARK: - Get Friendslist
@@ -238,6 +311,44 @@ final class FirebaseRepository {
                 }
             }
         }
+    }
+    
+    // Combine version
+    /// Returns a publisher with an array of the FriendsCollection
+    /// - Parameters:
+    ///    - uid: The UID for the user
+    
+    static func retrieveFriends(uid: String) -> AnyPublisher<[Friend], Error> {
+        let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(uid).collection(FIRKeys.CollectionPath.requests)
+        var friends: [Friend] = []
+        let dispatchOne = DispatchGroup()
+        let returnFuture = Future<[Friend], Error> { promise in
+            ref.getDocuments { (snapshot, error) in
+                if let error = error {
+                    promise(.failure(error))
+                }
+                if let documents = snapshot?.documents {
+                    for document in documents {
+                        dispatchOne.enter()
+                        retrieveUser(uid: document.documentID) { (result) in
+                            switch result {
+                            case .failure(let error):
+                                print("!!! Error fetching user: \(error)")
+                            case .success(let user):
+                                friends.append(Friend(documentData: document.data(), user: user)!)
+                            }
+                            print("dispatch leave after: \(friends.count)")
+                            dispatchOne.leave()
+                        }
+                    }
+                    dispatchOne.notify(queue: .global()) {
+                        print("dispatched friends: \(friends)")
+                        promise(.success(friends))
+                    }
+                }
+            }
+        }
+        return returnFuture.eraseToAnyPublisher()
     }
     
     // MARK: - Friends Listener
