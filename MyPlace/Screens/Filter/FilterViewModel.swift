@@ -34,16 +34,27 @@ final class FilterViewModel: ObservableObject {
     }
     
     func getFilteredPlaces(friendsList: [Friend], completion: @escaping (Bool) -> ()) {
-        FirebaseRepository.getFilteredPlaces(filteredList: filters, friendsList: friendsList) { (result) in
-            switch result {
-            case .failure(let error):
+        
+        _ = FirebaseRepository.getFilteredPlaces(filteredList: filters, friendsList: friendsList)
+            .sink { error in
                 print("Error getting places: \(error)")
                 completion(false)
-            case.success(let filteredFriendArray):
+            } receiveValue: { filteredFriendArray in
                 self.filteredFriends = filteredFriendArray
                 completion(true)
             }
-        }
+
+
+//        FirebaseRepository.getFilteredPlaces(filteredList: filters, friendsList: friendsList) { (result) in
+//            switch result {
+//            case .failure(let error):
+//                print("Error getting places: \(error)")
+//                completion(false)
+//            case.success(let filteredFriendArray):
+//                self.filteredFriends = filteredFriendArray
+//                completion(true)
+//            }
+//        }
     }
     
     func isFriendSelected(friend: Friend) -> Bool {
