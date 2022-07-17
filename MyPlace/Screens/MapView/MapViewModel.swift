@@ -128,6 +128,20 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
                 return
             } else {
                 // fetch new filtered places
+                _ = FirebaseRepository.getFilteredPlaces(filteredList: recievedFilters, friendsList: friendsList)
+                    .sink { error in
+                        print("Error getting places: \(error)")
+                    } receiveValue: { filteredFriendArray in
+                        self.filteredFriends = filteredFriendArray
+                        
+                        print("Friends for annotations fetched: \(self.filteredFriends)")
+                        // place on map
+                        for friend in self.filteredFriends {
+                            self.produceAnnotationsFromFilter(friend: friend)
+                        }
+                    }
+                
+                
                 FirebaseRepository.getFilteredPlaces(filteredList: recievedFilters, friendsList: friendsList) { (result) in
                     switch result {
                     case .failure(let error):
