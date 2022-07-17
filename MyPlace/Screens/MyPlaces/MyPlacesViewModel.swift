@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocation
+import Combine
 
 final class MyPlacesViewModel: ObservableObject {
     
@@ -20,16 +21,41 @@ final class MyPlacesViewModel: ObservableObject {
     
     func fetchData(for uid: String) {
         // MARK: - Check how lifecycle works. so no need to refetch every time. Cache ?
-        FirebaseRepository.getPlaceDocuments(for: uid) { (result) in
-            switch result {
-            case .failure(let error):
+//        FirebaseRepository.getPlaceDocuments(for: uid) { (result) in
+//            switch result {
+//            case .failure(let error):
+//                self.isLoading = false
+//                print("Error fetching documents from collection: \(error)")
+//            case .success(let fetchedPlaces):
+//                self.places = fetchedPlaces
+//                self.isLoading = false
+//            }
+//        }
+        
+        FirebaseRepository.getPlaceDocuments(for: uid)
+        
+            .subscribe(Subscribers.Sink(receiveCompletion: { completion in
                 self.isLoading = false
-                print("Error fetching documents from collection: \(error)")
-            case .success(let fetchedPlaces):
-                self.places = fetchedPlaces
+                switch completion {
+                case let .failure(error):
+                    print("Error fetching documents from collection: \(error)")
+                case .finished:
+                    break
+                }
+            }, receiveValue: {
+                print("Combine recieved places: \($0)")
+                self.places = $0
                 self.isLoading = false
-            }
-        }
+            }))
+        
+//            .sink { error in
+//                self.isLoading = false
+//                print("Error fetching documents from collection: \(error)")
+//            } receiveValue: { fetchedPlaces in
+//                self.places = fetchedPlaces
+//                self.isLoading = false
+//            }
+
     }
     
     func getDistance(lat: Double, lng: Double) -> String {
