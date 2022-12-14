@@ -384,22 +384,6 @@ final class FirebaseRepository {
                     friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
                     completion(friend)
                 }
-                
-//                if (diff.type == .added) {
-//                    print("!!! New friend Request: \(diff.document.data()), \(diff.document.documentID)")
-//                    friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
-//                    completion(friend)
-//                }
-//                if (diff.type == .modified) {
-//                    print("!!! Modified request: \(diff.document.data()), \(diff.document.documentID)")
-//                    friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
-//                    completion(friend)
-//                }
-//                if (diff.type == .removed) {
-//                    print("!!! Removed request: \(diff.document.data()), \(diff.document.documentID)")
-//                    friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
-//                    completion(friend)
-//                }
             }
         }
     }
