@@ -39,6 +39,8 @@ class UserInfo: ObservableObject {
         }
     }
     
+    var cancellable: AnyCancellable?
+    
     var lruUserImageCache: LRUCache<String, Image> = LRUCache(capacity: 1)
     var lruFriendsImagesCache: LRUCache<String, Image> = LRUCache(capacity: 50)
     
@@ -160,20 +162,20 @@ class UserInfo: ObservableObject {
     }
     
     private func fetchFriends(completion: @escaping (Bool) -> ()) {
-        FirebaseRepository.retrieveFriends(uid: user.uid) { (result) in
-            switch result {
-            case .failure(let error):
-                print("error retrieving documents: \(error)")
+        cancellable = FirebaseRepository.retrieveFriends(uid: user.uid)
+            .receive(on: RunLoop.main)
+            .sink { error in
+                print("##func fetchFriends - error retrieveing documents: \(error)")
                 completion(false)
-            case .success(let friends):
+            } receiveValue: { friendsArray in
+                print("##func fetchFriends - Recieving value on sink")
                 DispatchQueue.main.async {
-                    self.fullFriendsList = friends
-                    self.user.friends = friends
+                    self.fullFriendsList = friendsArray
+                    self.user.friends = friendsArray
                     self.makeLists()
                     completion(true)
                 }
             }
-        }
     }
     
     private func makeLists() {

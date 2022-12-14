@@ -282,7 +282,7 @@ final class FirebaseRepository {
     }
     
     // MARK: - Get Friendslist
-    
+#warning("See if changing the return value to be a Future instead of AnyCancellable. If good, do it everywhere in here (where applicable)")
     static func retrieveFriends(uid: String, completion: @escaping (Result<[Friend], Error>) -> ()) {
         let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.friendRequests).document(uid).collection(FIRKeys.CollectionPath.requests)
         var friends: [Friend] = []
@@ -370,21 +370,36 @@ final class FirebaseRepository {
                 let status = diff.document.data()["status"] as? String ?? ""
                 var friend = FriendListenerReturn(uid: diff.document.documentID, status: status, changeType: .added)
                 
-                if (diff.type == .added) {
+                switch diff.type {
+                case .added:
                     print("!!! New friend Request: \(diff.document.data()), \(diff.document.documentID)")
                     friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
                     completion(friend)
-                }
-                if (diff.type == .modified) {
+                case .modified:
                     print("!!! Modified request: \(diff.document.data()), \(diff.document.documentID)")
                     friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
                     completion(friend)
-                }
-                if (diff.type == .removed) {
+                case .removed:
                     print("!!! Removed request: \(diff.document.data()), \(diff.document.documentID)")
                     friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
                     completion(friend)
                 }
+                
+//                if (diff.type == .added) {
+//                    print("!!! New friend Request: \(diff.document.data()), \(diff.document.documentID)")
+//                    friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
+//                    completion(friend)
+//                }
+//                if (diff.type == .modified) {
+//                    print("!!! Modified request: \(diff.document.data()), \(diff.document.documentID)")
+//                    friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
+//                    completion(friend)
+//                }
+//                if (diff.type == .removed) {
+//                    print("!!! Removed request: \(diff.document.data()), \(diff.document.documentID)")
+//                    friend.changeType = FriendListenerReturn.ChangeType(rawValue: diff.type.rawValue)!
+//                    completion(friend)
+//                }
             }
         }
     }
@@ -415,7 +430,41 @@ final class FirebaseRepository {
                     completion(.success(returnArray))
                 }
             }
+        }
+    }
+    
+    // Combine version
+    /// Returns a future for a search result with an array of User or fails with an Error
+    /// - Parameters:
+    ///     - userName: User input name of search
+    
+    static func searchForFriend(userName: String) -> Future<[User], Error> {
+        return Future() { promise in
+            let ref = Firestore.firestore().collection(FIRKeys.CollectionPath.users)
+            var returnArray: [User] = []
+            let dispatchOne = DispatchGroup()
             
+            ref.whereField(FIRKeys.User.userName, isEqualTo: userName).getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("FIRRepo: Error getting document: \(error)")
+                    promise(.failure(error))
+                } else {
+                    for document in querySnapshot!.documents {
+                        dispatchOne.enter()
+                        print("FIRRepo: user with username \(userName) found: \(document.data())")
+                        guard let user = User(documentData: document.data(), uid: document.documentID) else {
+                            print("FIRRepo: Document failed guard check.")
+                            return
+                        }
+                        returnArray.append(user)
+                        dispatchOne.leave()
+                    }
+                    dispatchOne.notify(queue: .global()) {
+                        print("dispatchOne done")
+                        promise(.success(returnArray))
+                    }
+                }
+            }
         }
     }
     
